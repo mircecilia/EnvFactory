@@ -1,0 +1,6 @@
+# Verified 2026-09-11 with Python 3.12.14.
+# Upstream requirements.txt is unpinned and latest releases conflict on OpenAI SDK major version.
+fastmcp==3.1.0
+openai-agents==0.20.0
+litellm==1.100.1
+openai==2.54.0
