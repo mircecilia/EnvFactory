@@ -121,6 +121,7 @@ def main():
     experiments = EVAL_DIR / "experiments.csv"
     rows = list(csv.DictReader(experiments.open(encoding="utf-8", newline="")))
     run_id = f"bfcl_v3_smoke_{args.label}_seed20260913"
+    pipeline_status = "pipeline_smoke_pass" if not inference_errors else "pipeline_smoke_pass_with_model_inference_error"
     rows = [row for row in rows if row["run_id"] != run_id]
     rows.append({
         "run_id": run_id,
@@ -135,7 +136,7 @@ def main():
         "result_path": str(run_root / "result"),
         "score_path": str(run_root / "score"),
         "metric": str(mean_accuracy),
-        "status": "pipeline_smoke_pass",
+        "status": pipeline_status,
     })
     with experiments.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=rows[0].keys(), lineterminator="\n")
@@ -145,6 +146,7 @@ def main():
     ledger = REPRO_ROOT / "repro_1p7b" / "results" / "experiments.csv"
     ledger_rows = list(csv.DictReader(ledger.open(encoding="utf-8", newline="")))
     ledger_rows = [row for row in ledger_rows if row["run_id"] != run_id]
+    ledger_note = f"official BFCL v1.3 partial evaluation; pipeline smoke only; inference_error_count={len(inference_errors)}"
     ledger_rows.append({
         "run_id": run_id,
         "date": date.today().isoformat(),
@@ -163,7 +165,7 @@ def main():
         "metric": f"smoke_unweighted_multi_turn_accuracy={mean_accuracy}",
         "result_path": str(run_root / "result"),
         "log_path": str(EVAL_DIR / "logs" / "smoke"),
-        "notes": "official BFCL v1.3 partial evaluation; pipeline smoke only",
+        "notes": ledger_note,
     })
     with ledger.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=ledger_rows[0].keys(), lineterminator="\n")

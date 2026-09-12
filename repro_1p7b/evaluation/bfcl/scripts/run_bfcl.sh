@@ -44,7 +44,7 @@ SERVER_CMD=(
   --disable-cuda-graph
   --attention-backend triton
   --sampling-backend pytorch
-  --context-length 32768
+  --context-length 40960
   --max-total-tokens 65536
 )
 "${SERVER_CMD[@]}" >"$SERVER_LOG" 2>&1 &

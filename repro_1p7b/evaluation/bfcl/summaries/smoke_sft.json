@@ -1,0 +1,520 @@
+{
+  "bfcl_commit": "ea13468e4423454d0c213704fb87cf7cb3990433",
+  "benchmark_version": "BFCL V3",
+  "scope": "pipeline smoke only",
+  "label": "sft",
+  "model_id": "Qwen/Qwen3-1.7B-FC",
+  "model_path": "/home/u2024311031/workspace/envfactory_repro_1p7b/repro_1p7b/checkpoints/baseline_sft_8k_1p7b",
+  "backend": "sglang",
+  "temperature": 0.7,
+  "run_ids": {
+    "multi_turn_base": [
+      "multi_turn_base_24",
+      "multi_turn_base_159"
+    ],
+    "multi_turn_miss_func": [
+      "multi_turn_miss_func_48",
+      "multi_turn_miss_func_59"
+    ],
+    "multi_turn_miss_param": [
+      "multi_turn_miss_param_95",
+      "multi_turn_miss_param_96"
+    ],
+    "multi_turn_long_context": [
+      "multi_turn_long_context_107",
+      "multi_turn_long_context_85"
+    ]
+  },
+  "result_counts": {
+    "multi_turn_base": 2,
+    "multi_turn_long_context": 2,
+    "multi_turn_miss_func": 2,
+    "multi_turn_miss_param": 2
+  },
+  "observed_count": 8,
+  "category_scores": {
+    "multi_turn_base": {
+      "accuracy": 0.0,
+      "correct_count": 0,
+      "total_count": 2
+    },
+    "multi_turn_long_context": {
+      "accuracy": 0.0,
+      "correct_count": 0,
+      "total_count": 2
+    },
+    "multi_turn_miss_func": {
+      "accuracy": 0.0,
+      "correct_count": 0,
+      "total_count": 2
+    },
+    "multi_turn_miss_param": {
+      "accuracy": 0.5,
+      "correct_count": 1,
+      "total_count": 2
+    }
+  },
+  "multi_turn_unweighted_accuracy": 0.125,
+  "ordinary_generation": "PASS",
+  "tool_call_format_and_parse": "PASS",
+  "multi_turn_tool_response_refill": "PASS",
+  "inference_error_ids": [
+    "multi_turn_long_context_107"
+  ],
+  "empty_output_ids": [],
+  "official_score_failure_details": [
+    {
+      "id": "multi_turn_base_24",
+      "error": {
+        "error_message": "Model response execution results so far does not contain all the ground truth response execution results for turn 0.",
+        "error_type": "multi_turn:execution_response_mismatch",
+        "details": {
+          "missing_items": [
+            "{\"diff_lines\": \"- Initial draft content for the report.\\n+ Finalized content for the report.\"}"
+          ],
+          "model_response (including all previous turns)": [
+            "{\"matches\": [\"./report_draft.txt\"]}",
+            "{\"matches\": [\"./report_draft.txt\"]}",
+            "{\"matches\": [\"./report_final.txt\"]}",
+            "{\"file_content\": \"Initial draft content for the report.\"}",
+            "{\"file_content\": \"Finalized content for the report.\"}"
+          ],
+          "ground_truth_response (only the current turn)": [
+            "{\"diff_lines\": \"- Initial draft content for the report.\\n+ Finalized content for the report.\"}"
+          ]
+        }
+      }
+    },
+    {
+      "id": "multi_turn_base_159",
+      "error": {
+        "error_message": "Model instance for TravelAPI does not match the state with ground truth instance.",
+        "error_type": "multi_turn:instance_state_mismatch",
+        "details": {
+          "differences": {
+            "credit_card_list": {
+              "model": {
+                "card_3456": {
+                  "card_number": "6754 9823 6519 3456",
+                  "cardholder_name": "Elizabeth Montgomery",
+                  "expiry_date": "12/25",
+                  "cvv": 123,
+                  "balance": 13000.0
+                }
+              },
+              "ground_truth": {
+                "card_3456": {
+                  "card_number": "6754 9823 6519 3456",
+                  "cardholder_name": "Elizabeth Montgomery",
+                  "expiry_date": "12/25",
+                  "cvv": 123,
+                  "balance": 14600.0
+                }
+              }
+            },
+            "booking_record": {
+              "model": {
+                "3426812": {
+                  "card_id": "card_3456",
+                  "travel_date": "2024-11-15",
+                  "travel_from": "SFO",
+                  "travel_to": "LAX",
+                  "travel_class": "economy",
+                  "travel_cost": 400.0,
+                  "transaction_id": "45451592"
+                },
+                "7223063": {
+                  "card_id": "card_3456",
+                  "travel_date": "2024-11-15",
+                  "travel_from": "SFO",
+                  "travel_to": "LAX",
+                  "travel_class": "economy",
+                  "travel_cost": 400.0,
+                  "transaction_id": "35535380"
+                },
+                "6765159": {
+                  "card_id": "card_3456",
+                  "travel_date": "2024-11-15",
+                  "travel_from": "SFO",
+                  "travel_to": "LAX",
+                  "travel_class": "economy",
+                  "travel_cost": 400.0,
+                  "transaction_id": "96206559"
+                },
+                "8737609": {
+                  "card_id": "card_3456",
+                  "travel_date": "2024-11-15",
+                  "travel_from": "SFO",
+                  "travel_to": "LAX",
+                  "travel_class": "economy",
+                  "travel_cost": 400.0,
+                  "transaction_id": "49536459"
+                },
+                "7580219": {
+                  "card_id": "card_3456",
+                  "travel_date": "2024-11-15",
+                  "travel_from": "SFO",
+                  "travel_to": "LAX",
+                  "travel_class": "economy",
+                  "travel_cost": 400.0,
+                  "transaction_id": "20768819"
+                }
+              },
+              "ground_truth": {
+                "3426812": {
+                  "card_id": "card_3456",
+                  "travel_date": "2024-11-15",
+                  "travel_from": "SFO",
+                  "travel_to": "LAX",
+                  "travel_class": "economy",
+                  "travel_cost": 400.0,
+                  "transaction_id": "45451592"
+                }
+              }
+            }
+          },
+          "model_instance_state": {
+            "credit_card_list": {
+              "card_3456": {
+                "card_number": "6754 9823 6519 3456",
+                "cardholder_name": "Elizabeth Montgomery",
+                "expiry_date": "12/25",
+                "cvv": 123,
+                "balance": 13000.0
+              }
+            },
+            "booking_record": {
+              "3426812": {
+                "card_id": "card_3456",
+                "travel_date": "2024-11-15",
+                "travel_from": "SFO",
+                "travel_to": "LAX",
+                "travel_class": "economy",
+                "travel_cost": 400.0,
+                "transaction_id": "45451592"
+              },
+              "7223063": {
+                "card_id": "card_3456",
+                "travel_date": "2024-11-15",
+                "travel_from": "SFO",
+                "travel_to": "LAX",
+                "travel_class": "economy",
+                "travel_cost": 400.0,
+                "transaction_id": "35535380"
+              },
+              "6765159": {
+                "card_id": "card_3456",
+                "travel_date": "2024-11-15",
+                "travel_from": "SFO",
+                "travel_to": "LAX",
+                "travel_class": "economy",
+                "travel_cost": 400.0,
+                "transaction_id": "96206559"
+              },
+              "8737609": {
+                "card_id": "card_3456",
+                "travel_date": "2024-11-15",
+                "travel_from": "SFO",
+                "travel_to": "LAX",
+                "travel_class": "economy",
+                "travel_cost": 400.0,
+                "transaction_id": "49536459"
+              },
+              "7580219": {
+                "card_id": "card_3456",
+                "travel_date": "2024-11-15",
+                "travel_from": "SFO",
+                "travel_to": "LAX",
+                "travel_class": "economy",
+                "travel_cost": 400.0,
+                "transaction_id": "20768819"
+              }
+            },
+            "access_token": "abc123xyz",
+            "token_type": "Bearer",
+            "token_expires_in": 3600,
+            "token_scope": "read_write",
+            "user_first_name": "Theodore",
+            "user_last_name": "Collins",
+            "budget_limit": 5000.0,
+            "long_context": false
+          },
+          "ground_truth_instance_state": {
+            "credit_card_list": {
+              "card_3456": {
+                "card_number": "6754 9823 6519 3456",
+                "cardholder_name": "Elizabeth Montgomery",
+                "expiry_date": "12/25",
+                "cvv": 123,
+                "balance": 14600.0
+              }
+            },
+            "booking_record": {
+              "3426812": {
+                "card_id": "card_3456",
+                "travel_date": "2024-11-15",
+                "travel_from": "SFO",
+                "travel_to": "LAX",
+                "travel_class": "economy",
+                "travel_cost": 400.0,
+                "transaction_id": "45451592"
+              }
+            },
+            "access_token": "abc123xyz",
+            "token_type": "Bearer",
+            "token_expires_in": 3600,
+            "token_scope": "read_write",
+            "user_first_name": "Theodore",
+            "user_last_name": "Collins",
+            "budget_limit": 5000.0,
+            "long_context": false
+          }
+        },
+        "execution_result": [
+          {
+            "model": [
+              [
+                "['RMS', 'SBK', 'MPC', 'SVP', 'SHD', 'CDG', 'LHR', 'SSV', 'OKD', 'WLB', 'PEK', 'HND', 'HKG', 'CIA', 'CRH', 'ATV', 'PHV', 'GFD', 'SFO', 'LAX', 'JFK', 'ORD', 'BOS']"
+              ],
+              [
+                "{\"travel_cost_list\": [440.0]}"
+              ]
+            ],
+            "ground_truth": [
+              "['RMS', 'SBK', 'MPC', 'SVP', 'SHD', 'CDG', 'LHR', 'SSV', 'OKD', 'WLB', 'PEK', 'HND', 'HKG', 'CIA', 'CRH', 'ATV', 'PHV', 'GFD', 'SFO', 'LAX', 'JFK', 'ORD', 'BOS']",
+              "{\"travel_cost_list\": [440.0]}"
+            ]
+          },
+          {
+            "model": [
+              [
+                "{\"booking_id\": \"3426812\", \"transaction_id\": \"45451592\", \"booking_status\": true, \"booking_history\": {}}"
+              ],
+              [
+                "{\"booking_id\": \"7223063\", \"transaction_id\": \"35535380\", \"booking_status\": true, \"booking_history\": {}}"
+              ],
+              [
+                "{\"booking_id\": \"6765159\", \"transaction_id\": \"96206559\", \"booking_status\": true, \"booking_history\": {}}"
+              ],
+              [
+                "{\"booking_id\": \"8737609\", \"transaction_id\": \"49536459\", \"booking_status\": true, \"booking_history\": {}}"
+              ],
+              [
+                "{\"booking_id\": \"7580219\", \"transaction_id\": \"20768819\", \"booking_status\": true, \"booking_history\": {}}"
+              ]
+            ],
+            "ground_truth": [
+              "{\"booking_id\": \"3426812\", \"transaction_id\": \"45451592\", \"booking_status\": true, \"booking_history\": {}}"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "multi_turn_long_context_85",
+      "error": {
+        "error_message": "Model response execution results so far does not contain all the ground truth response execution results for turn 0.",
+        "error_type": "multi_turn:execution_response_mismatch",
+        "details": {
+          "missing_items": [
+            "{\"zipcode\": \"94016\"}",
+            "{\"distance\": 980.0, \"intermediaryCities\": [\"New Hamilton\", \"Jacksonville\", \"Fort Stoneport\", \"Lincolnville\", \"Madison\", \"Clayton Hillport\", \"Franklin Heights\", \"Old Jefferson\", \"Bentondale\", \"Sullivan Springs\", \"Red Monroe\", \"Newtonburg\", \"Green Clay\", \"East Kingston\", \"West Princeton\", \"Grand Georgetown\", \"Andersonfield\", \"Richmond\", \"Shelbyton\", \"Hamptonfield\", \"Fultondale\", \"Hudsonview\", \"Carsonville\", \"Lawrenceburg\", \"Masonport\", \"Bristol\", \"New Clayton\", \"Bensondale\", \"Clarkville\", \"Dawsonsprings\", \"Ellisport\", \"Floyd\", \"Graysonville\", \"Hayesburg\", \"Irvington\", \"Jasperburg\", \"Kentport\", \"Lamarburg\", \"Morganton\", \"Nortonville\", \"Owenport\", \"Perryville\", \"Quincyburg\", \"Russellton\", \"Shermanburg\", \"Taylor\", \"Uptonville\", \"Vernon\", \"Wilsonburg\", \"Youngtown\", \"Zionville\", \"Newfield\", \"Sanport\", \"Fortburg\", \"Mountview\", \"Lakeport\", \"Northfield\", \"Southport\", \"Eastwood\", \"Westdale\", \"Grandview\", \"Greenwood\", \"Redfield\", \"Oldtown\", \"Saintport\", \"Glenwood\", \"Springfield\", \"Riverdale\", \"Rockville\", \"Whitefield\", \"Blackport\", \"Blueburg\", \"Silverdale\", \"Goldton\", \"Crystal Springs\", \"Fairview\", \"Highfield\", \"Lowtown\", \"Brightwood\", \"Shadowbrook\", \"Sunridge\", \"Moonlake\", \"Starpoint\", \"Oakwood\", \"Pinecrest\", \"Mapleton\", \"Cedar Grove\", \"Ashland\", \"Willowbrook\", \"Elmdale\", \"Birchwood\", \"Greenfield\", \"Redwood\", \"Oldbridge\", \"Saintsville\", \"Glendale\", \"Springtown\", \"Riverport\", \"Rockford\", \"Whitehaven\", \"Blackburn\", \"Bluewater\", \"Silverton\", \"Goldfield\", \"Crystal Bay\", \"Fairhaven\", \"Highpoint\", \"Lowridge\", \"Brighton\", \"Shadow Valley\", \"Sun City\", \"Moontown\", \"Star Lake\", \"Oak Ridge\", \"Pine Hill\", \"Maple Grove\", \"Cedar Point\", \"Ashville\", \"Willow Creek\", \"Elmwood\", \"Birch Bay\", \"River Falls\", \"Rock Hill\", \"White Plains\", \"Black Lake\", \"Blue Ridge\", \"Silver Springs\", \"Golden Grove\", \"Crystal Cove\", \"Fair Oaks\", \"Highland\", \"Lowville\", \"Bright Meadows\", \"Shadow Creek\", \"Sunrise\", \"Moondale\", \"Star City\", \"Oakton\", \"Pine Valley\", \"Maple Ridge\", \"Cedar Falls\", \"Ashford\", \"Willow Springs\", \"Elmsford\", \"Birchwood\", \"River City\", \"Rockport\", \"Whitewater\", \"Blackstone\", \"Blue Hills\", \"Silver Lake\", \"Gold Beach\", \"Crystal River\", \"Fairfield\", \"Highview\", \"Low Point\", \"Brighton Beach\", \"Shadow Lake\", \"Sunset\", \"Moorestown\", \"Star City\", \"Oakland\", \"Pine City\", \"Mapleton\", \"Cedar Springs\", \"Ash Grove\", \"Willowdale\", \"Elm Creek\", \"Birch Grove\", \"River Ridge\", \"Rock Valley\", \"White Sands\", \"Black Rock\", \"Blue River\", \"Silver Creek\", \"Gold Hill\", \"Crystal Lake\", \"Fairview Heights\", \"High Springs\", \"Low Gap\", \"Bright City\", \"Shadow Mountain\", \"Sun Valley\", \"Moonlight\", \"Star Harbor\", \"Oak Hollow\", \"Pine Grove\", \"Maple Valley\", \"Cedar Ridge\", \"Ash Point\", \"Willow Glen\", \"Elm Springs\", \"Birch Creek\", \"Riverside\", \"Rockport\", \"White Rock\", \"Blackwood\", \"Blue Mountain\", \"Silver City\", \"Golden Valley\", \"Crystal Springs\", \"Fairhope\", \"Highland Park\", \"Lowtown\", \"Brighton Hills\", \"Shadow Creek\", \"Sunbrook\", \"Moon City\", \"Star View\", \"Oakdale\", \"Pinecrest\", \"Maple Hill\", \"Cedar City\", \"Ashwood\", \"Willow Valley\", \"Elmwood Park\", \"Birch Meadow\", \"Riverbend\", \"Rockland\", \"White Mountain\", \"Black Creek\", \"Blue Ridge\", \"Silverton\", \"Gold River\", \"Crystal Hill\", \"Fairmont\", \"Highland Springs\", \"Lowville\", \"Brightwood\", \"Shadow Valley\", \"Sunbrook\", \"Moonside\", \"Star City\", \"Oak Grove\", \"Pine Valley\", \"Maple Creek\", \"Cedar Lake\", \"Ash Hill\", \"Willow Creek\", \"Elmhurst\", \"Birchwood\", \"River City\", \"Rock Falls\", \"Whitehaven\", \"Black River\", \"Blue Mountain\", \"Silver Lake\", \"Gold Hill\", \"Crystal City\", \"Fairhaven\", \"High Point\", \"Low Gap\", \"Brighton\", \"Shadow Creek\", \"Sun Valley\", \"Moon Lake\", \"Star Hill\", \"Oakwood\", \"Pine Ridge\", \"Maple Valley\", \"Cedar Grove\", \"Ashland\", \"Willowbrook\", \"Elmwood\", \"Birch Grove\", \"Riverport\", \"Rock City\", \"White Plains\", \"Blackburn\", \"Blue Hills\", \"Silverton\", \"Golden Grove\", \"Crystal Cove\", \"Fairview\", \"Highland\", \"Lowtown\", \"Brighton\", \"Shadow Lake\", \"Sunrise\", \"Moontown\", \"Star Lake\", \"Oak Hill\", \"Pine Meadow\", \"Mapleton\", \"Cedar Bluff\", \"Ashford\", \"Willow Creek\", \"Elm Grove\", \"Birchwood\", \"Green Valley\", \"Redstone\", \"Old Mill\", \"Saintsville\", \"Glenview\", \"Springfield\", \"Riverdale\", \"Rockport\", \"Whitewater\", \"Blackwood\", \"Bluefield\", \"Silvertown\", \"Gold Creek\", \"Crystal Falls\", \"Fairbank\", \"Highfield\", \"Lowville\", \"Brighton\", \"Shadowbrook\", \"Sunridge\", \"Moonhaven\", \"Starpoint\", \"Oakton\", \"Pinecrest\", \"Maple Ridge\", \"Cedar Springs\", \"Ashland\", \"Willowbrook\", \"Elmdale\", \"Birchwood\", \"Greenfield\", \"Redwood\", \"Oldbridge\", \"Saintport\", \"Glenwood\", \"Springtown\", \"Riverport\", \"Rockford\", \"Whitehaven\", \"Blackburn\", \"Bluewater\", \"Silverton\", \"Goldfield\", \"Crystal Bay\", \"Fairhaven\", \"Highpoint\", \"Lowridge\", \"Brighton\", \"Shadow Valley\", \"Sun City\", \"Moontown\", \"Star Lake\", \"Oak Ridge\", \"Pine Hill\", \"Maple Grove\", \"Cedar Point\", \"Ashville\", \"Willow Creek\", \"Elmwood\", \"Birch Bay\", \"River Falls\", \"Rock Hill\", \"White Plains\", \"Black Lake\", \"Blue Ridge\", \"Silver Springs\", \"Golden Grove\", \"Crystal Cove\", \"Fair Oaks\", \"Highland\", \"Lowville\", \"Bright Meadows\", \"Shadow Creek\", \"Sunrise\", \"Moondale\", \"Star City\", \"Oakton\", \"Pine Valley\", \"Maple Ridge\", \"Cedar Falls\", \"Ashford\", \"Willow Springs\", \"Elmsford\", \"Birchwood\", \"River City\", \"Rockport\", \"Whitewater\", \"Blackstone\", \"Blue Hills\", \"Silver Lake\", \"Gold Beach\", \"Crystal River\", \"Fairfield\", \"Highview\", \"Low Point\", \"Brighton Beach\", \"Shadow Lake\", \"Sunset\", \"Moorestown\", \"Star City\", \"Oakland\", \"Pine City\", \"Mapleton\", \"Cedar Springs\", \"Ash Grove\", \"Willowdale\", \"Elm Creek\", \"Birch Grove\", \"River Ridge\", \"Rock Valley\", \"White Sands\", \"Black Rock\", \"Blue River\", \"Silver Creek\", \"Gold Hill\", \"Crystal Lake\", \"Fairview Heights\", \"High Springs\", \"Low Gap\", \"Bright City\", \"Shadow Mountain\", \"Sun Valley\", \"Moonlight\", \"Star Harbor\", \"Oak Hollow\", \"Pine Grove\", \"Maple Valley\", \"Cedar Ridge\", \"Ash Point\", \"Willow Glen\", \"Elm Springs\", \"Birch Creek\", \"Riverside\", \"Rockport\", \"White Rock\", \"Blackwood\", \"Blue Mountain\", \"Silver City\", \"Golden Valley\", \"Crystal Spring\", \"Greenstone\", \"Grandchester\", \"Hillbrook\", \"Redfield\", \"Bridgeton\", \"Forest Heights\", \"Mountainview\", \"Stone Harbor\", \"Seaford\", \"Crestwood\", \"Hillcrest\", \"Summitville\", \"Waterford\", \"Silverstone\", \"Lakeshore\", \"New River\", \"Riverbank\", \"Forestport\", \"Hightower\", \"Midland\", \"Pineville\", \"Hollow Ridge\", \"Ridgeway\", \"Sunset Valley\", \"Moonlight Bay\", \"Hilltown\", \"Blue Valley\", \"Snowhill\", \"Lakewood\", \"Eagle Ridge\", \"Bayfield\", \"Windmill\", \"Canyon Valley\", \"Cypress Grove\", \"Foxwood\", \"Pine Grove\", \"Evergreen Hill\", \"Green Hills\", \"Limestone\", \"Oceanview\", \"Sandalwood\", \"Whitestone\", \"Timberwood\", \"Winterhaven\", \"Desert Springs\", \"Pinewood\", \"Foxburg\", \"Haven Ridge\", \"Rocky River\", \"Shoreview\", \"Greystone\", \"Fernhill\", \"Stoneville\", \"Sandridge\", \"Highgate\", \"Redwater\", \"Elmwood Springs\", \"Silver Glen\", \"Woodside\", \"Forest Glen\", \"Clearbrook\", \"Lakeside\", \"Hawkstone\", \"Greenbriar\", \"Dalesville\", \"Brighton Point\", \"Highland Bay\", \"Brookstone\", \"Grand Terrace\", \"Ironwood\", \"Bluerock\", \"Glacier Ridge\", \"Wolf Creek\", \"Windy Ridge\", \"Maple Springs\", \"Shady Valley\", \"Crescent Ridge\", \"Wildwood\", \"Shadow Hills\", \"Riverstone\", \"Canyon Creek\", \"Woodland Springs\", \"Crystalfall\", \"Longstone\", \"Moonridge\", \"Maplepoint\", \"Sunset Hills\", \"Frostvalley\", \"Eaglewood\", \"Woodsford\", \"Brookfield\", \"Iron Ridge\", \"Fossil Ridge\", \"Spring Hill\", \"Oceancrest\", \"Firestone\", \"Evergreen Lake\", \"Frost Haven\", \"Stonecrest\", \"Willowstone\", \"Stonebridge\", \"Shady Hills\", \"Forest Edge\", \"Treetop Hill\", \"Fairbank Heights\", \"Hawk Valley\", \"Stonegate\", \"Timber Ridge\", \"Glacier Springs\", \"Windward\", \"Summit Edge\", \"Fox Ridge\", \"Elmwood Heights\", \"Whitewater Springs\", \"Cypress Bay\", \"Pine Valley\", \"Rivergate\", \"Eagleport\", \"Sandwood\", \"Birchfield\", \"Sunrise Grove\", \"Meadow Brook\", \"Bluffwood\", \"Green Lake\", \"Oceanstone\", \"Shady Brook\", \"Granite Ridge\", \"Rockstone\", \"Hollycrest\", \"Summit Ridge\", \"Edgewater Springs\", \"Eagle Peak\", \"Misty Hills\", \"River Valley\", \"Pineview\", \"Lakeview Ridge\", \"Stonewater\", \"Silver Ridge\", \"Greenstone Falls\", \"Seaside Valley\", \"Willowbend\", \"Baystone\", \"Sandbrook\", \"Cliffside\", \"Fernwood\", \"Crystal Ridge\", \"Oceancrest\", \"Foxbridge\", \"Seaview\", \"Meadowridge\", \"Canyon Hill\", \"Whitestone Ridge\", \"Lakeshore Hills\", \"Timberland\", \"Wolfstone\", \"Willowridge\", \"Granite Creek\", \"Shadowridge\", \"Ocean Bluff\", \"Bright Creek\", \"Evergreen Ridge\", \"Lakeshore Heights\", \"Fernhill Springs\", \"Sandhill Grove\", \"Glacier Hill\", \"Clearwater Ridge\", \"Stonewall Heights\", \"Pine Ridge\", \"Shady Grove\", \"Timber Cove\", \"Green Ridge\", \"Iron Ridge\", \"Hightower Point\", \"Windy Ridge\", \"Eagle Valley\", \"Sunset Crest\", \"Silver Heights\", \"Seaside Springs\", \"Misty Valley\", \"Woodland Grove\", \"Shadowbrook Grove\", \"Shady Brook\", \"Evergreen Crest\", \"Stonegate Valley\", \"Cypress Hills\", \"Moonlight Valley\", \"Cedar Valley\", \"Brookhaven Springs\", \"Riverbend Valley\", \"Seaside Grove\", \"Glacier Ridge\", \"Ironstone Point\", \"Foxwood Springs\", \"Oceanstone Valley\", \"Fernwood Cove\", \"Lakeside Grove\", \"Seabrook\", \"Misty Lake\", \"Greenfield Hill\", \"Oceanview Ridge\", \"Silver Creek\", \"Redwood Valley\", \"Riverstone Point\", \"Clearwater Springs\", \"Greenleaf Valley\", \"Shadowbrook Grove\", \"Sunset Hills\", \"Treetop Heights\", \"Windstone Hill\", \"Willowford\", \"Blueridge Grove\", \"Timber Ridge\", \"Misty River\", \"Redwood Springs\", \"Meadow Ridge\", \"Lakeside Valley\", \"Shady Cove\", \"Crystal Shore\", \"Granite Creek\", \"Ironstone Valley\", \"Foxwood Glen\", \"Seaview Ridge\", \"Treetop Hill\", \"Baystone Valley\", \"Blueridge Point\", \"Pinebrook Ridge\", \"Canyonbrook\", \"Granite Springs\", \"Riverstone Cove\", \"Clearwater Valley\", \"Silver Ridge\", \"Eagle Creek\", \"Willowbrook\", \"Shady Creek\", \"Timberstone Ridge\", \"Meadowbrook\", \"Bay Ridge\", \"Sandridge Point\", \"Eaglewood Heights\", \"Misty Grove\", \"Greenstone Point\", \"Clearview\", \"Silverstone Heights\", \"Oceancrest Ridge\", \"Granite Point\", \"Meadowdale\", \"Canyon Ridge\", \"Bluffridge\", \"Ironstone Ridge\", \"Foxbrook Heights\", \"Pine Ridge\", \"Shoreline Crest\", \"Timberland Ridge\", \"Meadowcrest\", \"Stonegate Grove\", \"Fernwood Springs\", \"Brookstone Valley\", \"Evergreen Hills\", \"Greenstone Ridge\", \"Oceanstone Point\", \"Brighton Crest\", \"Canyonbrook\", \"Wolfstone Ridge\", \"Ironstone Cove\", \"Fox Ridge\", \"Pinehill Grove\", \"Crystal River\", \"Clearview Point\", \"Seaside Valley\", \"Hollow Ridge\", \"Misty Creek\", \"Shady Valley\", \"Riverstone Heights\", \"Blueridge Cove\", \"Evergreen Grove\", \"Greenfield Ridge\", \"Timberstone Point\", \"Shady Brook\", \"Clearview Valley\", \"Silverstone Hill\", \"Oceanstone Springs\", \"Fernhill Ridge\", \"Fox Ridge\", \"Meadowridge Point\", \"Shady Crest\", \"Timber Ridge\", \"Evergreen Springs\", \"Foxwood Glen\", \"Seaview Heights\", \"Granite Ridge\", \"Ocean Ridge\", \"Rivergate Valley\", \"Seaside Grove\", \"Clearview Springs\", \"Silverstone Point\", \"Foxwood Ridge\", \"Timberstone Point\", \"Pinebrook Crest\", \"Riverstone Grove\", \"Granite Ridge\", \"Blueridge Valley\", \"Meadowbrook Point\", \"Ironstone Valley\", \"Cypress Springs\", \"Crystal Ridge\", \"Evergreen Springs\", \"Silver Creek\", \"Greenridge Valley\", \"Lakeside Ridge\", \"Shady Ridge\", \"Baystone Grove\", \"Crystal Grove\", \"Treetop Valley\", \"Seaside Crest\", \"Clearwater Ridge\", \"Oceanstone Ridge\", \"Bluffwood Grove\", \"Fernhill Point\", \"Silverstone Springs\", \"Clearwater Point\", \"Greenwood Valley\", \"Shadybrook Ridge\", \"Brightwood Ridge\", \"Willowbrook Grove\", \"Timberland Ridge\", \"Crystal Springs\", \"Granite Ridge\", \"Foxbrook Springs\", \"Lakeside Heights\", \"Shady Brook\", \"Greenstone Ridge\", \"Oceancrest Valley\", \"Blueridge Ridge\", \"Canyon Ridge\", \"Clearbrook Point\", \"Fernhill Ridge\", \"Pinecrest Heights\", \"Ironstone Grove\", \"Meadowstone Ridge\", \"Baystone Heights\", \"Crystal Valley\", \"Seaside Springs\", \"Silverton Springs\", \"Evergreen Point\", \"Granite Ridge\", \"Meadowbrook Ridge\", \"Lakeside Point\", \"Clearwater Springs\", \"Brightwood Point\", \"Silverstone Ridge\", \"Seaside Ridge\", \"Crystal Shores\", \"Evergreen Crest\", \"Granite Point\", \"Seaside Crest\", \"Clearwater Valley\", \"Fernhill Valley\", \"Baystone Ridge\", \"Riverstone Grove\", \"Shadybrook Ridge\", \"Foxbrook Point\", \"Timberstone Point\", \"Brightwood Ridge\", \"Evergreen Springs\", \"Seaside Ridge\", \"Granite Valley\", \"Crystal Ridge\", \"Shadybrook Springs\", \"Foxbrook Ridge\", \"Pinecrest Grove\", \"Willowbrook Valley\", \"Canyon Ridge\", \"Clearwater Ridge\", \"Oceancrest Point\", \"Seaside Heights\", \"Shadybrook Ridge\", \"Baystone Heights\", \"Pinebrook Ridge\", \"Foxbrook Valley\", \"Granite Ridge\", \"Shadybrook Valley\", \"Clearwater Grove\", \"Evergreen Ridge\", \"Willowbrook Ridge\", \"Granite Ridge\", \"Shadybrook Grove\", \"Willowbrook Grove\", \"Foxbrook Point\", \"Clearwater Ridge\", \"Silverstone Ridge\", \"Shadybrook Valley\", \"Clearwater Ridge\", \"Seaside Grove\", \"Willowbrook Valley\", \"Shadybrook Valley\", \"Seaside Ridge\", \"Willowbrook Ridge\"]}",
+            "{\"canDrive\": false}"
+          ],
+          "model_response (including all previous turns)": [
+            "{\"zipcode\": \"83214\"}",
+            "{\"error\": \"distance not found in database.\", \"intermediaryCities\": [\"New Hamilton\", \"Jacksonville\", \"Fort Stoneport\", \"Lincolnville\", \"Madison\", \"Clayton Hillport\", \"Franklin Heights\", \"Old Jefferson\", \"Bentondale\", \"Sullivan Springs\", \"Red Monroe\", \"Newtonburg\", \"Green Clay\", \"East Kingston\", \"West Princeton\", \"Grand Georgetown\", \"Andersonfield\", \"Richmond\", \"Shelbyton\", \"Hamptonfield\", \"Fultondale\", \"Hudsonview\", \"Carsonville\", \"Lawrenceburg\", \"Masonport\", \"Bristol\", \"New Clayton\", \"Bensondale\", \"Clarkville\", \"Dawsonsprings\", \"Ellisport\", \"Floyd\", \"Graysonville\", \"Hayesburg\", \"Irvington\", \"Jasperburg\", \"Kentport\", \"Lamarburg\", \"Morganton\", \"Nortonville\", \"Owenport\", \"Perryville\", \"Quincyburg\", \"Russellton\", \"Shermanburg\", \"Taylor\", \"Uptonville\", \"Vernon\", \"Wilsonburg\", \"Youngtown\", \"Zionville\", \"Newfield\", \"Sanport\", \"Fortburg\", \"Mountview\", \"Lakeport\", \"Northfield\", \"Southport\", \"Eastwood\", \"Westdale\", \"Grandview\", \"Greenwood\", \"Redfield\", \"Oldtown\", \"Saintport\", \"Glenwood\", \"Springfield\", \"Riverdale\", \"Rockville\", \"Whitefield\", \"Blackport\", \"Blueburg\", \"Silverdale\", \"Goldton\", \"Crystal Springs\", \"Fairview\", \"Highfield\", \"Lowtown\", \"Brightwood\", \"Shadowbrook\", \"Sunridge\", \"Moonlake\", \"Starpoint\", \"Oakwood\", \"Pinecrest\", \"Mapleton\", \"Cedar Grove\", \"Ashland\", \"Willowbrook\", \"Elmdale\", \"Birchwood\", \"Greenfield\", \"Redwood\", \"Oldbridge\", \"Saintsville\", \"Glendale\", \"Springtown\", \"Riverport\", \"Rockford\", \"Whitehaven\", \"Blackburn\", \"Bluewater\", \"Silverton\", \"Goldfield\", \"Crystal Bay\", \"Fairhaven\", \"Highpoint\", \"Lowridge\", \"Brighton\", \"Shadow Valley\", \"Sun City\", \"Moontown\", \"Star Lake\", \"Oak Ridge\", \"Pine Hill\", \"Maple Grove\", \"Cedar Point\", \"Ashville\", \"Willow Creek\", \"Elmwood\", \"Birch Bay\", \"River Falls\", \"Rock Hill\", \"White Plains\", \"Black Lake\", \"Blue Ridge\", \"Silver Springs\", \"Golden Grove\", \"Crystal Cove\", \"Fair Oaks\", \"Highland\", \"Lowville\", \"Bright Meadows\", \"Shadow Creek\", \"Sunrise\", \"Moondale\", \"Star City\", \"Oakton\", \"Pine Valley\", \"Maple Ridge\", \"Cedar Falls\", \"Ashford\", \"Willow Springs\", \"Elmsford\", \"Birchwood\", \"River City\", \"Rockport\", \"Whitewater\", \"Blackstone\", \"Blue Hills\", \"Silver Lake\", \"Gold Beach\", \"Crystal River\", \"Fairfield\", \"Highview\", \"Low Point\", \"Brighton Beach\", \"Shadow Lake\", \"Sunset\", \"Moorestown\", \"Star City\", \"Oakland\", \"Pine City\", \"Mapleton\", \"Cedar Springs\", \"Ash Grove\", \"Willowdale\", \"Elm Creek\", \"Birch Grove\", \"River Ridge\", \"Rock Valley\", \"White Sands\", \"Black Rock\", \"Blue River\", \"Silver Creek\", \"Gold Hill\", \"Crystal Lake\", \"Fairview Heights\", \"High Springs\", \"Low Gap\", \"Bright City\", \"Shadow Mountain\", \"Sun Valley\", \"Moonlight\", \"Star Harbor\", \"Oak Hollow\", \"Pine Grove\", \"Maple Valley\", \"Cedar Ridge\", \"Ash Point\", \"Willow Glen\", \"Elm Springs\", \"Birch Creek\", \"Riverside\", \"Rockport\", \"White Rock\", \"Blackwood\", \"Blue Mountain\", \"Silver City\", \"Golden Valley\", \"Crystal Springs\", \"Fairhope\", \"Highland Park\", \"Lowtown\", \"Brighton Hills\", \"Shadow Creek\", \"Sunbrook\", \"Moon City\", \"Star View\", \"Oakdale\", \"Pinecrest\", \"Maple Hill\", \"Cedar City\", \"Ashwood\", \"Willow Valley\", \"Elmwood Park\", \"Birch Meadow\", \"Riverbend\", \"Rockland\", \"White Mountain\", \"Black Creek\", \"Blue Ridge\", \"Silverton\", \"Gold River\", \"Crystal Hill\", \"Fairmont\", \"Highland Springs\", \"Lowville\", \"Brightwood\", \"Shadow Valley\", \"Sunbrook\", \"Moonside\", \"Star City\", \"Oak Grove\", \"Pine Valley\", \"Maple Creek\", \"Cedar Lake\", \"Ash Hill\", \"Willow Creek\", \"Elmhurst\", \"Birchwood\", \"River City\", \"Rock Falls\", \"Whitehaven\", \"Black River\", \"Blue Mountain\", \"Silver Lake\", \"Gold Hill\", \"Crystal City\", \"Fairhaven\", \"High Point\", \"Low Gap\", \"Brighton\", \"Shadow Creek\", \"Sun Valley\", \"Moon Lake\", \"Star Hill\", \"Oakwood\", \"Pine Ridge\", \"Maple Valley\", \"Cedar Grove\", \"Ashland\", \"Willowbrook\", \"Elmwood\", \"Birch Grove\", \"Riverport\", \"Rock City\", \"White Plains\", \"Blackburn\", \"Blue Hills\", \"Silverton\", \"Golden Grove\", \"Crystal Cove\", \"Fairview\", \"Highland\", \"Lowtown\", \"Brighton\", \"Shadow Lake\", \"Sunrise\", \"Moontown\", \"Star Lake\", \"Oak Hill\", \"Pine Meadow\", \"Mapleton\", \"Cedar Bluff\", \"Ashford\", \"Willow Creek\", \"Elm Grove\", \"Birchwood\", \"Green Valley\", \"Redstone\", \"Old Mill\", \"Saintsville\", \"Glenview\", \"Springfield\", \"Riverdale\", \"Rockport\", \"Whitewater\", \"Blackwood\", \"Bluefield\", \"Silvertown\", \"Gold Creek\", \"Crystal Falls\", \"Fairbank\", \"Highfield\", \"Lowville\", \"Brighton\", \"Shadowbrook\", \"Sunridge\", \"Moonhaven\", \"Starpoint\", \"Oakton\", \"Pinecrest\", \"Maple Ridge\", \"Cedar Springs\", \"Ashland\", \"Willowbrook\", \"Elmdale\", \"Birchwood\", \"Greenfield\", \"Redwood\", \"Oldbridge\", \"Saintport\", \"Glenwood\", \"Springtown\", \"Riverport\", \"Rockford\", \"Whitehaven\", \"Blackburn\", \"Bluewater\", \"Silverton\", \"Goldfield\", \"Crystal Bay\", \"Fairhaven\", \"Highpoint\", \"Lowridge\", \"Brighton\", \"Shadow Valley\", \"Sun City\", \"Moontown\", \"Star Lake\", \"Oak Ridge\", \"Pine Hill\", \"Maple Grove\", \"Cedar Point\", \"Ashville\", \"Willow Creek\", \"Elmwood\", \"Birch Bay\", \"River Falls\", \"Rock Hill\", \"White Plains\", \"Black Lake\", \"Blue Ridge\", \"Silver Springs\", \"Golden Grove\", \"Crystal Cove\", \"Fair Oaks\", \"Highland\", \"Lowville\", \"Bright Meadows\", \"Shadow Creek\", \"Sunrise\", \"Moondale\", \"Star City\", \"Oakton\", \"Pine Valley\", \"Maple Ridge\", \"Cedar Falls\", \"Ashford\", \"Willow Springs\", \"Elmsford\", \"Birchwood\", \"River City\", \"Rockport\", \"Whitewater\", \"Blackstone\", \"Blue Hills\", \"Silver Lake\", \"Gold Beach\", \"Crystal River\", \"Fairfield\", \"Highview\", \"Low Point\", \"Brighton Beach\", \"Shadow Lake\", \"Sunset\", \"Moorestown\", \"Star City\", \"Oakland\", \"Pine City\", \"Mapleton\", \"Cedar Springs\", \"Ash Grove\", \"Willowdale\", \"Elm Creek\", \"Birch Grove\", \"River Ridge\", \"Rock Valley\", \"White Sands\", \"Black Rock\", \"Blue River\", \"Silver Creek\", \"Gold Hill\", \"Crystal Lake\", \"Fairview Heights\", \"High Springs\", \"Low Gap\", \"Bright City\", \"Shadow Mountain\", \"Sun Valley\", \"Moonlight\", \"Star Harbor\", \"Oak Hollow\", \"Pine Grove\", \"Maple Valley\", \"Cedar Ridge\", \"Ash Point\", \"Willow Glen\", \"Elm Springs\", \"Birch Creek\", \"Riverside\", \"Rockport\", \"White Rock\", \"Blackwood\", \"Blue Mountain\", \"Silver City\", \"Golden Valley\", \"Crystal Spring\", \"Greenstone\", \"Grandchester\", \"Hillbrook\", \"Redfield\", \"Bridgeton\", \"Forest Heights\", \"Mountainview\", \"Stone Harbor\", \"Seaford\", \"Crestwood\", \"Hillcrest\", \"Summitville\", \"Waterford\", \"Silverstone\", \"Lakeshore\", \"New River\", \"Riverbank\", \"Forestport\", \"Hightower\", \"Midland\", \"Pineville\", \"Hollow Ridge\", \"Ridgeway\", \"Sunset Valley\", \"Moonlight Bay\", \"Hilltown\", \"Blue Valley\", \"Snowhill\", \"Lakewood\", \"Eagle Ridge\", \"Bayfield\", \"Windmill\", \"Canyon Valley\", \"Cypress Grove\", \"Foxwood\", \"Pine Grove\", \"Evergreen Hill\", \"Green Hills\", \"Limestone\", \"Oceanview\", \"Sandalwood\", \"Whitestone\", \"Timberwood\", \"Winterhaven\", \"Desert Springs\", \"Pinewood\", \"Foxburg\", \"Haven Ridge\", \"Rocky River\", \"Shoreview\", \"Greystone\", \"Fernhill\", \"Stoneville\", \"Sandridge\", \"Highgate\", \"Redwater\", \"Elmwood Springs\", \"Silver Glen\", \"Woodside\", \"Forest Glen\", \"Clearbrook\", \"Lakeside\", \"Hawkstone\", \"Greenbriar\", \"Dalesville\", \"Brighton Point\", \"Highland Bay\", \"Brookstone\", \"Grand Terrace\", \"Ironwood\", \"Bluerock\", \"Glacier Ridge\", \"Wolf Creek\", \"Windy Ridge\", \"Maple Springs\", \"Shady Valley\", \"Crescent Ridge\", \"Wildwood\", \"Shadow Hills\", \"Riverstone\", \"Canyon Creek\", \"Woodland Springs\", \"Crystalfall\", \"Longstone\", \"Moonridge\", \"Maplepoint\", \"Sunset Hills\", \"Frostvalley\", \"Eaglewood\", \"Woodsford\", \"Brookfield\", \"Iron Ridge\", \"Fossil Ridge\", \"Spring Hill\", \"Oceancrest\", \"Firestone\", \"Evergreen Lake\", \"Frost Haven\", \"Stonecrest\", \"Willowstone\", \"Stonebridge\", \"Shady Hills\", \"Forest Edge\", \"Treetop Hill\", \"Fairbank Heights\", \"Hawk Valley\", \"Stonegate\", \"Timber Ridge\", \"Glacier Springs\", \"Windward\", \"Summit Edge\", \"Fox Ridge\", \"Elmwood Heights\", \"Whitewater Springs\", \"Cypress Bay\", \"Pine Valley\", \"Rivergate\", \"Eagleport\", \"Sandwood\", \"Birchfield\", \"Sunrise Grove\", \"Meadow Brook\", \"Bluffwood\", \"Green Lake\", \"Oceanstone\", \"Shady Brook\", \"Granite Ridge\", \"Rockstone\", \"Hollycrest\", \"Summit Ridge\", \"Edgewater Springs\", \"Eagle Peak\", \"Misty Hills\", \"River Valley\", \"Pineview\", \"Lakeview Ridge\", \"Stonewater\", \"Silver Ridge\", \"Greenstone Falls\", \"Seaside Valley\", \"Willowbend\", \"Baystone\", \"Sandbrook\", \"Cliffside\", \"Fernwood\", \"Crystal Ridge\", \"Oceancrest\", \"Foxbridge\", \"Seaview\", \"Meadowridge\", \"Canyon Hill\", \"Whitestone Ridge\", \"Lakeshore Hills\", \"Timberland\", \"Wolfstone\", \"Willowridge\", \"Granite Creek\", \"Shadowridge\", \"Ocean Bluff\", \"Bright Creek\", \"Evergreen Ridge\", \"Lakeshore Heights\", \"Fernhill Springs\", \"Sandhill Grove\", \"Glacier Hill\", \"Clearwater Ridge\", \"Stonewall Heights\", \"Pine Ridge\", \"Shady Grove\", \"Timber Cove\", \"Green Ridge\", \"Iron Ridge\", \"Hightower Point\", \"Windy Ridge\", \"Eagle Valley\", \"Sunset Crest\", \"Silver Heights\", \"Seaside Springs\", \"Misty Valley\", \"Woodland Grove\", \"Shadowbrook Grove\", \"Shady Brook\", \"Evergreen Crest\", \"Stonegate Valley\", \"Cypress Hills\", \"Moonlight Valley\", \"Cedar Valley\", \"Brookhaven Springs\", \"Riverbend Valley\", \"Seaside Grove\", \"Glacier Ridge\", \"Ironstone Point\", \"Foxwood Springs\", \"Oceanstone Valley\", \"Fernwood Cove\", \"Lakeside Grove\", \"Seabrook\", \"Misty Lake\", \"Greenfield Hill\", \"Oceanview Ridge\", \"Silver Creek\", \"Redwood Valley\", \"Riverstone Point\", \"Clearwater Springs\", \"Greenleaf Valley\", \"Shadowbrook Grove\", \"Sunset Hills\", \"Treetop Heights\", \"Windstone Hill\", \"Willowford\", \"Blueridge Grove\", \"Timber Ridge\", \"Misty River\", \"Redwood Springs\", \"Meadow Ridge\", \"Lakeside Valley\", \"Shady Cove\", \"Crystal Shore\", \"Granite Creek\", \"Ironstone Valley\", \"Foxwood Glen\", \"Seaview Ridge\", \"Treetop Hill\", \"Baystone Valley\", \"Blueridge Point\", \"Pinebrook Ridge\", \"Canyonbrook\", \"Granite Springs\", \"Riverstone Cove\", \"Clearwater Valley\", \"Silver Ridge\", \"Eagle Creek\", \"Willowbrook\", \"Shady Creek\", \"Timberstone Ridge\", \"Meadowbrook\", \"Bay Ridge\", \"Sandridge Point\", \"Eaglewood Heights\", \"Misty Grove\", \"Greenstone Point\", \"Clearview\", \"Silverstone Heights\", \"Oceancrest Ridge\", \"Granite Point\", \"Meadowdale\", \"Canyon Ridge\", \"Bluffridge\", \"Ironstone Ridge\", \"Foxbrook Heights\", \"Pine Ridge\", \"Shoreline Crest\", \"Timberland Ridge\", \"Meadowcrest\", \"Stonegate Grove\", \"Fernwood Springs\", \"Brookstone Valley\", \"Evergreen Hills\", \"Greenstone Ridge\", \"Oceanstone Point\", \"Brighton Crest\", \"Canyonbrook\", \"Wolfstone Ridge\", \"Ironstone Cove\", \"Fox Ridge\", \"Pinehill Grove\", \"Crystal River\", \"Clearview Point\", \"Seaside Valley\", \"Hollow Ridge\", \"Misty Creek\", \"Shady Valley\", \"Riverstone Heights\", \"Blueridge Cove\", \"Evergreen Grove\", \"Greenfield Ridge\", \"Timberstone Point\", \"Shady Brook\", \"Clearview Valley\", \"Silverstone Hill\", \"Oceanstone Springs\", \"Fernhill Ridge\", \"Fox Ridge\", \"Meadowridge Point\", \"Shady Crest\", \"Timber Ridge\", \"Evergreen Springs\", \"Foxwood Glen\", \"Seaview Heights\", \"Granite Ridge\", \"Ocean Ridge\", \"Rivergate Valley\", \"Seaside Grove\", \"Clearview Springs\", \"Silverstone Point\", \"Foxwood Ridge\", \"Timberstone Point\", \"Pinebrook Crest\", \"Riverstone Grove\", \"Granite Ridge\", \"Blueridge Valley\", \"Meadowbrook Point\", \"Ironstone Valley\", \"Cypress Springs\", \"Crystal Ridge\", \"Evergreen Springs\", \"Silver Creek\", \"Greenridge Valley\", \"Lakeside Ridge\", \"Shady Ridge\", \"Baystone Grove\", \"Crystal Grove\", \"Treetop Valley\", \"Seaside Crest\", \"Clearwater Ridge\", \"Oceanstone Ridge\", \"Bluffwood Grove\", \"Fernhill Point\", \"Silverstone Springs\", \"Clearwater Point\", \"Greenwood Valley\", \"Shadybrook Ridge\", \"Brightwood Ridge\", \"Willowbrook Grove\", \"Timberland Ridge\", \"Crystal Springs\", \"Granite Ridge\", \"Foxbrook Springs\", \"Lakeside Heights\", \"Shady Brook\", \"Greenstone Ridge\", \"Oceancrest Valley\", \"Blueridge Ridge\", \"Canyon Ridge\", \"Clearbrook Point\", \"Fernhill Ridge\", \"Pinecrest Heights\", \"Ironstone Grove\", \"Meadowstone Ridge\", \"Baystone Heights\", \"Crystal Valley\", \"Seaside Springs\", \"Silverton Springs\", \"Evergreen Point\", \"Granite Ridge\", \"Meadowbrook Ridge\", \"Lakeside Point\", \"Clearwater Springs\", \"Brightwood Point\", \"Silverstone Ridge\", \"Seaside Ridge\", \"Crystal Shores\", \"Evergreen Crest\", \"Granite Point\", \"Seaside Crest\", \"Clearwater Valley\", \"Fernhill Valley\", \"Baystone Ridge\", \"Riverstone Grove\", \"Shadybrook Ridge\", \"Foxbrook Point\", \"Timberstone Point\", \"Brightwood Ridge\", \"Evergreen Springs\", \"Seaside Ridge\", \"Granite Valley\", \"Crystal Ridge\", \"Shadybrook Springs\", \"Foxbrook Ridge\", \"Pinecrest Grove\", \"Willowbrook Valley\", \"Canyon Ridge\", \"Clearwater Ridge\", \"Oceancrest Point\", \"Seaside Heights\", \"Shadybrook Ridge\", \"Baystone Heights\", \"Pinebrook Ridge\", \"Foxbrook Valley\", \"Granite Ridge\", \"Shadybrook Valley\", \"Clearwater Grove\", \"Evergreen Ridge\", \"Willowbrook Ridge\", \"Granite Ridge\", \"Shadybrook Grove\", \"Willowbrook Grove\", \"Foxbrook Point\", \"Clearwater Ridge\", \"Silverstone Ridge\", \"Shadybrook Valley\", \"Clearwater Ridge\", \"Seaside Grove\", \"Willowbrook Valley\", \"Shadybrook Valley\", \"Seaside Ridge\", \"Willowbrook Ridge\"]}"
+          ],
+          "ground_truth_response (only the current turn)": [
+            "{\"zipcode\": \"94016\"}",
+            "{\"zipcode\": \"83214\"}",
+            "{\"distance\": 980.0, \"intermediaryCities\": [\"New Hamilton\", \"Jacksonville\", \"Fort Stoneport\", \"Lincolnville\", \"Madison\", \"Clayton Hillport\", \"Franklin Heights\", \"Old Jefferson\", \"Bentondale\", \"Sullivan Springs\", \"Red Monroe\", \"Newtonburg\", \"Green Clay\", \"East Kingston\", \"West Princeton\", \"Grand Georgetown\", \"Andersonfield\", \"Richmond\", \"Shelbyton\", \"Hamptonfield\", \"Fultondale\", \"Hudsonview\", \"Carsonville\", \"Lawrenceburg\", \"Masonport\", \"Bristol\", \"New Clayton\", \"Bensondale\", \"Clarkville\", \"Dawsonsprings\", \"Ellisport\", \"Floyd\", \"Graysonville\", \"Hayesburg\", \"Irvington\", \"Jasperburg\", \"Kentport\", \"Lamarburg\", \"Morganton\", \"Nortonville\", \"Owenport\", \"Perryville\", \"Quincyburg\", \"Russellton\", \"Shermanburg\", \"Taylor\", \"Uptonville\", \"Vernon\", \"Wilsonburg\", \"Youngtown\", \"Zionville\", \"Newfield\", \"Sanport\", \"Fortburg\", \"Mountview\", \"Lakeport\", \"Northfield\", \"Southport\", \"Eastwood\", \"Westdale\", \"Grandview\", \"Greenwood\", \"Redfield\", \"Oldtown\", \"Saintport\", \"Glenwood\", \"Springfield\", \"Riverdale\", \"Rockville\", \"Whitefield\", \"Blackport\", \"Blueburg\", \"Silverdale\", \"Goldton\", \"Crystal Springs\", \"Fairview\", \"Highfield\", \"Lowtown\", \"Brightwood\", \"Shadowbrook\", \"Sunridge\", \"Moonlake\", \"Starpoint\", \"Oakwood\", \"Pinecrest\", \"Mapleton\", \"Cedar Grove\", \"Ashland\", \"Willowbrook\", \"Elmdale\", \"Birchwood\", \"Greenfield\", \"Redwood\", \"Oldbridge\", \"Saintsville\", \"Glendale\", \"Springtown\", \"Riverport\", \"Rockford\", \"Whitehaven\", \"Blackburn\", \"Bluewater\", \"Silverton\", \"Goldfield\", \"Crystal Bay\", \"Fairhaven\", \"Highpoint\", \"Lowridge\", \"Brighton\", \"Shadow Valley\", \"Sun City\", \"Moontown\", \"Star Lake\", \"Oak Ridge\", \"Pine Hill\", \"Maple Grove\", \"Cedar Point\", \"Ashville\", \"Willow Creek\", \"Elmwood\", \"Birch Bay\", \"River Falls\", \"Rock Hill\", \"White Plains\", \"Black Lake\", \"Blue Ridge\", \"Silver Springs\", \"Golden Grove\", \"Crystal Cove\", \"Fair Oaks\", \"Highland\", \"Lowville\", \"Bright Meadows\", \"Shadow Creek\", \"Sunrise\", \"Moondale\", \"Star City\", \"Oakton\", \"Pine Valley\", \"Maple Ridge\", \"Cedar Falls\", \"Ashford\", \"Willow Springs\", \"Elmsford\", \"Birchwood\", \"River City\", \"Rockport\", \"Whitewater\", \"Blackstone\", \"Blue Hills\", \"Silver Lake\", \"Gold Beach\", \"Crystal River\", \"Fairfield\", \"Highview\", \"Low Point\", \"Brighton Beach\", \"Shadow Lake\", \"Sunset\", \"Moorestown\", \"Star City\", \"Oakland\", \"Pine City\", \"Mapleton\", \"Cedar Springs\", \"Ash Grove\", \"Willowdale\", \"Elm Creek\", \"Birch Grove\", \"River Ridge\", \"Rock Valley\", \"White Sands\", \"Black Rock\", \"Blue River\", \"Silver Creek\", \"Gold Hill\", \"Crystal Lake\", \"Fairview Heights\", \"High Springs\", \"Low Gap\", \"Bright City\", \"Shadow Mountain\", \"Sun Valley\", \"Moonlight\", \"Star Harbor\", \"Oak Hollow\", \"Pine Grove\", \"Maple Valley\", \"Cedar Ridge\", \"Ash Point\", \"Willow Glen\", \"Elm Springs\", \"Birch Creek\", \"Riverside\", \"Rockport\", \"White Rock\", \"Blackwood\", \"Blue Mountain\", \"Silver City\", \"Golden Valley\", \"Crystal Springs\", \"Fairhope\", \"Highland Park\", \"Lowtown\", \"Brighton Hills\", \"Shadow Creek\", \"Sunbrook\", \"Moon City\", \"Star View\", \"Oakdale\", \"Pinecrest\", \"Maple Hill\", \"Cedar City\", \"Ashwood\", \"Willow Valley\", \"Elmwood Park\", \"Birch Meadow\", \"Riverbend\", \"Rockland\", \"White Mountain\", \"Black Creek\", \"Blue Ridge\", \"Silverton\", \"Gold River\", \"Crystal Hill\", \"Fairmont\", \"Highland Springs\", \"Lowville\", \"Brightwood\", \"Shadow Valley\", \"Sunbrook\", \"Moonside\", \"Star City\", \"Oak Grove\", \"Pine Valley\", \"Maple Creek\", \"Cedar Lake\", \"Ash Hill\", \"Willow Creek\", \"Elmhurst\", \"Birchwood\", \"River City\", \"Rock Falls\", \"Whitehaven\", \"Black River\", \"Blue Mountain\", \"Silver Lake\", \"Gold Hill\", \"Crystal City\", \"Fairhaven\", \"High Point\", \"Low Gap\", \"Brighton\", \"Shadow Creek\", \"Sun Valley\", \"Moon Lake\", \"Star Hill\", \"Oakwood\", \"Pine Ridge\", \"Maple Valley\", \"Cedar Grove\", \"Ashland\", \"Willowbrook\", \"Elmwood\", \"Birch Grove\", \"Riverport\", \"Rock City\", \"White Plains\", \"Blackburn\", \"Blue Hills\", \"Silverton\", \"Golden Grove\", \"Crystal Cove\", \"Fairview\", \"Highland\", \"Lowtown\", \"Brighton\", \"Shadow Lake\", \"Sunrise\", \"Moontown\", \"Star Lake\", \"Oak Hill\", \"Pine Meadow\", \"Mapleton\", \"Cedar Bluff\", \"Ashford\", \"Willow Creek\", \"Elm Grove\", \"Birchwood\", \"Green Valley\", \"Redstone\", \"Old Mill\", \"Saintsville\", \"Glenview\", \"Springfield\", \"Riverdale\", \"Rockport\", \"Whitewater\", \"Blackwood\", \"Bluefield\", \"Silvertown\", \"Gold Creek\", \"Crystal Falls\", \"Fairbank\", \"Highfield\", \"Lowville\", \"Brighton\", \"Shadowbrook\", \"Sunridge\", \"Moonhaven\", \"Starpoint\", \"Oakton\", \"Pinecrest\", \"Maple Ridge\", \"Cedar Springs\", \"Ashland\", \"Willowbrook\", \"Elmdale\", \"Birchwood\", \"Greenfield\", \"Redwood\", \"Oldbridge\", \"Saintport\", \"Glenwood\", \"Springtown\", \"Riverport\", \"Rockford\", \"Whitehaven\", \"Blackburn\", \"Bluewater\", \"Silverton\", \"Goldfield\", \"Crystal Bay\", \"Fairhaven\", \"Highpoint\", \"Lowridge\", \"Brighton\", \"Shadow Valley\", \"Sun City\", \"Moontown\", \"Star Lake\", \"Oak Ridge\", \"Pine Hill\", \"Maple Grove\", \"Cedar Point\", \"Ashville\", \"Willow Creek\", \"Elmwood\", \"Birch Bay\", \"River Falls\", \"Rock Hill\", \"White Plains\", \"Black Lake\", \"Blue Ridge\", \"Silver Springs\", \"Golden Grove\", \"Crystal Cove\", \"Fair Oaks\", \"Highland\", \"Lowville\", \"Bright Meadows\", \"Shadow Creek\", \"Sunrise\", \"Moondale\", \"Star City\", \"Oakton\", \"Pine Valley\", \"Maple Ridge\", \"Cedar Falls\", \"Ashford\", \"Willow Springs\", \"Elmsford\", \"Birchwood\", \"River City\", \"Rockport\", \"Whitewater\", \"Blackstone\", \"Blue Hills\", \"Silver Lake\", \"Gold Beach\", \"Crystal River\", \"Fairfield\", \"Highview\", \"Low Point\", \"Brighton Beach\", \"Shadow Lake\", \"Sunset\", \"Moorestown\", \"Star City\", \"Oakland\", \"Pine City\", \"Mapleton\", \"Cedar Springs\", \"Ash Grove\", \"Willowdale\", \"Elm Creek\", \"Birch Grove\", \"River Ridge\", \"Rock Valley\", \"White Sands\", \"Black Rock\", \"Blue River\", \"Silver Creek\", \"Gold Hill\", \"Crystal Lake\", \"Fairview Heights\", \"High Springs\", \"Low Gap\", \"Bright City\", \"Shadow Mountain\", \"Sun Valley\", \"Moonlight\", \"Star Harbor\", \"Oak Hollow\", \"Pine Grove\", \"Maple Valley\", \"Cedar Ridge\", \"Ash Point\", \"Willow Glen\", \"Elm Springs\", \"Birch Creek\", \"Riverside\", \"Rockport\", \"White Rock\", \"Blackwood\", \"Blue Mountain\", \"Silver City\", \"Golden Valley\", \"Crystal Spring\", \"Greenstone\", \"Grandchester\", \"Hillbrook\", \"Redfield\", \"Bridgeton\", \"Forest Heights\", \"Mountainview\", \"Stone Harbor\", \"Seaford\", \"Crestwood\", \"Hillcrest\", \"Summitville\", \"Waterford\", \"Silverstone\", \"Lakeshore\", \"New River\", \"Riverbank\", \"Forestport\", \"Hightower\", \"Midland\", \"Pineville\", \"Hollow Ridge\", \"Ridgeway\", \"Sunset Valley\", \"Moonlight Bay\", \"Hilltown\", \"Blue Valley\", \"Snowhill\", \"Lakewood\", \"Eagle Ridge\", \"Bayfield\", \"Windmill\", \"Canyon Valley\", \"Cypress Grove\", \"Foxwood\", \"Pine Grove\", \"Evergreen Hill\", \"Green Hills\", \"Limestone\", \"Oceanview\", \"Sandalwood\", \"Whitestone\", \"Timberwood\", \"Winterhaven\", \"Desert Springs\", \"Pinewood\", \"Foxburg\", \"Haven Ridge\", \"Rocky River\", \"Shoreview\", \"Greystone\", \"Fernhill\", \"Stoneville\", \"Sandridge\", \"Highgate\", \"Redwater\", \"Elmwood Springs\", \"Silver Glen\", \"Woodside\", \"Forest Glen\", \"Clearbrook\", \"Lakeside\", \"Hawkstone\", \"Greenbriar\", \"Dalesville\", \"Brighton Point\", \"Highland Bay\", \"Brookstone\", \"Grand Terrace\", \"Ironwood\", \"Bluerock\", \"Glacier Ridge\", \"Wolf Creek\", \"Windy Ridge\", \"Maple Springs\", \"Shady Valley\", \"Crescent Ridge\", \"Wildwood\", \"Shadow Hills\", \"Riverstone\", \"Canyon Creek\", \"Woodland Springs\", \"Crystalfall\", \"Longstone\", \"Moonridge\", \"Maplepoint\", \"Sunset Hills\", \"Frostvalley\", \"Eaglewood\", \"Woodsford\", \"Brookfield\", \"Iron Ridge\", \"Fossil Ridge\", \"Spring Hill\", \"Oceancrest\", \"Firestone\", \"Evergreen Lake\", \"Frost Haven\", \"Stonecrest\", \"Willowstone\", \"Stonebridge\", \"Shady Hills\", \"Forest Edge\", \"Treetop Hill\", \"Fairbank Heights\", \"Hawk Valley\", \"Stonegate\", \"Timber Ridge\", \"Glacier Springs\", \"Windward\", \"Summit Edge\", \"Fox Ridge\", \"Elmwood Heights\", \"Whitewater Springs\", \"Cypress Bay\", \"Pine Valley\", \"Rivergate\", \"Eagleport\", \"Sandwood\", \"Birchfield\", \"Sunrise Grove\", \"Meadow Brook\", \"Bluffwood\", \"Green Lake\", \"Oceanstone\", \"Shady Brook\", \"Granite Ridge\", \"Rockstone\", \"Hollycrest\", \"Summit Ridge\", \"Edgewater Springs\", \"Eagle Peak\", \"Misty Hills\", \"River Valley\", \"Pineview\", \"Lakeview Ridge\", \"Stonewater\", \"Silver Ridge\", \"Greenstone Falls\", \"Seaside Valley\", \"Willowbend\", \"Baystone\", \"Sandbrook\", \"Cliffside\", \"Fernwood\", \"Crystal Ridge\", \"Oceancrest\", \"Foxbridge\", \"Seaview\", \"Meadowridge\", \"Canyon Hill\", \"Whitestone Ridge\", \"Lakeshore Hills\", \"Timberland\", \"Wolfstone\", \"Willowridge\", \"Granite Creek\", \"Shadowridge\", \"Ocean Bluff\", \"Bright Creek\", \"Evergreen Ridge\", \"Lakeshore Heights\", \"Fernhill Springs\", \"Sandhill Grove\", \"Glacier Hill\", \"Clearwater Ridge\", \"Stonewall Heights\", \"Pine Ridge\", \"Shady Grove\", \"Timber Cove\", \"Green Ridge\", \"Iron Ridge\", \"Hightower Point\", \"Windy Ridge\", \"Eagle Valley\", \"Sunset Crest\", \"Silver Heights\", \"Seaside Springs\", \"Misty Valley\", \"Woodland Grove\", \"Shadowbrook Grove\", \"Shady Brook\", \"Evergreen Crest\", \"Stonegate Valley\", \"Cypress Hills\", \"Moonlight Valley\", \"Cedar Valley\", \"Brookhaven Springs\", \"Riverbend Valley\", \"Seaside Grove\", \"Glacier Ridge\", \"Ironstone Point\", \"Foxwood Springs\", \"Oceanstone Valley\", \"Fernwood Cove\", \"Lakeside Grove\", \"Seabrook\", \"Misty Lake\", \"Greenfield Hill\", \"Oceanview Ridge\", \"Silver Creek\", \"Redwood Valley\", \"Riverstone Point\", \"Clearwater Springs\", \"Greenleaf Valley\", \"Shadowbrook Grove\", \"Sunset Hills\", \"Treetop Heights\", \"Windstone Hill\", \"Willowford\", \"Blueridge Grove\", \"Timber Ridge\", \"Misty River\", \"Redwood Springs\", \"Meadow Ridge\", \"Lakeside Valley\", \"Shady Cove\", \"Crystal Shore\", \"Granite Creek\", \"Ironstone Valley\", \"Foxwood Glen\", \"Seaview Ridge\", \"Treetop Hill\", \"Baystone Valley\", \"Blueridge Point\", \"Pinebrook Ridge\", \"Canyonbrook\", \"Granite Springs\", \"Riverstone Cove\", \"Clearwater Valley\", \"Silver Ridge\", \"Eagle Creek\", \"Willowbrook\", \"Shady Creek\", \"Timberstone Ridge\", \"Meadowbrook\", \"Bay Ridge\", \"Sandridge Point\", \"Eaglewood Heights\", \"Misty Grove\", \"Greenstone Point\", \"Clearview\", \"Silverstone Heights\", \"Oceancrest Ridge\", \"Granite Point\", \"Meadowdale\", \"Canyon Ridge\", \"Bluffridge\", \"Ironstone Ridge\", \"Foxbrook Heights\", \"Pine Ridge\", \"Shoreline Crest\", \"Timberland Ridge\", \"Meadowcrest\", \"Stonegate Grove\", \"Fernwood Springs\", \"Brookstone Valley\", \"Evergreen Hills\", \"Greenstone Ridge\", \"Oceanstone Point\", \"Brighton Crest\", \"Canyonbrook\", \"Wolfstone Ridge\", \"Ironstone Cove\", \"Fox Ridge\", \"Pinehill Grove\", \"Crystal River\", \"Clearview Point\", \"Seaside Valley\", \"Hollow Ridge\", \"Misty Creek\", \"Shady Valley\", \"Riverstone Heights\", \"Blueridge Cove\", \"Evergreen Grove\", \"Greenfield Ridge\", \"Timberstone Point\", \"Shady Brook\", \"Clearview Valley\", \"Silverstone Hill\", \"Oceanstone Springs\", \"Fernhill Ridge\", \"Fox Ridge\", \"Meadowridge Point\", \"Shady Crest\", \"Timber Ridge\", \"Evergreen Springs\", \"Foxwood Glen\", \"Seaview Heights\", \"Granite Ridge\", \"Ocean Ridge\", \"Rivergate Valley\", \"Seaside Grove\", \"Clearview Springs\", \"Silverstone Point\", \"Foxwood Ridge\", \"Timberstone Point\", \"Pinebrook Crest\", \"Riverstone Grove\", \"Granite Ridge\", \"Blueridge Valley\", \"Meadowbrook Point\", \"Ironstone Valley\", \"Cypress Springs\", \"Crystal Ridge\", \"Evergreen Springs\", \"Silver Creek\", \"Greenridge Valley\", \"Lakeside Ridge\", \"Shady Ridge\", \"Baystone Grove\", \"Crystal Grove\", \"Treetop Valley\", \"Seaside Crest\", \"Clearwater Ridge\", \"Oceanstone Ridge\", \"Bluffwood Grove\", \"Fernhill Point\", \"Silverstone Springs\", \"Clearwater Point\", \"Greenwood Valley\", \"Shadybrook Ridge\", \"Brightwood Ridge\", \"Willowbrook Grove\", \"Timberland Ridge\", \"Crystal Springs\", \"Granite Ridge\", \"Foxbrook Springs\", \"Lakeside Heights\", \"Shady Brook\", \"Greenstone Ridge\", \"Oceancrest Valley\", \"Blueridge Ridge\", \"Canyon Ridge\", \"Clearbrook Point\", \"Fernhill Ridge\", \"Pinecrest Heights\", \"Ironstone Grove\", \"Meadowstone Ridge\", \"Baystone Heights\", \"Crystal Valley\", \"Seaside Springs\", \"Silverton Springs\", \"Evergreen Point\", \"Granite Ridge\", \"Meadowbrook Ridge\", \"Lakeside Point\", \"Clearwater Springs\", \"Brightwood Point\", \"Silverstone Ridge\", \"Seaside Ridge\", \"Crystal Shores\", \"Evergreen Crest\", \"Granite Point\", \"Seaside Crest\", \"Clearwater Valley\", \"Fernhill Valley\", \"Baystone Ridge\", \"Riverstone Grove\", \"Shadybrook Ridge\", \"Foxbrook Point\", \"Timberstone Point\", \"Brightwood Ridge\", \"Evergreen Springs\", \"Seaside Ridge\", \"Granite Valley\", \"Crystal Ridge\", \"Shadybrook Springs\", \"Foxbrook Ridge\", \"Pinecrest Grove\", \"Willowbrook Valley\", \"Canyon Ridge\", \"Clearwater Ridge\", \"Oceancrest Point\", \"Seaside Heights\", \"Shadybrook Ridge\", \"Baystone Heights\", \"Pinebrook Ridge\", \"Foxbrook Valley\", \"Granite Ridge\", \"Shadybrook Valley\", \"Clearwater Grove\", \"Evergreen Ridge\", \"Willowbrook Ridge\", \"Granite Ridge\", \"Shadybrook Grove\", \"Willowbrook Grove\", \"Foxbrook Point\", \"Clearwater Ridge\", \"Silverstone Ridge\", \"Shadybrook Valley\", \"Clearwater Ridge\", \"Seaside Grove\", \"Willowbrook Valley\", \"Shadybrook Valley\", \"Seaside Ridge\", \"Willowbrook Ridge\"]}",
+            "{\"canDrive\": false}"
+          ]
+        }
+      }
+    },
+    {
+      "id": "multi_turn_long_context_107",
+      "error": {
+        "error_message": [
+          "Error during inference phase. Model did not output a list of model responses."
+        ],
+        "error_type": "multi_turn:inference_error"
+      }
+    },
+    {
+      "id": "multi_turn_long_context_107",
+      "error": {
+        "error_message": [
+          "Model was force-terminated during inference phase. The length of the model result turns (213) does not match the length of the ground truth turns (5)."
+        ],
+        "error_type": "multi_turn:force_terminated"
+      }
+    },
+    {
+      "id": "multi_turn_miss_func_48",
+      "error": {
+        "error_message": "Model response list is empty for turn 2",
+        "error_type": "multi_turn:empty_turn_model_response",
+        "details": {
+          "execution_result": [
+            {
+              "model": [
+                [
+                  "{\"current_directory_content\": [\"assignment.docx\", \"test\", \"submissions\", \"completed_tasks\"]}"
+                ],
+                [
+                  "{\"current_working_directory\": \"test\"}"
+                ]
+              ],
+              "ground_truth": [
+                "{\"current_directory_content\": [\"assignment.docx\", \"test\", \"submissions\", \"completed_tasks\"]}",
+                "{\"current_working_directory\": \"test\"}"
+              ]
+            },
+            {
+              "model": [
+                [
+                  "{\"current_directory_content\": [\"test_file1.txt\", \"test_file2.txt\"]}"
+                ],
+                [
+                  "{\"matches\": [\"./test_file1.txt\", \"./test_file2.txt\"]}"
+                ]
+              ],
+              "ground_truth": []
+            },
+            {
+              "model": [],
+              "ground_truth": [
+                "{\"count\": 20, \"type\": \"characters\"}",
+                "{\"count\": 18, \"type\": \"characters\"}"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "multi_turn_miss_func_59",
+      "error": {
+        "error_message": "Model response list is empty for turn 1",
+        "error_type": "multi_turn:empty_turn_model_response",
+        "details": {
+          "execution_result": [
+            {
+              "model": [
+                [
+                  "{\"zipcode\": \"94016\"}",
+                  "{\"zipcode\": \"83214\"}"
+                ],
+                [
+                  "{\"distance\": 980.0}"
+                ]
+              ],
+              "ground_truth": [
+                "{\"zipcode\": \"94016\"}",
+                "{\"zipcode\": \"83214\"}",
+                "{\"distance\": 980.0}"
+              ]
+            },
+            {
+              "model": [],
+              "ground_truth": [
+                "{\"fuelLevel\": 10.0}",
+                "{\"liter\": 37.8541}"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "multi_turn_miss_param_95",
+      "error": {
+        "error_message": "Model instance for VehicleControlAPI does not match the state with ground truth instance.",
+        "error_type": "multi_turn:instance_state_mismatch",
+        "details": {
+          "differences": {
+            "engine_state": {
+              "model": "stopped",
+              "ground_truth": "running"
+            }
+          },
+          "model_instance_state": {
+            "fuelLevel": 15.5,
+            "batteryVoltage": 12.8,
+            "engine_state": "stopped",
+            "remainingUnlockedDoors": 0,
+            "doorStatus": {
+              "driver": "locked",
+              "passenger": "locked",
+              "rear_left": "locked",
+              "rear_right": "locked"
+            },
+            "acTemperature": 22.0,
+            "fanSpeed": 60,
+            "acMode": "auto",
+            "humidityLevel": 45.0,
+            "headLightStatus": "off",
+            "parkingBrakeStatus": "engaged",
+            "brakePedalStatus": "pressed",
+            "distanceToNextVehicle": 100.0,
+            "cruiseStatus": "inactive",
+            "destination": "None",
+            "frontLeftTirePressure": 32.0,
+            "frontRightTirePressure": 32.0,
+            "rearLeftTirePressure": 30.0,
+            "rearRightTirePressure": 30.0,
+            "long_context": false
+          },
+          "ground_truth_instance_state": {
+            "fuelLevel": 15.5,
+            "batteryVoltage": 12.8,
+            "engine_state": "running",
+            "remainingUnlockedDoors": 0,
+            "doorStatus": {
+              "driver": "locked",
+              "passenger": "locked",
+              "rear_left": "locked",
+              "rear_right": "locked"
+            },
+            "acTemperature": 22.0,
+            "fanSpeed": 60,
+            "acMode": "auto",
+            "humidityLevel": 45.0,
+            "headLightStatus": "off",
+            "parkingBrakeStatus": "engaged",
+            "brakePedalStatus": "pressed",
+            "distanceToNextVehicle": 100.0,
+            "cruiseStatus": "inactive",
+            "destination": "None",
+            "frontLeftTirePressure": 32.0,
+            "frontRightTirePressure": 32.0,
+            "rearLeftTirePressure": 30.0,
+            "rearRightTirePressure": 30.0,
+            "long_context": false
+          }
+        },
+        "execution_result": [
+          {
+            "model": [
+              [
+                "{\"error\": \"Brake pedal needs to be pressed when starting the engine.\"}"
+              ],
+              [
+                "{\"brakePedalStatus\": \"pressed\", \"brakePedalForce\": 500.0}"
+              ]
+            ],
+            "ground_truth": [
+              "{\"brakePedalStatus\": \"pressed\", \"brakePedalForce\": 1000.0}",
+              "{\"engineState\": \"running\", \"fuelLevel\": 15.5, \"batteryVoltage\": 12.8}"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "raw_result_root": "/home/u2024311031/workspace/envfactory_repro_1p7b/repro_1p7b/evaluation/bfcl/artifacts/smoke/sft/result",
+  "raw_score_root": "/home/u2024311031/workspace/envfactory_repro_1p7b/repro_1p7b/evaluation/bfcl/artifacts/smoke/sft/score"
+}

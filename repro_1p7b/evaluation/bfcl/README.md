@@ -82,3 +82,8 @@ In v1.3, `--run-ids` is implemented for generation only. The stock evaluator rel
 ## Base smoke result
 
 Base completed all eight predeclared generations. Ordinary generation, official QwenFC tool-call parsing, and tool-result refill passed. Official partial scoring returned 0/2 in each category (0/8 overall smoke); there were no inference-error rows or top-level empty outputs. The failures are retained in the score JSON and include state/execution mismatches and empty per-turn call lists. This tiny subset is a pipeline check only, not a quality estimate.
+## SFT smoke result
+
+SFT completed all eight predeclared result rows with the same handler, IDs, backend, and decoding as Base. Official partial scores were 0/2 for base, 0/2 for long-context, 0/2 for missing-function, and 1/2 for missing-parameter, or 1/8 (0.125) overall. Tool-call parse/decode and multi-turn tool-response refill passed.
+
+One SFT case, multi_turn_long_context_107, accumulated 67,198 input tokens after repeated model calls and exceeded both checkpoints native 40,960-token limit. BFCL recorded it as an inference failure and continued. The service was aligned to 40,960 after an initial 32,768 launcher mismatch; no unsupported RoPE extension, truncation, evaluator change, or replacement case was used. This is retained as model behavior, not hidden as an infrastructure pass.

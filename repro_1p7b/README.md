@@ -25,7 +25,7 @@ Establish a clean, reproducible EnvFactory-1.7B baseline before changing any tra
 - 16K accumulation-32 pilot: FAILED after step 1 with CUDA OOM
 - 8K accumulation-32 two-step steady-state gate: PASS
 - Formal resource-adapted 8K SFT: PASS (414/414, one epoch, train loss 1.013704)
-- BFCL V3 evaluation: Base smoke PASS for pipeline; formal SFT smoke pending
+- BFCL V3 evaluation: Base/SFT smoke pipelines complete; SFT recorded one native-context model inference failure
 
 ## Official versus ours
 
@@ -70,4 +70,4 @@ official-recipe audits.
 
 ## BFCL V3 evaluation
 
-The official BFCL v1.3 evaluation pipeline is prepared under `repro_1p7b/evaluation/bfcl/`. It uses the clean fixed commit `ea13468e4423454d0c213704fb87cf7cb3990433`, the official Qwen3-1.7B-FC handler, SGLang 0.5.9, and a predeclared eight-case multi-turn smoke subset. Full benchmark scripts are prepared but must not be started until Base and formal SFT smoke both pass; Codex will not launch full BFCL.
+The official BFCL v1.3 evaluation pipeline is ready under repro_1p7b/evaluation/bfcl/. It uses fixed commit ea13468e4423454d0c213704fb87cf7cb3990433, the official Qwen3-1.7B-FC handler, SGLang 0.5.9, and the same predeclared eight-case multi-turn subset for Base and SFT. Both smoke pipelines completed; the SFT model scored 1/8 and one long-context case produced a recorded model-level context overflow. Full scripts are validated but Codex will not launch them.

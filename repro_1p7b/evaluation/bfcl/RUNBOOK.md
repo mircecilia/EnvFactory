@@ -41,3 +41,8 @@ BFCL v1.3's built-in SGLang launcher passes the historical `--tp` flag, while th
 ## 2026-09-13 - Formal SFT completion and Base smoke
 
 Formal SFT completed with exit code 0. The verified final root checkpoint is `repro_1p7b/checkpoints/baseline_sft_8k_1p7b`. Base produced 8/8 results and official partial score JSON files; category scores were 0/2 each. No inference-error row or top-level empty output was found.
+## 2026-09-13 - SFT smoke
+
+The first SFT attempt exposed a launcher mismatch: a 35,522-token prompt exceeded the wrapper 32,768 context limit. Both Base and SFT configs declare 40,960 with no RoPE scaling, so the wrapper was corrected to 40,960 and the full fixed eight-ID smoke was rerun.
+
+The recorded run produced 8/8 result rows and four official partial score files. Accuracy was 1/8 overall: base 0/2, long-context 0/2, missing-function 0/2, missing-parameter 1/2. Tool-call parse/decode and tool-response refill passed. multi_turn_long_context_107 accumulated 67,198 tokens from repeated model calls, exceeded the native 40,960 limit, and was retained as an official inference failure; BFCL continued and completed the run.
