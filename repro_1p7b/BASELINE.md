@@ -81,3 +81,6 @@ CUDA_VISIBLE_DEVICES=0,1 FORCE_TORCHRUN=1 NNODES=1 NODE_RANK=0 \
   written, and the final checkpoint loads without error.
 
 After it finishes, report the shell exit status and the last 100 log lines so
+the checkpoint and metrics can be audited.
+
+For the shorter capacity/stability run, use `PILOT.md`.
