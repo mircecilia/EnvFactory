@@ -1,0 +1,22 @@
+{
+  "status": "FAIL_CUDA_OOM",
+  "date": "2026-09-12",
+  "run_id": "baseline_sft_pilot_16k_acc32",
+  "config_commit": "40dc336182af976771cfb87fac050668907c9727",
+  "cutoff_len": 16384,
+  "gradient_accumulation_steps": 32,
+  "effective_batch_size": 64,
+  "planned_optimizer_steps": 32,
+  "completed_optimizer_steps": 1,
+  "step_1_loss": 1.9161,
+  "step_1_seconds": 115.4,
+  "failed_rank": 1,
+  "gpu_memory_used_at_failure_gib": 34.54,
+  "gpu_memory_free_at_failure_gib": 5.13,
+  "allocation_request_gib": 8.23,
+  "reserved_unallocated_mib": 134.45,
+  "exit_code": 1,
+  "gpu_released_after_failure": true,
+  "root_cause": "steady-state GPU memory is insufficient for the 16K accumulation-32 workload",
+  "log_path": "repro_1p7b/logs/baseline_sft_pilot_1p7b.log"
+}

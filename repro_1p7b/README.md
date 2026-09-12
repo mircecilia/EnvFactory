@@ -22,6 +22,9 @@ Establish a clean, reproducible EnvFactory-1.7B baseline before changing any tra
 - One-step 1.7B full-SFT smoke: PASS
 - Official FILTERED dataset audit: PASS (26,463 records at a fixed Hub revision)
 - Two-GPU full-SFT/ZeRO-3/16K one-step gate: PASS
+- 16K accumulation-32 pilot: FAILED after step 1 with CUDA OOM
+- 8K accumulation-32 two-step steady-state gate: PASS
+- 8K 32-step resource-adapted pilot: READY, NOT STARTED
 - Formal training/evaluation: NOT STARTED
 
 ## Official versus ours

@@ -139,3 +139,25 @@ Result: PASS for one-step feasibility only
 The SGLang server and trainer processes were stopped/exited, port 30000 is closed, and no task-owned GPU process remains.
 
 The formal FILTERED-dataset audit and two-GPU ZeRO-3 gate are recorded in `BASELINE.md` and `results/baseline/`.
+
+
+## 2026-09-12 - 16K OOM and 8K steady-state recovery
+
+The 16K accumulation-32 pilot completed optimizer step 1 with loss 1.9161 in
+115.40 seconds, then rank 1 failed during the next backward pass. GPU 1 had
+34.54 GiB in use and 5.13 GiB free when an additional 8.23 GiB allocation was
+requested. Only 134.45 MiB was reserved but unallocated, so allocator
+fragmentation was not the primary cause. Exit code was 1; both GPUs returned
+to 0 MiB afterward.
+
+The fixed-revision tokenized dataset has mean length 8,601.59, median 8,163,
+P90 15,055.8, and 1,633 records at the 16,384 cutoff. The earlier one-step,
+accumulation-1 gate did not cover post-update steady-state memory.
+
+A separate resource-adapted 8K config was created. Its two-step gate retained
+full SFT, BF16, ZeRO-3, accumulation 32, effective batch 64, and seeds 42. It
+completed both optimizer steps in 96.8905 seconds with final loss
+1.9541229009628296 and observed 34,633 MiB maximum on each GPU. The checkpoint
+saved successfully, exit code was 0, and both GPUs returned to 0 MiB.
+
+Result: 16K FAIL (OOM); resource-adapted 8K steady-state gate PASS

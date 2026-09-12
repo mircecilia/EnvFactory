@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "date": "2026-09-12",
+  "run_id": "baseline_sft_gate_8k_acc32_2step",
+  "cutoff_len": 8192,
+  "finetuning_type": "full",
+  "bf16": true,
+  "deepspeed_zero_stage": 3,
+  "gradient_accumulation_steps": 32,
+  "effective_batch_size": 64,
+  "optimizer_steps": 2,
+  "sample_presentations": 128,
+  "train_loss": 1.9541229009628296,
+  "train_runtime_seconds": 96.8905,
+  "train_samples_per_second": 1.321,
+  "train_steps_per_second": 0.021,
+  "total_flos": 623494823936.0,
+  "observed_gpu_memory_mib": {
+    "gpu_0": 34633,
+    "gpu_1": 34633
+  },
+  "preprocessing_seconds_approx": 689,
+  "checkpoint_path": "repro_1p7b/checkpoints/baseline_sft_gate_8k_2step_1p7b",
+  "exit_code": 0,
+  "gpu_released_after_completion": true,
+  "pilot_config": "repro_1p7b/configs/llamafactory_sft_pilot_8k_1p7b.yaml",
+  "pilot_optimizer_steps": 32,
+  "pilot_sample_presentations": 2048,
+  "estimated_pilot_training_minutes": 25.8,
+  "operational_budget_minutes": 60,
+  "formal_baseline_equivalent": false,
+  "deviation": "cutoff_len reduced from 16384 to 8192"
+}
