@@ -1,0 +1,13 @@
+{
+  "epoch": 0.5,
+  "total_flos": 676516823040,
+  "train_loss": 5.125259876251221,
+  "train_runtime": 6.7239,
+  "train_samples_per_second": 0.149,
+  "train_steps_per_second": 0.149,
+  "smoke_scope": "one optimizer step; not formal training",
+  "model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+  "trainable_parameters": 1720574976,
+  "observed_gpu_memory_mib": 27238,
+  "config": "repro_1p7b/configs/llamafactory_sft_smoke.yaml"
+}

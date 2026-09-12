@@ -1,0 +1,18 @@
+# Verified 2026-09-12 with Python 3.12.14 and pip check.
+# SGLang's OpenAI pin conflicts with the core Agent/LiteLLM role, so keep this
+# environment separate at /home/u2024311031/.conda/envs/envfactory_sglang_1p7b.
+sglang==0.5.9
+torch==2.9.1+cu128
+transformers==4.57.1
+openai==2.6.1
+datasets==4.0.0
+accelerate==1.11.0
+peft==0.18.1
+trl==0.24.0
+
+# Editable checkout, not a PyPI wheel:
+# LlamaFactory 0.9.6.dev0
+# /home/u2024311031/workspace/LLaMA-Factory_envfactory_1p7b
+# commit 100e9a42c6c09f8f7849b70d60f3da445fb2024b
+#
+# Conda-only toolchain: cuda-nvcc 12.8.61 from NVIDIA's cuda-12.8.0 label.

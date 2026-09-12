@@ -1,0 +1,9 @@
+{
+  "status": "BLOCKED",
+  "infrastructure_path_reached": true,
+  "scenario_generated": true,
+  "query": null,
+  "steps": 0,
+  "retries": 3,
+  "reason": "SchemaGenerator emitted JSON-like statusTextMap with unquoted numeric keys; parse_structured_output retained schema as string and Pydantic rejected it."
+}

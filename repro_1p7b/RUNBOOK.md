@@ -68,3 +68,72 @@ No training, evaluation, large generation, model download, or dataset download w
 The first direct invocation of each smoke script failed before executing project logic because Python placed only `repro_1p7b/scripts` on `sys.path`. Each script now derives the checkout root from `__file__` and prepends it to `sys.path`. `py_compile` and all three direct invocations then passed.
 
 Result: PASS after narrow runner fix
+
+## 2026-09-12 - Local model, serving, QueryGen, and SFT smoke
+
+### Split core/GPU environments
+
+Installing official `sglang==0.5.9` exposed a hard `openai==2.6.1` pin, incompatible with the core `litellm==1.100.1` / `openai-agents==0.20.0` stack that needs newer OpenAI 2.x. The core environment was restored to OpenAI 2.54.0 and passes `pip check`. SGLang and LlamaFactory run in `envfactory_sglang_1p7b`, which also passes `pip check`.
+
+Importing `src.gen.query_gen` additionally exposed undeclared runtime dependency `ddgs`; `ddgs==9.16.0` and `primp==2.0.0` were installed only in the core environment. Canonical source was not patched.
+
+Result: PASS with role-isolated environments
+
+### Fixed base model and direct GPU smoke
+
+`Qwen/Qwen3-1.7B` was downloaded through `hf-mirror.com` at revision `70d244cc86ccca08cf5af4e1e306ecf908b1ad5e`. Twelve files occupy 4,079,450,110 bytes. The first high-parallel Xet transfer failed after about 524 MB; single-worker standard HTTP with Xet disabled completed.
+
+`model_smoke.py` loaded 1,720,574,976 BF16 parameters on one A100, consumed 22 prompt tokens, generated seven tokens with exact text `EnvFactory model smoke passed.`, and observed 3.785 GiB peak CUDA memory. The confirmation run took 5.242 seconds after model load.
+
+Result: PASS
+
+### SGLang serving and project LLM client
+
+Three constrained start attempts identified the missing compiler boundary:
+
+1. default CUDA graph capture required CUDA/nvcc;
+2. disabling CUDA graphs still triggered FlashInfer JIT;
+3. Triton attention plus PyTorch sampling reached first request, where SGLang rope JIT still required `CUDA_HOME`.
+
+An environment-only CUDA 12.8.61 nvcc/GCC toolchain (218.9 MB download) was then installed. With `CUDA_HOME=$CONDA_PREFIX`, Triton attention, PyTorch sampling, CUDA graphs disabled, 8192 total KV tokens, 4096 context, and 0.2 static memory fraction, SGLang loaded the model in 3.28 GB and allocated 0.88 GB KV cache. The server became ready on `127.0.0.1:30000`.
+
+The repository's unchanged `src.manager.llm_client_manager.LLMClient.inference()` called the OpenAI-compatible endpoint. With Qwen thinking explicitly disabled, the exact response was `EnvFactory SGLang API passed.`.
+
+Result: PASS
+
+### Minimal real QueryGen attempt
+
+A seed-42 two-tool chain (`CampusCard-query_balance -> CampusCard-recharge`) was passed through the real `QueryGenNonConv` Agent/LiteLLM/SGLang path with `pass_k=1`. The first import found the undeclared `ddgs` dependency described above. After installation, ScenarioPlanner succeeded and SchemaGenerator ran.
+
+SchemaGenerator deterministically emitted a JSON-like `statusTextMap` with unquoted numeric keys. `parse_structured_output()` therefore retained `schema` as a string, and the official CampusCard `load_scenario` Pydantic boundary rejected it as not a dictionary. Three built-in retries produced the same invalid schema. No trajectory decision, query, or tool execution was fabricated. Raw generations and the terminated chains are retained under `logs/querygen/` and `results/querygen/`.
+
+Result: BLOCKED by 1.7B structured-output quality/normalization contract; infrastructure and LLM call path reached
+
+### DataProcessing confirmation
+
+After the environment changes, Environment/Tool, ToolGraph/TopologySampler, and DataProcessing scripts were rerun. All passed, and the same one valid four-step trajectory produced two SFT samples with history lengths 0 and 1.
+
+Result: PASS
+
+### One-step full-SFT smoke
+
+LlamaFactory commit `100e9a42c6c09f8f7849b70d60f3da445fb2024b` loaded the fixed Qwen3-1.7B base and the two generated SFT samples. The smoke configuration uses full fine-tuning, BF16, Qwen3 template, cutoff 1024, batch 1, accumulation 1, learning rate 1e-6, cosine schedule, and exactly one optimizer step on GPU 0. It intentionally omits DeepSpeed for this single-process feasibility check.
+
+Observed metrics:
+
+- trainable/all parameters: 1,720,574,976 / 1,720,574,976 (100%)
+- train loss: 5.125259876251221
+- gradient norm: 222.51739501953125
+- train runtime: 6.7239 seconds
+- throughput: 0.149 samples/s and 0.149 steps/s
+- total FLOPs: 676,516,823,040
+- observed process GPU memory: 27,238 MiB
+- final checkpoint: 6.5 GiB, ignored by Git
+
+The host kernel is 4.18.0; Accelerate warns that kernels below 5.5 may hang. This one-step run completed, but formal long training needs monitoring and must not treat this smoke as proof of long-run stability.
+
+Result: PASS for one-step feasibility only
+
+### Cleanup
+
+The SGLang server and trainer processes were stopped/exited, port 30000 is closed, and no task-owned GPU process remains.

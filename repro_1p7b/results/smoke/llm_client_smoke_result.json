@@ -1,0 +1,7 @@
+{
+  "response": "EnvFactory SGLang API passed.",
+  "exact_match": true,
+  "client": "src.manager.llm_client_manager.LLMClient",
+  "backend": "sglang 0.5.9",
+  "model": "Qwen3-1.7B"
+}

@@ -1,0 +1,21 @@
+{
+  "nodes": [
+    {
+      "raw_tool_call": [],
+      "initial_scenario": null,
+      "steps": [],
+      "query": null,
+      "final_scenario": null,
+      "decision": null,
+      "accuracy": null,
+      "pass_k_trace": {},
+      "pass_k_scenario": {},
+      "pass_k_decision": {},
+      "mcp_servers": null
+    }
+  ],
+  "seed": 42,
+  "scenario": "\nLena, a 22-year-old student at a university in Beijing, is trying to manage her campus card balance. She recently noticed her balance is low and wants to recharge it. She uses the CampusCard-query_balance tool to check her account. After confirming her balance, she decides to recharge her card with 50 yuan using her bank card. She then uses the CampusCard-recharge tool to complete the transaction. The next step would be for her to check her new balance to ensure the recharge was successful.\n",
+  "user_tools": null,
+  "user_profile": null
+}

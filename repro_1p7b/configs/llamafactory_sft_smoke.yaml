@@ -1,0 +1,45 @@
+### model
+model_name_or_path: /home/u2024311031/workspace/envfactory_repro_1p7b/repro_1p7b/models/Qwen3-1.7B
+trust_remote_code: true
+
+### method
+stage: sft
+do_train: true
+finetuning_type: full
+
+### dataset
+dataset: envfactory_smoke
+dataset_dir: repro_1p7b/data/llamafactory
+template: qwen3
+cutoff_len: 1024
+max_samples: 2
+preprocessing_num_workers: 1
+dataloader_num_workers: 0
+
+### output
+output_dir: repro_1p7b/checkpoints/sft_smoke
+logging_steps: 1
+save_strategy: 'no'
+plot_loss: false
+overwrite_output_dir: true
+save_only_model: false
+report_to: none  # choices: [none, wandb, tensorboard, swanlab, mlflow]
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 1
+learning_rate: 1.0e-6
+num_train_epochs: 1.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.0
+bf16: true
+ddp_timeout: 180000000
+max_steps: 1
+resume_from_checkpoint: null
+
+### eval
+# eval_dataset: alpaca_en_demo
+# val_size: 0.1
+# per_device_eval_batch_size: 1
+# eval_strategy: steps
+# eval_steps: 500

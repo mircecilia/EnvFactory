@@ -4,3 +4,5 @@ fastmcp==3.1.0
 openai-agents==0.20.0
 litellm==1.100.1
 openai==2.54.0
+ddgs==9.16.0
+primp==2.0.0

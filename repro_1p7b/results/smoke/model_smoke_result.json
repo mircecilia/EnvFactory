@@ -1,0 +1,30 @@
+{
+  "model_dir": "/home/u2024311031/workspace/envfactory_repro_1p7b/repro_1p7b/models/Qwen3-1.7B",
+  "model_type": "qwen3",
+  "parameter_count": 1720574976,
+  "dtype": "torch.bfloat16",
+  "input_token_count": 22,
+  "input_token_ids_prefix": [
+    151644,
+    872,
+    198,
+    20841,
+    448,
+    6896,
+    25,
+    37039,
+    4153,
+    1614,
+    16205,
+    5823,
+    13,
+    151645,
+    198,
+    151644
+  ],
+  "generated_token_count": 7,
+  "generated_text": "EnvFactory model smoke passed.",
+  "gpu": "NVIDIA A100-PCIE-40GB",
+  "peak_memory_gib": 3.785,
+  "elapsed_seconds": 4.193
+}
