@@ -38,7 +38,7 @@ SERVER_CMD=(
   --model-path "$MODEL_PATH"
   --port "$BFCL_PORT"
   --dtype bfloat16
-  --tp 1
+  --tp-size 1
   --mem-fraction-static "$BFCL_GPU_MEMORY_UTILIZATION"
   --trust-remote-code
   --disable-cuda-graph

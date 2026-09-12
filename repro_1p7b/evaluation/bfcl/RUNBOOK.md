@@ -25,3 +25,7 @@ For each model, retain:
 6. explicit scan for error, empty, timeout, truncation, and parse failures.
 
 Do not launch the full `multi_turn` category from Codex.
+
+## SGLang launch compatibility
+
+BFCL v1.3's built-in SGLang launcher passes the historical `--tp` flag, while the pinned SGLang 0.5.9 CLI exposes `--tp-size`. The repository wrapper therefore starts SGLang itself with the verified current flag and invokes official BFCL generation with `--skip-server-setup`. Model prompting, handler decoding, case execution, and scoring remain official and unmodified.

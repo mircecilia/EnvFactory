@@ -2,9 +2,12 @@
 import argparse
 import csv
 import json
+import subprocess
+from datetime import date
 from pathlib import Path
 
 EVAL_DIR = Path(__file__).resolve().parents[1]
+REPRO_ROOT = EVAL_DIR.parents[2]
 EXPECTED_COMMIT = "ea13468e4423454d0c213704fb87cf7cb3990433"
 MODEL_ID = "Qwen/Qwen3-1.7B-FC"
 CATEGORIES = [
@@ -138,6 +141,34 @@ def main():
         writer = csv.DictWriter(handle, fieldnames=rows[0].keys())
         writer.writeheader()
         writer.writerows(rows)
+
+    ledger = REPRO_ROOT / "repro_1p7b" / "results" / "experiments.csv"
+    ledger_rows = list(csv.DictReader(ledger.open(encoding="utf-8", newline="")))
+    ledger_rows = [row for row in ledger_rows if row["run_id"] != run_id]
+    ledger_rows.append({
+        "run_id": run_id,
+        "date": date.today().isoformat(),
+        "git_commit": subprocess.check_output(["git", "-C", str(REPRO_ROOT), "rev-parse", "HEAD"], text=True).strip(),
+        "model": MODEL_ID,
+        "dataset": "BFCL V3 multi_turn",
+        "dataset_size": "8",
+        "seed": "20260913",
+        "training_method": "evaluation_only",
+        "epochs": "",
+        "effective_batch_size": "",
+        "learning_rate": "",
+        "max_length": "official_dynamic_up_to_4096_output",
+        "gpu_count": "1",
+        "checkpoint": args.model_path,
+        "metric": f"smoke_unweighted_multi_turn_accuracy={mean_accuracy}",
+        "result_path": str(run_root / "result"),
+        "log_path": str(EVAL_DIR / "logs" / "smoke"),
+        "notes": "official BFCL v1.3 partial evaluation; pipeline smoke only",
+    })
+    with ledger.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=ledger_rows[0].keys())
+        writer.writeheader()
+        writer.writerows(ledger_rows)
     print(json.dumps(summary, indent=2, ensure_ascii=False))
 
 if __name__ == "__main__":
