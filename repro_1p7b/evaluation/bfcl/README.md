@@ -27,7 +27,7 @@ Backend is SGLang 0.5.9 on one A100. This matches the paper backend, the officia
 - Base: `/home/u2024311031/workspace/envfactory_repro_1p7b/repro_1p7b/models/Qwen3-1.7B`
 - Our SFT: `/home/u2024311031/workspace/envfactory_repro_1p7b/repro_1p7b/checkpoints/baseline_sft_8k_1p7b`
 
-The SFT path is valid only after formal training exits successfully and final weights/tokenizer/config files pass integrity checks. Smoke/gate/intermediate checkpoints are not substitutes.
+The formal SFT run completed with exit code 0. Its final root checkpoint passed config/tokenizer/chat-template/weight/trainer-state checks; smoke, gate, intermediate, and nested step checkpoints are not substitutes.
 
 ## Paper reference values
 
@@ -74,3 +74,11 @@ Raw result, score, input log, state trace, and server logs are under ignored `ar
 ## Verified environment
 
 The isolated environment passed imports, `pip check`, official category listing, Qwen3-FC registry lookup, and CUDA compiler checks. Key versions are recorded in `configs/environment-lock.txt`. The official `bfcl version` subcommand is not used because the v1.3 source queries distribution metadata named `bfcl` while its built distribution is `bfcl_eval`; this display-only upstream issue does not affect generate/evaluate.
+
+## Partial evaluation compatibility
+
+In v1.3, `--run-ids` is implemented for generation only. The stock evaluator reloads all 200 prompt/answer rows per category and asserts their lengths equal the partial result, so directly evaluating a two-row result fails before scoring. `scripts/evaluate_partial.py` loads the generated IDs, selects those exact rows from the unmodified official prompt and possible-answer files in memory, and calls the official `multi_turn_runner`. It does not alter cases, ground truth, handler decoding, execution, or score calculation. Full runs use the stock `bfcl evaluate` command.
+
+## Base smoke result
+
+Base completed all eight predeclared generations. Ordinary generation, official QwenFC tool-call parsing, and tool-result refill passed. Official partial scoring returned 0/2 in each category (0/8 overall smoke); there were no inference-error rows or top-level empty outputs. The failures are retained in the score JSON and include state/execution mismatches and empty per-turn call lists. This tiny subset is a pipeline check only, not a quality estimate.

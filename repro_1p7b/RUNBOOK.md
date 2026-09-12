@@ -165,3 +165,9 @@ Result: 16K FAIL (OOM); resource-adapted 8K steady-state gate PASS
 ## 2026-09-13 - BFCL V3 evaluation bootstrap
 
 Created an independent Python 3.10 BFCL environment at `/home/u2024311031/.conda/envs/envfactory_bfcl_v1p3` through the Tsinghua mirrors. Installed the official Gorilla v1.3 source package plus SGLang 0.5.9 and an environment-local CUDA 12.8.61 nvcc/GCC toolchain. `pip check`, imports, official category enumeration, Qwen3-1.7B-FC registration, fixed commit, and clean checkout checks passed. The display-only `bfcl version` command has an upstream distribution-name mismatch in this non-editable install, so the check reads `bfcl_eval` metadata and the Git commit instead. Smoke is deferred until the formal SFT run releases the GPUs.
+
+## 2026-09-13 - Formal SFT completion and Base BFCL smoke
+
+Formal resource-adapted 8K SFT completed 414/414 steps with exit code 0, epoch 1.0, train loss 1.0137040206199683, and runtime 21463.8971 seconds. The final root checkpoint contains config, generation config, tokenizer files, chat template, trainer state/results, and a 3,441,185,608-byte `model.safetensors`; both GPUs returned to 0 MiB.
+
+Base BFCL generation completed all eight predeclared IDs. The server, ordinary generation, official QwenFC tool-call parser, and `<tool_response>` refill checks passed. Stock v1.3 evaluate rejected the partial result due its 200-row length assertion; the documented in-memory adapter then invoked official `multi_turn_runner` and produced four real score JSON files. Accuracy was 0/2 in every category (0/8 smoke), with no inference errors or top-level empty outputs. This is not a model-quality conclusion.

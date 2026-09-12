@@ -35,3 +35,9 @@ BFCL v1.3's built-in SGLang launcher passes the historical `--tp` flag, while th
 - The next Base server attempt loaded the model and exposed `/v1/models`, then the first completion caused SGLang QK-Norm/RoPE JIT to fail with `fatal error: concepts: No such file or directory`. This was not OOM and no BFCL case ran. The new environment already contained GCC/G++ 13.4 and the C++20 header; the JIT had selected the system host compiler. `CC`, `CXX`, `GCC`, and `GXX` are now pinned to the BFCL environment compilers.
 
 - Exporting `CC/CXX` alone did not alter direct nvcc invocations. A minimal `/tmp` compile including `<concepts>` passed only after `NVCC_PREPEND_FLAGS=-ccbin=$CXX`; the wrapper now exports that NVIDIA-supported flag. No GPU inference was attempted until this compiler gate passed.
+
+- Base generation produced all eight predeclared result rows, but stock `bfcl evaluate` failed before scoring because v1.3 reloads 200 prompt/answer rows and has no evaluation-side run-ID filter. A narrow repository-owned adapter now selects exact generated IDs from official data in memory and calls official `multi_turn_runner`; official files and scoring remain unchanged.
+
+## 2026-09-13 - Formal SFT completion and Base smoke
+
+Formal SFT completed with exit code 0. The verified final root checkpoint is `repro_1p7b/checkpoints/baseline_sft_8k_1p7b`. Base produced 8/8 results and official partial score JSON files; category scores were 0/2 each. No inference-error row or top-level empty output was found.

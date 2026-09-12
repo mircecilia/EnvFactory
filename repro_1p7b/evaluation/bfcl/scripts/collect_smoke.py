@@ -138,7 +138,7 @@ def main():
         "status": "pipeline_smoke_pass",
     })
     with experiments.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=rows[0].keys())
+        writer = csv.DictWriter(handle, fieldnames=rows[0].keys(), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -166,7 +166,7 @@ def main():
         "notes": "official BFCL v1.3 partial evaluation; pipeline smoke only",
     })
     with ledger.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=ledger_rows[0].keys())
+        writer = csv.DictWriter(handle, fieldnames=ledger_rows[0].keys(), lineterminator="\n")
         writer.writeheader()
         writer.writerows(ledger_rows)
     print(json.dumps(summary, indent=2, ensure_ascii=False))

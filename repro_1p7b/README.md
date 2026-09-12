@@ -24,8 +24,8 @@ Establish a clean, reproducible EnvFactory-1.7B baseline before changing any tra
 - Two-GPU full-SFT/ZeRO-3/16K one-step gate: PASS
 - 16K accumulation-32 pilot: FAILED after step 1 with CUDA OOM
 - 8K accumulation-32 two-step steady-state gate: PASS
-- 8K 32-step resource-adapted pilot: READY, NOT STARTED
-- Formal training/evaluation: NOT STARTED
+- Formal resource-adapted 8K SFT: PASS (414/414, one epoch, train loss 1.013704)
+- BFCL V3 evaluation: Base smoke PASS for pipeline; formal SFT smoke pending
 
 ## Official versus ours
 
