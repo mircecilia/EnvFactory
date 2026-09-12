@@ -1,5 +1,4 @@
 import json
-import os
 import time
 from pathlib import Path
 
@@ -8,7 +7,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-MODEL_DIR=Path(os.environ.get("ENVFACTORY_MODEL_DIR",REPO_ROOT/"repro_1p7b"/"models"/"Qwen3-1.7B"))
+MODEL_DIR = REPO_ROOT / "repro_1p7b" / "models" / "Qwen3-1.7B"
 
 
 def main() -> None:
