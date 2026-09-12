@@ -1,0 +1,2 @@
+run_id,date,git_commit,model,dataset,dataset_size,seed,training_method,epochs,effective_batch_size,learning_rate,max_length,gpu_count,checkpoint,metric,result_path,log_path,notes
+sft_gate_1p7b_20260912,2026-09-12,000214851b34df9acd5246717aef66d5d9c6b843,Qwen3-1.7B,EnvFactory-SFT-FILTERED,128,42,full_sft_zero3,0.015625,2,0.000001,16384,2,repro_1p7b/checkpoints/baseline_sft_gate_1p7b,train_loss=2.4957048892974854,repro_1p7b/results/baseline/sft_gate_summary.json,repro_1p7b/logs/baseline_sft_gate_1p7b.log,"one-step exact-protocol gate; formal run not started"
