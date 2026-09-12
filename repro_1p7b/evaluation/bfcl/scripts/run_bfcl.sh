@@ -86,4 +86,7 @@ else
 fi
 
 "$BFCL_BIN" evaluate --model "$BFCL_MODEL_ID" --test-category multi_turn
+if [ "$SCOPE" = smoke ]; then
+  "$BFCL_PYTHON" "$EVAL_DIR/scripts/collect_smoke.py" --label "$RUN_LABEL" --model-path "$MODEL_PATH"
+fi
 printf 'BFCL %s %s complete. Results: %s/result Scores: %s/score\n' "$SCOPE" "$RUN_LABEL" "$RUN_ROOT" "$RUN_ROOT"
