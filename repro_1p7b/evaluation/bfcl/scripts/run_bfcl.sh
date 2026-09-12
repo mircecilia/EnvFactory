@@ -55,7 +55,7 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
-"$BFCL_PYTHON" -c 'import os,time,requests; u=f"http://127.0.0.1:{os.environ[\"VLLM_PORT\"]}/v1/models"; deadline=time.time()+300; last=None
+"$BFCL_PYTHON" -c 'import os,time,requests; u="http://127.0.0.1:"+os.environ["VLLM_PORT"]+"/v1/models"; deadline=time.time()+300; last=None
 while time.time()<deadline:
     try:
         r=requests.get(u,timeout=2); last=f"{r.status_code} {r.text[:200]}"
