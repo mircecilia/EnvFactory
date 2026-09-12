@@ -31,3 +31,5 @@ Do not launch the full `multi_turn` category from Codex.
 BFCL v1.3's built-in SGLang launcher passes the historical `--tp` flag, while the pinned SGLang 0.5.9 CLI exposes `--tp-size`. The repository wrapper therefore starts SGLang itself with the verified current flag and invokes official BFCL generation with `--skip-server-setup`. Model prompting, handler decoding, case execution, and scoring remain official and unmodified.
 
 - First Base smoke launch exited before any case because the wrapper readiness one-liner placed an escaped quote inside an f-string expression. The server cleanup trap ran. The URL construction was replaced with plain concatenation; this infrastructure attempt is not a model result.
+
+- The next Base server attempt loaded the model and exposed `/v1/models`, then the first completion caused SGLang QK-Norm/RoPE JIT to fail with `fatal error: concepts: No such file or directory`. This was not OOM and no BFCL case ran. The new environment already contained GCC/G++ 13.4 and the C++20 header; the JIT had selected the system host compiler. `CC`, `CXX`, `GCC`, and `GXX` are now pinned to the BFCL environment compilers.

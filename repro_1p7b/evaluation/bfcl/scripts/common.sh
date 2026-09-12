@@ -15,6 +15,10 @@ BFCL_PORT="${BFCL_PORT:-1053}"
 EXPECTED_BFCL_COMMIT="ea13468e4423454d0c213704fb87cf7cb3990433"
 export CUDA_HOME="$BFCL_ENV"
 export PATH="$CUDA_HOME/bin:$PATH"
+export CC="$BFCL_ENV/bin/x86_64-conda-linux-gnu-cc"
+export CXX="$BFCL_ENV/bin/x86_64-conda-linux-gnu-c++"
+export GCC="$BFCL_ENV/bin/x86_64-conda-linux-gnu-gcc"
+export GXX="$BFCL_ENV/bin/x86_64-conda-linux-gnu-g++"
 
 require_clean_bfcl() {
   test "$(git -C "$BFCL_ROOT" rev-parse HEAD)" = "$EXPECTED_BFCL_COMMIT"
