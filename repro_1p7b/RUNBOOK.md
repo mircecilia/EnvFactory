@@ -4,7 +4,7 @@
 
 ### Remote identity and hardware
 
-`hostname`, `whoami`, `pwd`, and `nvidia-smi` verified host `n1`, user `u2024311031`, home `/home/u2024311031`, and two NVIDIA A100-SXM4-40GB GPUs (40960 MiB each, initially 0 MiB used). The home filesystem had 174T available.
+`hostname`, `whoami`, `pwd`, and `nvidia-smi` verified host `n1`, user `u2024311031`, home `/home/u2024311031`, and two NVIDIA A100-PCIE-40GB GPUs (40960 MiB each, initially 0 MiB used). The home filesystem had 174T available.
 
 Result: PASS
 
@@ -137,3 +137,5 @@ Result: PASS for one-step feasibility only
 ### Cleanup
 
 The SGLang server and trainer processes were stopped/exited, port 30000 is closed, and no task-owned GPU process remains.
+
+The formal FILTERED-dataset audit and two-GPU ZeRO-3 gate are recorded in `BASELINE.md` and `results/baseline/`.

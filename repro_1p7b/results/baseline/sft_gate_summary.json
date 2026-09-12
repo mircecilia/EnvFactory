@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "date": "2026-09-12",
+  "purpose": "one-step feasibility gate for exact formal model, method, precision, ZeRO stage, and sequence cutoff",
+  "model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+  "dataset_revision": "ee97a07fd01fe5902ac7ac6358dbbfa5403cc683",
+  "llamafactory_commit": "100e9a42c6c09f8f7849b70d60f3da445fb2024b",
+  "hardware": [
+    "NVIDIA A100-PCIE-40GB",
+    "NVIDIA A100-PCIE-40GB"
+  ],
+  "world_size": 2,
+  "trainable_parameters": 1720574976,
+  "finetuning_type": "full",
+  "deepspeed_zero_stage": 3,
+  "bf16": true,
+  "cutoff_len": 16384,
+  "gate_samples": 128,
+  "per_device_train_batch_size": 1,
+  "gradient_accumulation_steps": 1,
+  "optimization_steps": 1,
+  "train_loss": 2.4957048892974854,
+  "train_runtime_seconds": 15.5102,
+  "train_samples_per_second": 0.129,
+  "train_steps_per_second": 0.064,
+  "total_flos": 19168444416.0,
+  "observed_gpu_memory_mib": {
+    "gpu_0": 37338,
+    "gpu_1": 29436
+  },
+  "warnings": [
+    "DeepSpeed reported one allocator cache flush under high memory pressure.",
+    "Host kernel 4.18 is below Accelerate recommended 5.5 and remains a long-run hang risk."
+  ],
+  "formal_effective_batch_size": 64,
+  "formal_optimizer_steps": 414,
+  "formal_run_started": false
+}

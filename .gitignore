@@ -28,6 +28,7 @@ __pycache__/
 *.pkl
 
 # Local reproduction artifacts
+/repro_1p7b/datasets/
 /repro_1p7b/cache/
 /repro_1p7b/models/
 /repro_1p7b/checkpoints/

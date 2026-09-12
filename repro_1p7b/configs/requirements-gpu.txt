@@ -9,6 +9,8 @@ datasets==4.0.0
 accelerate==1.11.0
 peft==0.18.1
 trl==0.24.0
+deepspeed==0.18.4
+tensorboard==2.20.0
 
 # Editable checkout, not a PyPI wheel:
 # LlamaFactory 0.9.6.dev0

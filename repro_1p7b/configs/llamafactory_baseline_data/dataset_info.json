@@ -1,0 +1,13 @@
+{
+  "env_factory_sft": {
+    "file_name": "../../datasets/EnvFactory-SFT-FILTERED/mcp_factory_sft_nips.json",
+    "formatting": "alpaca",
+    "columns": {
+      "prompt": "instruction",
+      "query": "input",
+      "response": "output",
+      "history": "history",
+      "system": "system"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "status": "PASS_WITH_UPSTREAM_METADATA_DISCREPANCY",
+  "repository": "LARK-Lab/EnvFactory-SFT-FILTERED",
+  "revision": "ee97a07fd01fe5902ac7ac6358dbbfa5403cc683",
+  "file": "mcp_factory_sft_nips.json",
+  "file_size_bytes": 989025444,
+  "load_seconds": 12.472,
+  "actual_records": 26463,
+  "readme_claimed_records": 53400,
+  "required_fields": [
+    "instruction",
+    "input",
+    "output",
+    "system",
+    "history"
+  ],
+  "records_with_all_required_fields": 26463,
+  "empty_input_records": 26463,
+  "history_list_records": 26463,
+  "empty_history_records": 1262,
+  "outputs_with_think_tag": 26463,
+  "outputs_with_tool_call_tag": 12917,
+  "source_transfer": "downloaded directly on remote host from fixed Hub revision"
+}
