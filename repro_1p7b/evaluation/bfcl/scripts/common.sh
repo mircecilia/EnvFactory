@@ -19,6 +19,7 @@ export CC="$BFCL_ENV/bin/x86_64-conda-linux-gnu-cc"
 export CXX="$BFCL_ENV/bin/x86_64-conda-linux-gnu-c++"
 export GCC="$BFCL_ENV/bin/x86_64-conda-linux-gnu-gcc"
 export GXX="$BFCL_ENV/bin/x86_64-conda-linux-gnu-g++"
+export NVCC_PREPEND_FLAGS="-ccbin=$CXX"
 
 require_clean_bfcl() {
   test "$(git -C "$BFCL_ROOT" rev-parse HEAD)" = "$EXPECTED_BFCL_COMMIT"
