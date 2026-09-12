@@ -161,3 +161,7 @@ completed both optimizer steps in 96.8905 seconds with final loss
 saved successfully, exit code was 0, and both GPUs returned to 0 MiB.
 
 Result: 16K FAIL (OOM); resource-adapted 8K steady-state gate PASS
+
+## 2026-09-13 - BFCL V3 evaluation bootstrap
+
+Created an independent Python 3.10 BFCL environment at `/home/u2024311031/.conda/envs/envfactory_bfcl_v1p3` through the Tsinghua mirrors. Installed the official Gorilla v1.3 source package plus SGLang 0.5.9 and an environment-local CUDA 12.8.61 nvcc/GCC toolchain. `pip check`, imports, official category enumeration, Qwen3-1.7B-FC registration, fixed commit, and clean checkout checks passed. The display-only `bfcl version` command has an upstream distribution-name mismatch in this non-editable install, so the check reads `bfcl_eval` metadata and the Git commit instead. Smoke is deferred until the formal SFT run releases the GPUs.

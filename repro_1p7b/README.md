@@ -67,3 +67,7 @@ CUDA_VISIBLE_DEVICES=0 llamafactory-cli train repro_1p7b/configs/llamafactory_sf
 See `BASELINE.md` for the locked formal protocol and gate evidence,
 `RUNBOOK.md` for observed outputs, and `notes/` for the repository and
 official-recipe audits.
+
+## BFCL V3 evaluation
+
+The official BFCL v1.3 evaluation pipeline is prepared under `repro_1p7b/evaluation/bfcl/`. It uses the clean fixed commit `ea13468e4423454d0c213704fb87cf7cb3990433`, the official Qwen3-1.7B-FC handler, SGLang 0.5.9, and a predeclared eight-case multi-turn smoke subset. Full benchmark scripts are prepared but must not be started until Base and formal SFT smoke both pass; Codex will not launch full BFCL.

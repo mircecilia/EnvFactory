@@ -1,0 +1,13 @@
+Python 3.10.21
+Name: bfcl_eval
+Version: 0.0.0.dev0
+Name: sglang
+Version: 0.5.9
+Name: torch
+Version: 2.9.1
+Name: transformers
+Version: 4.57.1
+Name: openai
+Version: 2.6.1
+Cuda compilation tools, release 12.8, V12.8.61
+Build cuda_12.8.r12.8/compiler.35404655_0
