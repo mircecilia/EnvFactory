@@ -1,0 +1,273 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://envfactory.local/schema/graph-frontier-profile-v1.json",
+  "title": "EnvFactory Graph-Frontier Rollout Profile",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "task_id",
+    "terminal_success",
+    "state_success",
+    "expected_tool_nodes",
+    "actual_tool_nodes",
+    "expected_dependency_edges",
+    "satisfied_dependency_edges",
+    "dependency_edge_checks",
+    "internal_parameter_flow_checks",
+    "first_failed_edge",
+    "first_failure_step",
+    "max_dependency_depth_reached",
+    "redundant_tool_calls",
+    "extra_tool_calls",
+    "root_cause_failures",
+    "downstream_propagated_failures"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "graph_frontier_profile_v1"
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "terminal_success": {
+      "$ref": "#/$defs/knownBoolean"
+    },
+    "state_success": {
+      "$ref": "#/$defs/knownBoolean"
+    },
+    "expected_tool_nodes": {
+      "oneOf": [
+        {
+          "const": "unknown"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "actual_tool_nodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/toolEvent"
+      }
+    },
+    "expected_dependency_edges": {
+      "oneOf": [
+        {
+          "const": "unknown"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/edge"
+          }
+        }
+      ]
+    },
+    "satisfied_dependency_edges": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "dependency_edge_checks": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "internal_parameter_flow_checks": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "first_failed_edge": {
+      "oneOf": [
+        {
+          "const": "unknown"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "first_failure_step": {
+      "oneOf": [
+        {
+          "const": "unknown"
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ]
+    },
+    "max_dependency_depth_reached": {
+      "oneOf": [
+        {
+          "const": "unknown"
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ]
+    },
+    "redundant_tool_calls": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "extra_tool_calls": {
+      "oneOf": [
+        {
+          "const": "unknown"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      ]
+    },
+    "missing_expected_tools": {
+      "oneOf": [
+        {
+          "const": "unknown"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "root_cause_failures": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "downstream_propagated_failures": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "adapter_notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "knownBoolean": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "const": "unknown"
+        }
+      ]
+    },
+    "knownFlag": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "const": "unknown"
+        }
+      ]
+    },
+    "toolEvent": {
+      "type": "object",
+      "required": [
+        "step_index",
+        "tool_name",
+        "arguments",
+        "result",
+        "execution_success"
+      ],
+      "properties": {
+        "step_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tool_name": {
+          "type": "string"
+        },
+        "arguments": {},
+        "result": {},
+        "execution_success": {
+          "$ref": "#/$defs/knownBoolean"
+        },
+        "state_changing": {
+          "$ref": "#/$defs/knownFlag"
+        }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "required": [
+        "edge_id",
+        "producer_tool",
+        "consumer_tool",
+        "edge_type",
+        "source_parameter",
+        "target_parameter",
+        "required",
+        "internal_parameter"
+      ],
+      "properties": {
+        "edge_id": {
+          "type": "string"
+        },
+        "producer_tool": {
+          "type": "string"
+        },
+        "consumer_tool": {
+          "type": "string"
+        },
+        "edge_type": {
+          "type": "string"
+        },
+        "source_parameter": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "const": "unknown"
+            }
+          ]
+        },
+        "target_parameter": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "const": "unknown"
+            }
+          ]
+        },
+        "required": {
+          "$ref": "#/$defs/knownFlag"
+        },
+        "internal_parameter": {
+          "$ref": "#/$defs/knownFlag"
+        }
+      }
+    }
+  }
+}
