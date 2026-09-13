@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "selector": "length_stratified_weighted_resampling_v1",
+  "seed": 20260913,
+  "bin_width_chars": 512,
+  "weight_formula": "1 + 1.25*min(dependent_calls,3) + 0.75*min(max_dependency_depth,3) + 0.20*min(matched_args,5)",
+  "input": "repro_1p7b/datasets/EnvFactory-SFT-FILTERED/mcp_factory_sft_nips.json",
+  "output": "/tmp/parameter_aware_smoke_64.json",
+  "sample_count": 64,
+  "unique_source_samples": 54,
+  "duplicate_draws": 10,
+  "unique_source_rate": 0.84375,
+  "before": {
+    "total_chars": 2516812,
+    "dependency_proxy_samples": 52,
+    "dependency_proxy_rate": 0.8125,
+    "dependency_depth_bins": {
+      "0": 12,
+      "1": 6,
+      "2": 19,
+      "3+": 27
+    },
+    "tool_calls": {
+      "count": 64,
+      "min": 1,
+      "mean": 7.375,
+      "median": 7.5,
+      "p75": 10.25,
+      "p90": 13.700000000000003,
+      "p95": 14.849999999999994,
+      "max": 16,
+      "counts": {
+        "1": 5,
+        "2": 6,
+        "3": 6,
+        "4": 5,
+        "5": 2,
+        "6": 5,
+        "7": 3,
+        "8": 7,
+        "9": 3,
+        "10": 6,
+        "11": 3,
+        "12": 2,
+        "13": 4,
+        "14": 3,
+        "15": 2,
+        "16": 2
+      }
+    },
+    "max_dependency_depth": {
+      "count": 64,
+      "min": 0,
+      "mean": 2.59375,
+      "median": 2.0,
+      "p75": 4.0,
+      "p90": 5.0,
+      "p95": 6.0,
+      "max": 7,
+      "counts": {
+        "0": 12,
+        "1": 6,
+        "2": 19,
+        "3": 8,
+        "4": 5,
+        "5": 8,
+        "6": 4,
+        "7": 2
+      }
+    }
+  },
+  "after": {
+    "total_chars": 2515902,
+    "dependency_proxy_samples": 57,
+    "dependency_proxy_rate": 0.890625,
+    "dependency_depth_bins": {
+      "0": 7,
+      "1": 8,
+      "2": 20,
+      "3+": 29
+    },
+    "tool_calls": {
+      "count": 64,
+      "min": 1,
+      "mean": 7.6875,
+      "median": 8.0,
+      "p75": 11.0,
+      "p90": 13.0,
+      "p95": 14.849999999999994,
+      "max": 16,
+      "counts": {
+        "1": 4,
+        "2": 4,
+        "3": 7,
+        "4": 4,
+        "5": 3,
+        "6": 5,
+        "7": 4,
+        "8": 6,
+        "9": 3,
+        "10": 6,
+        "11": 4,
+        "12": 3,
+        "13": 5,
+        "14": 2,
+        "15": 2,
+        "16": 2
+      }
+    },
+    "max_dependency_depth": {
+      "count": 64,
+      "min": 0,
+      "mean": 2.765625,
+      "median": 2.0,
+      "p75": 4.0,
+      "p90": 5.0,
+      "p95": 6.0,
+      "max": 7,
+      "counts": {
+        "0": 7,
+        "1": 8,
+        "2": 20,
+        "3": 9,
+        "4": 5,
+        "5": 9,
+        "6": 5,
+        "7": 1
+      }
+    }
+  },
+  "char_budget_ratio": 0.9996384314760102,
+  "output_bytes": 2717399,
+  "output_sha256": "d1fa27544cd8414e447305dd15583661b29da8d4cfbff48fce3e7fdd6d3398ec"
+}

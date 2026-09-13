@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "input": "/tmp/parameter_aware_smoke_64.json",
+  "sample_count": 64,
+  "bad_indices": [],
+  "bytes": 2717399,
+  "sha256": "d1fa27544cd8414e447305dd15583661b29da8d4cfbff48fce3e7fdd6d3398ec"
+}
