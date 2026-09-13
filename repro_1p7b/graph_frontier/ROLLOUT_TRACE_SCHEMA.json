@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://envfactory.local/schema/rollout-trace-v1.json",
+  "title": "EnvFactory typed rollout trace",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "task_id",
+    "environment_identifiers",
+    "initial_environment_state",
+    "events",
+    "final_status",
+    "terminal_success",
+    "final_environment_state",
+    "verifier_result",
+    "verifier_details",
+    "trace_notes"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "envfactory_rollout_trace_v1"
+    },
+    "task_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "environment_identifiers": {},
+    "initial_environment_state": {},
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "step_index",
+          "tool_name",
+          "tool_arguments",
+          "tool_response",
+          "returned_fields",
+          "execution_success",
+          "exception",
+          "timestamp",
+          "environment_id",
+          "server_id"
+        ],
+        "properties": {
+          "step_index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "tool_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tool_arguments": {},
+          "tool_response": {},
+          "returned_fields": {},
+          "execution_success": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "const": "unknown"
+              }
+            ]
+          },
+          "exception": {},
+          "timestamp": {
+            "type": "string"
+          },
+          "environment_id": {
+            "type": "string"
+          },
+          "server_id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "final_status": {
+      "enum": [
+        "success",
+        "failure",
+        "unknown"
+      ]
+    },
+    "terminal_success": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "const": "unknown"
+        }
+      ]
+    },
+    "final_environment_state": {},
+    "verifier_result": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "const": "unknown"
+        }
+      ]
+    },
+    "verifier_details": {},
+    "trace_notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -144,6 +144,8 @@ def tool_graph_to_spec(
                         "graph_provenance": provenance,
                         "source_parameter": source_parameter,
                         "target_parameter": target_parameter,
+                        "source_parameter_user_provided": _parameter_user_provided(output_parameter),
+                        "target_parameter_user_provided": user_provided,
                         "required": required,
                         "internal_parameter": internal_parameter,
                     }
@@ -178,6 +180,8 @@ def tool_graph_to_spec(
                     "graph_provenance": "tool_depend",
                     "source_parameter": UNKNOWN,
                     "target_parameter": UNKNOWN,
+                    "source_parameter_user_provided": UNKNOWN,
+                    "target_parameter_user_provided": UNKNOWN,
                     "required": UNKNOWN,
                     "internal_parameter": UNKNOWN,
                 }

@@ -6,6 +6,11 @@ This directory contains offline infrastructure only. It does not start training,
 
 - `SCHEMA_AUDIT.md`: source and serialization audit, including what the existing artifacts cannot recover.
 - `profile.schema.json`: versioned rollout-profile JSON schema with explicit `unknown` values.
+- `GOLD_SIDECAR_SCHEMA.json` / `gold_sidecar.py`: task-local generation-time graph export.
+- `ROLLOUT_TRACE_SCHEMA.json` / `rollout_trace.py`: typed executor trace recorder and wrappers.
+- `export_pipeline.py`: strict task-ID join from gold sidecar and typed trace to profiler.
+- `EXPORT_PIPELINE.md`: real hook-point audit and integration instructions.
+- `PROBE_PLAN.md`: frozen 300-task diagnostic pool design; no pool is generated here.
 - `adapters.py`: live `ToolGraph`, QueryGen artifact, and typed-rollout adapters.
 - `profiler.py`: programmatic dependency checks and first-root/downstream attribution.
 - `capability.py`: Beta(1,1)-smoothed capability aggregation and scoring components.
@@ -23,7 +28,7 @@ python -m repro_1p7b.graph_frontier.demo \
   --output repro_1p7b/graph_frontier/mock_demo_output.json
 ```
 
-The mock output is illustrative, not an experiment result. It uses three synthetic rollouts and three synthetic curriculum candidates.
+The mock output is illustrative, not an experiment result. It uses three synthetic rollouts and three synthetic curriculum candidates. `tests/test_export_pipeline.py` separately verifies the real sidecar-to-typed-trace interface with structured values `123`, `456`, and the mismatched `999`.
 
 ## Integration boundary
 

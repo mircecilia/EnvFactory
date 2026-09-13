@@ -222,6 +222,8 @@ def profile_rollout(bundle: Mapping[str, Any]) -> Dict[str, Any]:
                     "propagated_from": UNKNOWN,
                     "source_value_available": UNKNOWN,
                     "target_value_available": UNKNOWN,
+                    "source_values": UNKNOWN,
+                    "target_values": UNKNOWN,
                 }
 
                 if not producers:
@@ -295,6 +297,8 @@ def profile_rollout(bundle: Mapping[str, Any]) -> Dict[str, Any]:
                             target_values = _path_values(event.get("arguments"), target_path)
                             check["source_value_available"] = source_values != UNKNOWN
                             check["target_value_available"] = target_values != UNKNOWN
+                            check["source_values"] = deepcopy(source_values)
+                            check["target_values"] = deepcopy(target_values)
                             match = _values_match(source_values, target_values)
                             if match is True:
                                 check.update(status="satisfied", success=True)
@@ -364,6 +368,8 @@ def profile_rollout(bundle: Mapping[str, Any]) -> Dict[str, Any]:
                     "propagated_from": UNKNOWN,
                     "source_value_available": UNKNOWN,
                     "target_value_available": UNKNOWN,
+                    "source_values": UNKNOWN,
+                    "target_values": UNKNOWN,
                 }
             )
     else:

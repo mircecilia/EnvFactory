@@ -99,7 +99,13 @@
           "root_cause": false,
           "propagated_from": "unknown",
           "source_value_available": true,
-          "target_value_available": true
+          "target_value_available": true,
+          "source_values": [
+            "user-7"
+          ],
+          "target_values": [
+            "user-7"
+          ]
         },
         {
           "edge_id": "order-to-cancel",
@@ -116,7 +122,13 @@
           "root_cause": false,
           "propagated_from": "unknown",
           "source_value_available": true,
-          "target_value_available": true
+          "target_value_available": true,
+          "source_values": [
+            "order-9"
+          ],
+          "target_values": [
+            "order-9"
+          ]
         }
       ],
       "internal_parameter_flow_checks": [
@@ -135,7 +147,13 @@
           "root_cause": false,
           "propagated_from": "unknown",
           "source_value_available": true,
-          "target_value_available": true
+          "target_value_available": true,
+          "source_values": [
+            "user-7"
+          ],
+          "target_values": [
+            "user-7"
+          ]
         },
         {
           "edge_id": "order-to-cancel",
@@ -152,7 +170,13 @@
           "root_cause": false,
           "propagated_from": "unknown",
           "source_value_available": true,
-          "target_value_available": true
+          "target_value_available": true,
+          "source_values": [
+            "order-9"
+          ],
+          "target_values": [
+            "order-9"
+          ]
         }
       ],
       "first_failed_edge": "unknown",
@@ -259,7 +283,13 @@
           "root_cause": true,
           "propagated_from": "unknown",
           "source_value_available": true,
-          "target_value_available": true
+          "target_value_available": true,
+          "source_values": [
+            "user-7"
+          ],
+          "target_values": [
+            "wrong"
+          ]
         },
         {
           "edge_id": "order-to-cancel",
@@ -276,7 +306,9 @@
           "root_cause": false,
           "propagated_from": "root-0:wrong_propagated_value",
           "source_value_available": "unknown",
-          "target_value_available": "unknown"
+          "target_value_available": "unknown",
+          "source_values": "unknown",
+          "target_values": "unknown"
         }
       ],
       "internal_parameter_flow_checks": [
@@ -295,7 +327,13 @@
           "root_cause": true,
           "propagated_from": "unknown",
           "source_value_available": true,
-          "target_value_available": true
+          "target_value_available": true,
+          "source_values": [
+            "user-7"
+          ],
+          "target_values": [
+            "wrong"
+          ]
         },
         {
           "edge_id": "order-to-cancel",
@@ -312,7 +350,9 @@
           "root_cause": false,
           "propagated_from": "root-0:wrong_propagated_value",
           "source_value_available": "unknown",
-          "target_value_available": "unknown"
+          "target_value_available": "unknown",
+          "source_values": "unknown",
+          "target_values": "unknown"
         }
       ],
       "first_failed_edge": {
@@ -330,7 +370,13 @@
         "root_cause": true,
         "propagated_from": "unknown",
         "source_value_available": true,
-        "target_value_available": true
+        "target_value_available": true,
+        "source_values": [
+          "user-7"
+        ],
+        "target_values": [
+          "wrong"
+        ]
       },
       "first_failure_step": 2,
       "max_dependency_depth_reached": 0,
@@ -476,7 +522,13 @@
           "root_cause": false,
           "propagated_from": "unknown",
           "source_value_available": true,
-          "target_value_available": true
+          "target_value_available": true,
+          "source_values": [
+            "user-7"
+          ],
+          "target_values": [
+            "user-7"
+          ]
         },
         {
           "edge_id": "order-to-cancel",
@@ -493,7 +545,13 @@
           "root_cause": false,
           "propagated_from": "unknown",
           "source_value_available": true,
-          "target_value_available": true
+          "target_value_available": true,
+          "source_values": [
+            "order-9"
+          ],
+          "target_values": [
+            "order-9"
+          ]
         }
       ],
       "internal_parameter_flow_checks": [
@@ -512,7 +570,13 @@
           "root_cause": false,
           "propagated_from": "unknown",
           "source_value_available": true,
-          "target_value_available": true
+          "target_value_available": true,
+          "source_values": [
+            "user-7"
+          ],
+          "target_values": [
+            "user-7"
+          ]
         },
         {
           "edge_id": "order-to-cancel",
@@ -529,7 +593,13 @@
           "root_cause": false,
           "propagated_from": "unknown",
           "source_value_available": true,
-          "target_value_available": true
+          "target_value_available": true,
+          "source_values": [
+            "order-9"
+          ],
+          "target_values": [
+            "order-9"
+          ]
         }
       ],
       "first_failed_edge": "unknown",
