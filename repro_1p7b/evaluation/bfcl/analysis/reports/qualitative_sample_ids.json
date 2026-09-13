@@ -1,0 +1,24 @@
+{
+  "seed": 20260913,
+  "FT": [
+    "multi_turn_base_12",
+    "multi_turn_miss_func_169",
+    "multi_turn_miss_param_164",
+    "multi_turn_base_136",
+    "multi_turn_base_166"
+  ],
+  "TF": [
+    "multi_turn_long_context_32",
+    "multi_turn_long_context_64",
+    "multi_turn_miss_func_102",
+    "multi_turn_long_context_182",
+    "multi_turn_base_127"
+  ],
+  "FF": [
+    "multi_turn_miss_func_148",
+    "multi_turn_miss_func_183",
+    "multi_turn_long_context_157",
+    "multi_turn_miss_param_16",
+    "multi_turn_base_81"
+  ]
+}

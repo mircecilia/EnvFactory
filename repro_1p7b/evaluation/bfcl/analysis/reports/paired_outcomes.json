@@ -1,0 +1,320 @@
+{
+  "seed": 20260913,
+  "bootstrap_resamples": 10000,
+  "completeness": {
+    "base_result_count": 800,
+    "sft_result_count": 800,
+    "shared_id_count": 800,
+    "missing_from_base": [],
+    "missing_from_sft": [],
+    "base_duplicate_ids": [],
+    "sft_duplicate_ids": [],
+    "invalid_category_ids": [],
+    "aggregate_checks": {
+      "base": {
+        "base": {
+          "result_count": 200,
+          "aggregate_total_count": 200,
+          "aggregate_correct_count": 25,
+          "inferred_correct_count": 25,
+          "match": true
+        },
+        "miss_func": {
+          "result_count": 200,
+          "aggregate_total_count": 200,
+          "aggregate_correct_count": 15,
+          "inferred_correct_count": 15,
+          "match": true
+        },
+        "miss_param": {
+          "result_count": 200,
+          "aggregate_total_count": 200,
+          "aggregate_correct_count": 17,
+          "inferred_correct_count": 17,
+          "match": true
+        },
+        "long_context": {
+          "result_count": 200,
+          "aggregate_total_count": 200,
+          "aggregate_correct_count": 13,
+          "inferred_correct_count": 13,
+          "match": true
+        }
+      },
+      "sft": {
+        "base": {
+          "result_count": 200,
+          "aggregate_total_count": 200,
+          "aggregate_correct_count": 27,
+          "inferred_correct_count": 27,
+          "match": true
+        },
+        "miss_func": {
+          "result_count": 200,
+          "aggregate_total_count": 200,
+          "aggregate_correct_count": 22,
+          "inferred_correct_count": 22,
+          "match": true
+        },
+        "miss_param": {
+          "result_count": 200,
+          "aggregate_total_count": 200,
+          "aggregate_correct_count": 16,
+          "inferred_correct_count": 16,
+          "match": true
+        },
+        "long_context": {
+          "result_count": 200,
+          "aggregate_total_count": 200,
+          "aggregate_correct_count": 13,
+          "inferred_correct_count": 13,
+          "match": true
+        }
+      }
+    }
+  },
+  "sections": {
+    "overall": {
+      "total": 800,
+      "base_correct": 70,
+      "base_accuracy": 0.0875,
+      "base_wilson_95_ci": [
+        0.06983842196591744,
+        0.1091041509037653
+      ],
+      "sft_correct": 78,
+      "sft_accuracy": 0.0975,
+      "sft_wilson_95_ci": [
+        0.07882711251857823,
+        0.12001988282699101
+      ],
+      "delta": 0.01,
+      "net_cases": 8,
+      "transitions": {
+        "TT": 25,
+        "TF": 45,
+        "FT": 53,
+        "FF": 677
+      },
+      "mcnemar_exact_p": 0.479692499567487,
+      "paired_bootstrap_95_ci": [
+        -0.015,
+        0.03375
+      ]
+    },
+    "base": {
+      "total": 200,
+      "base_correct": 25,
+      "base_accuracy": 0.125,
+      "base_wilson_95_ci": [
+        0.08611974475712644,
+        0.17801425002582347
+      ],
+      "sft_correct": 27,
+      "sft_accuracy": 0.135,
+      "sft_wilson_95_ci": [
+        0.09446570454787906,
+        0.18929138370752552
+      ],
+      "delta": 0.01,
+      "net_cases": 2,
+      "transitions": {
+        "TT": 8,
+        "TF": 17,
+        "FT": 19,
+        "FF": 156
+      },
+      "mcnemar_exact_p": 0.8679394004284404,
+      "paired_bootstrap_95_ci": [
+        -0.05,
+        0.07
+      ]
+    },
+    "miss_func": {
+      "total": 200,
+      "base_correct": 15,
+      "base_accuracy": 0.075,
+      "base_wilson_95_ci": [
+        0.04597491718438201,
+        0.12004361023629456
+      ],
+      "sft_correct": 22,
+      "sft_accuracy": 0.11,
+      "sft_wilson_95_ci": [
+        0.07377244460125303,
+        0.1609269099730149
+      ],
+      "delta": 0.035,
+      "net_cases": 7,
+      "transitions": {
+        "TT": 7,
+        "TF": 8,
+        "FT": 15,
+        "FF": 170
+      },
+      "mcnemar_exact_p": 0.21003961563110352,
+      "paired_bootstrap_95_ci": [
+        -0.01,
+        0.08
+      ]
+    },
+    "miss_param": {
+      "total": 200,
+      "base_correct": 17,
+      "base_accuracy": 0.085,
+      "base_wilson_95_ci": [
+        0.05374575017747561,
+        0.13189587071565567
+      ],
+      "sft_correct": 16,
+      "sft_accuracy": 0.08,
+      "sft_wilson_95_ci": [
+        0.049840585889759974,
+        0.12598948826714396
+      ],
+      "delta": -0.005,
+      "net_cases": -1,
+      "transitions": {
+        "TT": 6,
+        "TF": 11,
+        "FT": 10,
+        "FF": 173
+      },
+      "mcnemar_exact_p": 1.0,
+      "paired_bootstrap_95_ci": [
+        -0.05,
+        0.04
+      ]
+    },
+    "long_context": {
+      "total": 200,
+      "base_correct": 13,
+      "base_accuracy": 0.065,
+      "base_wilson_95_ci": [
+        0.03837635464915299,
+        0.10801907929906895
+      ],
+      "sft_correct": 13,
+      "sft_accuracy": 0.065,
+      "sft_wilson_95_ci": [
+        0.03837635464915299,
+        0.10801907929906895
+      ],
+      "delta": 0.0,
+      "net_cases": 0,
+      "transitions": {
+        "TT": 4,
+        "TF": 9,
+        "FT": 9,
+        "FF": 178
+      },
+      "mcnemar_exact_p": 1.0,
+      "paired_bootstrap_95_ci": [
+        -0.04,
+        0.04
+      ]
+    }
+  },
+  "fixed_ids": [
+    "multi_turn_base_101",
+    "multi_turn_base_102",
+    "multi_turn_base_104",
+    "multi_turn_base_111",
+    "multi_turn_base_112",
+    "multi_turn_base_115",
+    "multi_turn_base_12",
+    "multi_turn_base_121",
+    "multi_turn_base_123",
+    "multi_turn_base_126",
+    "multi_turn_base_128",
+    "multi_turn_base_129",
+    "multi_turn_base_136",
+    "multi_turn_base_150",
+    "multi_turn_base_166",
+    "multi_turn_base_21",
+    "multi_turn_base_34",
+    "multi_turn_base_50",
+    "multi_turn_base_57",
+    "multi_turn_long_context_111",
+    "multi_turn_long_context_13",
+    "multi_turn_long_context_152",
+    "multi_turn_long_context_153",
+    "multi_turn_long_context_161",
+    "multi_turn_long_context_166",
+    "multi_turn_long_context_45",
+    "multi_turn_long_context_57",
+    "multi_turn_long_context_79",
+    "multi_turn_miss_func_116",
+    "multi_turn_miss_func_12",
+    "multi_turn_miss_func_127",
+    "multi_turn_miss_func_128",
+    "multi_turn_miss_func_129",
+    "multi_turn_miss_func_133",
+    "multi_turn_miss_func_134",
+    "multi_turn_miss_func_138",
+    "multi_turn_miss_func_144",
+    "multi_turn_miss_func_157",
+    "multi_turn_miss_func_162",
+    "multi_turn_miss_func_169",
+    "multi_turn_miss_func_50",
+    "multi_turn_miss_func_51",
+    "multi_turn_miss_func_79",
+    "multi_turn_miss_param_108",
+    "multi_turn_miss_param_112",
+    "multi_turn_miss_param_125",
+    "multi_turn_miss_param_128",
+    "multi_turn_miss_param_146",
+    "multi_turn_miss_param_150",
+    "multi_turn_miss_param_154",
+    "multi_turn_miss_param_164",
+    "multi_turn_miss_param_23",
+    "multi_turn_miss_param_26"
+  ],
+  "regressed_ids": [
+    "multi_turn_base_100",
+    "multi_turn_base_116",
+    "multi_turn_base_119",
+    "multi_turn_base_127",
+    "multi_turn_base_140",
+    "multi_turn_base_142",
+    "multi_turn_base_146",
+    "multi_turn_base_153",
+    "multi_turn_base_162",
+    "multi_turn_base_165",
+    "multi_turn_base_167",
+    "multi_turn_base_189",
+    "multi_turn_base_191",
+    "multi_turn_base_37",
+    "multi_turn_base_77",
+    "multi_turn_base_80",
+    "multi_turn_base_89",
+    "multi_turn_long_context_12",
+    "multi_turn_long_context_122",
+    "multi_turn_long_context_150",
+    "multi_turn_long_context_179",
+    "multi_turn_long_context_182",
+    "multi_turn_long_context_189",
+    "multi_turn_long_context_32",
+    "multi_turn_long_context_64",
+    "multi_turn_long_context_7",
+    "multi_turn_miss_func_102",
+    "multi_turn_miss_func_107",
+    "multi_turn_miss_func_113",
+    "multi_turn_miss_func_120",
+    "multi_turn_miss_func_176",
+    "multi_turn_miss_func_184",
+    "multi_turn_miss_func_60",
+    "multi_turn_miss_func_64",
+    "multi_turn_miss_param_116",
+    "multi_turn_miss_param_119",
+    "multi_turn_miss_param_12",
+    "multi_turn_miss_param_123",
+    "multi_turn_miss_param_126",
+    "multi_turn_miss_param_130",
+    "multi_turn_miss_param_139",
+    "multi_turn_miss_param_176",
+    "multi_turn_miss_param_191",
+    "multi_turn_miss_param_62",
+    "multi_turn_miss_param_64"
+  ]
+}

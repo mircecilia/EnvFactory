@@ -1,0 +1,1153 @@
+{
+  "base": {
+    "counts": {
+      "tasks": 800,
+      "normal_tasks": 777,
+      "steps": 7591,
+      "assistant_entries": 7591,
+      "assistant_entries_with_reasoning": 7570,
+      "raw_tool_blocks": 6570,
+      "json_parseable_tool_blocks": 6565,
+      "schema_valid_tool_blocks": 6541,
+      "offered_name_tool_blocks": 6275,
+      "natural_language_or_unclosed_steps": 3232,
+      "tasks_with_tool_block": 769,
+      "tasks_with_schema_valid_call": 769,
+      "tasks_with_offered_name_call": 769,
+      "malformed_arguments_tool_blocks": 8,
+      "handler_error_entries": 23,
+      "unknown_name_tool_blocks": 266,
+      "generation_cap_hits": 20,
+      "invalid_schema_tool_blocks": 16,
+      "invalid_json_tool_blocks": 5,
+      "empty_assistant_steps": 1,
+      "overflow_tasks": 23,
+      "empty_tool_blocks": 0,
+      "empty_handler_entries": 0,
+      "generation_near_cap": 0
+    },
+    "rates": {
+      "overflow_task_rate": 0.02875,
+      "tasks_with_schema_valid_call_rate_among_normal": 0.9897039897039897,
+      "tasks_with_offered_name_call_rate_among_normal": 0.9897039897039897,
+      "json_parseable_rate_per_tool_block": 0.9992389649923896,
+      "offered_name_rate_per_schema_valid_block": 0.9593334352545483,
+      "mean_tool_blocks_per_normal_task": 8.455598455598455,
+      "mean_tool_blocks_per_all_tasks": 8.2125,
+      "normal_tasks_without_tool_block_rate": 0.010296010296010296
+    },
+    "token_counts": {
+      "input_observations": 7591,
+      "output_observations": 7591,
+      "max_input_tokens": 40709,
+      "max_output_tokens": 4096,
+      "finish_reason_available": false,
+      "generation_cap_hit_task_count": 19,
+      "generation_cap_hit_task_ids": [
+        "multi_turn_base_36",
+        "multi_turn_long_context_103",
+        "multi_turn_long_context_104",
+        "multi_turn_long_context_106",
+        "multi_turn_long_context_114",
+        "multi_turn_long_context_115",
+        "multi_turn_long_context_117",
+        "multi_turn_long_context_127",
+        "multi_turn_long_context_139",
+        "multi_turn_long_context_149",
+        "multi_turn_long_context_154",
+        "multi_turn_long_context_162",
+        "multi_turn_long_context_192",
+        "multi_turn_long_context_51",
+        "multi_turn_long_context_71",
+        "multi_turn_long_context_89",
+        "multi_turn_long_context_97",
+        "multi_turn_miss_func_105",
+        "multi_turn_miss_func_123"
+      ],
+      "generation_cap_hit_correct": 1,
+      "generation_cap_hit_wrong": 18
+    },
+    "invalid_examples": [
+      {
+        "id": "multi_turn_base_1",
+        "raw": "{\"name\": \"pwd\"}"
+      },
+      {
+        "id": "multi_turn_base_54",
+        "raw": "{\"name\": \"success\", \"content\": \"Successfully retweeted\"}"
+      },
+      {
+        "id": "multi_turn_base_141",
+        "raw": "{\"status\": \"Message sent successfully\", \"message_id\": 4567, \"receiver_id\": \"MICAL\"}"
+      },
+      {
+        "id": "multi_turn_base_180",
+        "raw": "{\"error\": \"Booking not found\"}"
+      },
+      {
+        "id": "multi_turn_base_196",
+        "raw": "{\"status\": \"Ticket 1 has been resolved successfully.\"}"
+      },
+      {
+        "id": "multi_turn_long_context_0",
+        "raw": "{\"name\": \"mv\", \"arguments\": {\"source\": \"document/previous_report.pdf\", \"destination\": \"document/temp\"}}\n<tool_call>\n{\"name\": \"mv\", \"arguments\": {\"source\": \"document/final_report.pdf\", \"destination\": \"document/temp\"}}\n<tool_call>\n{\"name\": \"diff\", \"arguments\": {\"file_name1\": \"document/final_report.pdf\", \"file_name2\": \"document/previous_report.pdf\"}}"
+      },
+      {
+        "id": "multi_turn_long_context_41",
+        "raw": "{\"name\": \"view_messages_sent\", \"arguments\": {\"\"}}"
+      },
+      {
+        "id": "multi_turn_long_context_48",
+        "raw": "{\"name\": \"pwd\"}"
+      },
+      {
+        "id": "multi_turn_long_context_48",
+        "raw": "{\"name\": \"ls\"}"
+      },
+      {
+        "id": "multi_turn_long_context_65",
+        "raw": "{\"name\": \"comment_status\": \"Comment added successfully\"}"
+      }
+    ],
+    "unknown_name_examples": [
+      {
+        "id": "multi_turn_base_24",
+        "name": "status",
+        "allowed_sample": [
+          "cat",
+          "cd",
+          "close_ticket",
+          "cp",
+          "create_ticket",
+          "diff",
+          "du",
+          "echo",
+          "edit_ticket",
+          "find",
+          "get_ticket",
+          "get_user_tickets",
+          "grep",
+          "logout",
+          "ls",
+          "mkdir",
+          "mv",
+          "pwd",
+          "resolve_ticket",
+          "rm"
+        ]
+      },
+      {
+        "id": "multi_turn_base_48",
+        "name": "error",
+        "allowed_sample": [
+          "cat",
+          "cd",
+          "close_ticket",
+          "cp",
+          "create_ticket",
+          "diff",
+          "du",
+          "echo",
+          "edit_ticket",
+          "find",
+          "get_ticket",
+          "get_user_tickets",
+          "grep",
+          "logout",
+          "ls",
+          "mkdir",
+          "mv",
+          "pwd",
+          "resolve_ticket",
+          "rm"
+        ]
+      },
+      {
+        "id": "multi_turn_base_61",
+        "name": "get_battery_voltage",
+        "allowed_sample": [
+          "activateParkingBrake",
+          "add_contact",
+          "adjustClimateControl",
+          "check_tire_pressure",
+          "delete_message",
+          "displayCarStatus",
+          "display_log",
+          "estimate_distance",
+          "estimate_drive_feasibility_by_mileage",
+          "fillFuelTank",
+          "find_nearest_tire_shop",
+          "gallon_to_liter",
+          "get_current_speed",
+          "get_message_stats",
+          "get_outside_temperature_from_google",
+          "get_outside_temperature_from_weather_com",
+          "get_user_id",
+          "get_zipcode_based_on_city",
+          "list_users",
+          "liter_to_gallon"
+        ]
+      },
+      {
+        "id": "multi_turn_base_65",
+        "name": "get_fuel_level",
+        "allowed_sample": [
+          "activateParkingBrake",
+          "adjustClimateControl",
+          "authenticate_twitter",
+          "check_tire_pressure",
+          "comment",
+          "displayCarStatus",
+          "display_log",
+          "estimate_distance",
+          "estimate_drive_feasibility_by_mileage",
+          "fillFuelTank",
+          "find_nearest_tire_shop",
+          "follow_user",
+          "gallon_to_liter",
+          "get_current_speed",
+          "get_outside_temperature_from_google",
+          "get_outside_temperature_from_weather_com",
+          "get_tweet",
+          "get_tweet_comments",
+          "get_user_stats",
+          "get_user_tweets"
+        ]
+      },
+      {
+        "id": "multi_turn_base_65",
+        "name": "get_battery_voltage",
+        "allowed_sample": [
+          "activateParkingBrake",
+          "adjustClimateControl",
+          "authenticate_twitter",
+          "check_tire_pressure",
+          "comment",
+          "displayCarStatus",
+          "display_log",
+          "estimate_distance",
+          "estimate_drive_feasibility_by_mileage",
+          "fillFuelTank",
+          "find_nearest_tire_shop",
+          "follow_user",
+          "gallon_to_liter",
+          "get_current_speed",
+          "get_outside_temperature_from_google",
+          "get_outside_temperature_from_weather_com",
+          "get_tweet",
+          "get_tweet_comments",
+          "get_user_stats",
+          "get_user_tweets"
+        ]
+      },
+      {
+        "id": "multi_turn_base_65",
+        "name": "get_fuel_level",
+        "allowed_sample": [
+          "activateParkingBrake",
+          "adjustClimateControl",
+          "authenticate_twitter",
+          "check_tire_pressure",
+          "comment",
+          "displayCarStatus",
+          "display_log",
+          "estimate_distance",
+          "estimate_drive_feasibility_by_mileage",
+          "fillFuelTank",
+          "find_nearest_tire_shop",
+          "follow_user",
+          "gallon_to_liter",
+          "get_current_speed",
+          "get_outside_temperature_from_google",
+          "get_outside_temperature_from_weather_com",
+          "get_tweet",
+          "get_tweet_comments",
+          "get_user_stats",
+          "get_user_tweets"
+        ]
+      },
+      {
+        "id": "multi_turn_base_65",
+        "name": "get_battery_voltage",
+        "allowed_sample": [
+          "activateParkingBrake",
+          "adjustClimateControl",
+          "authenticate_twitter",
+          "check_tire_pressure",
+          "comment",
+          "displayCarStatus",
+          "display_log",
+          "estimate_distance",
+          "estimate_drive_feasibility_by_mileage",
+          "fillFuelTank",
+          "find_nearest_tire_shop",
+          "follow_user",
+          "gallon_to_liter",
+          "get_current_speed",
+          "get_outside_temperature_from_google",
+          "get_outside_temperature_from_weather_com",
+          "get_tweet",
+          "get_tweet_comments",
+          "get_user_stats",
+          "get_user_tweets"
+        ]
+      },
+      {
+        "id": "multi_turn_base_66",
+        "name": "status",
+        "allowed_sample": [
+          "activateParkingBrake",
+          "adjustClimateControl",
+          "check_tire_pressure",
+          "displayCarStatus",
+          "display_log",
+          "estimate_distance",
+          "estimate_drive_feasibility_by_mileage",
+          "fillFuelTank",
+          "find_nearest_tire_shop",
+          "gallon_to_liter",
+          "get_current_speed",
+          "get_outside_temperature_from_google",
+          "get_outside_temperature_from_weather_com",
+          "get_zipcode_based_on_city",
+          "liter_to_gallon",
+          "lockDoors",
+          "pressBrakePedal",
+          "releaseBrakePedal",
+          "setCruiseControl",
+          "setHeadlights"
+        ]
+      },
+      {
+        "id": "multi_turn_base_88",
+        "name": "display_car_status",
+        "allowed_sample": [
+          "activateParkingBrake",
+          "adjustClimateControl",
+          "authenticate_twitter",
+          "check_tire_pressure",
+          "comment",
+          "displayCarStatus",
+          "display_log",
+          "estimate_distance",
+          "estimate_drive_feasibility_by_mileage",
+          "fillFuelTank",
+          "find_nearest_tire_shop",
+          "follow_user",
+          "gallon_to_liter",
+          "get_current_speed",
+          "get_outside_temperature_from_google",
+          "get_outside_temperature_from_weather_com",
+          "get_tweet",
+          "get_tweet_comments",
+          "get_user_stats",
+          "get_user_tweets"
+        ]
+      },
+      {
+        "id": "multi_turn_base_194",
+        "name": "get_all_airports",
+        "allowed_sample": [
+          "authenticate_travel",
+          "book_flight",
+          "cancel_booking",
+          "compute_exchange_rate",
+          "contact_customer_support",
+          "get_all_credit_cards",
+          "get_budget_fiscal_year",
+          "get_credit_card_balance",
+          "get_flight_cost",
+          "get_nearest_airport_by_city",
+          "list_all_airports",
+          "purchase_insurance",
+          "register_credit_card",
+          "retrieve_invoice",
+          "set_budget_limit",
+          "travel_get_login_status",
+          "verify_traveler_information"
+        ]
+      }
+    ],
+    "truncation_examples": [
+      {
+        "id": "multi_turn_base_36",
+        "input_tokens": 6030,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_long_context_51",
+        "input_tokens": 8578,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_long_context_71",
+        "input_tokens": 8635,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_long_context_89",
+        "input_tokens": 8682,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_long_context_97",
+        "input_tokens": 10293,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_long_context_103",
+        "input_tokens": 9492,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_long_context_104",
+        "input_tokens": 35587,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_long_context_106",
+        "input_tokens": 37232,
+        "output_tokens": 3726,
+        "computed_request_cap": 3726
+      },
+      {
+        "id": "multi_turn_long_context_114",
+        "input_tokens": 9607,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_long_context_115",
+        "input_tokens": 35589,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_long_context_117",
+        "input_tokens": 7952,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_long_context_117",
+        "input_tokens": 16081,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_long_context_127",
+        "input_tokens": 11780,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_long_context_139",
+        "input_tokens": 10712,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_long_context_149",
+        "input_tokens": 13644,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_long_context_154",
+        "input_tokens": 7121,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_long_context_162",
+        "input_tokens": 7411,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_long_context_192",
+        "input_tokens": 5500,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_miss_func_105",
+        "input_tokens": 3922,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_miss_func_123",
+        "input_tokens": 3721,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      }
+    ],
+    "limitations": [
+      "BFCL result JSONL does not persist provider finish_reason.",
+      "Cap-hit detection uses the handler's dynamic max-token rule and is a truncation symptom, not proof.",
+      "Natural-language and unclosed-tool steps are combined because some malformed outputs omit a closing tag."
+    ]
+  },
+  "sft": {
+    "counts": {
+      "tasks": 800,
+      "normal_tasks": 771,
+      "steps": 11010,
+      "assistant_entries": 11010,
+      "assistant_entries_with_reasoning": 10900,
+      "raw_tool_blocks": 8856,
+      "json_parseable_tool_blocks": 8830,
+      "schema_valid_tool_blocks": 8802,
+      "offered_name_tool_blocks": 8187,
+      "natural_language_or_unclosed_steps": 3108,
+      "tasks_with_tool_block": 771,
+      "tasks_with_schema_valid_call": 771,
+      "tasks_with_offered_name_call": 771,
+      "malformed_arguments_tool_blocks": 21,
+      "handler_error_entries": 26,
+      "generation_cap_hits": 116,
+      "unknown_name_tool_blocks": 615,
+      "invalid_json_tool_blocks": 26,
+      "empty_assistant_steps": 2,
+      "overflow_tasks": 29,
+      "invalid_schema_tool_blocks": 7,
+      "generation_near_cap": 2,
+      "empty_tool_blocks": 0,
+      "empty_handler_entries": 0
+    },
+    "rates": {
+      "overflow_task_rate": 0.03625,
+      "tasks_with_schema_valid_call_rate_among_normal": 1.0,
+      "tasks_with_offered_name_call_rate_among_normal": 1.0,
+      "json_parseable_rate_per_tool_block": 0.9970641373080398,
+      "offered_name_rate_per_schema_valid_block": 0.9301295160190866,
+      "mean_tool_blocks_per_normal_task": 11.486381322957198,
+      "mean_tool_blocks_per_all_tasks": 11.07,
+      "normal_tasks_without_tool_block_rate": 0.0
+    },
+    "token_counts": {
+      "input_observations": 11010,
+      "output_observations": 11010,
+      "max_input_tokens": 39655,
+      "max_output_tokens": 4096,
+      "finish_reason_available": false,
+      "generation_cap_hit_task_count": 110,
+      "generation_cap_hit_task_ids": [
+        "multi_turn_base_16",
+        "multi_turn_base_165",
+        "multi_turn_base_17",
+        "multi_turn_base_18",
+        "multi_turn_base_180",
+        "multi_turn_base_187",
+        "multi_turn_base_19",
+        "multi_turn_base_199",
+        "multi_turn_base_2",
+        "multi_turn_base_32",
+        "multi_turn_base_35",
+        "multi_turn_base_36",
+        "multi_turn_base_38",
+        "multi_turn_base_39",
+        "multi_turn_base_41",
+        "multi_turn_base_42",
+        "multi_turn_base_45",
+        "multi_turn_base_47",
+        "multi_turn_base_48",
+        "multi_turn_base_5",
+        "multi_turn_base_51",
+        "multi_turn_base_65",
+        "multi_turn_base_67",
+        "multi_turn_base_79",
+        "multi_turn_long_context_10",
+        "multi_turn_long_context_105",
+        "multi_turn_long_context_158",
+        "multi_turn_long_context_163",
+        "multi_turn_long_context_165",
+        "multi_turn_long_context_169",
+        "multi_turn_long_context_171",
+        "multi_turn_long_context_175",
+        "multi_turn_long_context_187",
+        "multi_turn_long_context_19",
+        "multi_turn_long_context_197",
+        "multi_turn_long_context_199",
+        "multi_turn_long_context_28",
+        "multi_turn_long_context_3",
+        "multi_turn_long_context_30",
+        "multi_turn_long_context_36",
+        "multi_turn_long_context_38",
+        "multi_turn_long_context_42",
+        "multi_turn_long_context_46",
+        "multi_turn_long_context_5",
+        "multi_turn_long_context_55",
+        "multi_turn_long_context_65",
+        "multi_turn_long_context_69",
+        "multi_turn_long_context_77",
+        "multi_turn_long_context_83",
+        "multi_turn_long_context_9",
+        "multi_turn_miss_func_113",
+        "multi_turn_miss_func_117",
+        "multi_turn_miss_func_12",
+        "multi_turn_miss_func_13",
+        "multi_turn_miss_func_16",
+        "multi_turn_miss_func_160",
+        "multi_turn_miss_func_163",
+        "multi_turn_miss_func_165",
+        "multi_turn_miss_func_176",
+        "multi_turn_miss_func_19",
+        "multi_turn_miss_func_193",
+        "multi_turn_miss_func_194",
+        "multi_turn_miss_func_195",
+        "multi_turn_miss_func_24",
+        "multi_turn_miss_func_25",
+        "multi_turn_miss_func_26",
+        "multi_turn_miss_func_28",
+        "multi_turn_miss_func_3",
+        "multi_turn_miss_func_31",
+        "multi_turn_miss_func_34",
+        "multi_turn_miss_func_35",
+        "multi_turn_miss_func_36",
+        "multi_turn_miss_func_37",
+        "multi_turn_miss_func_38",
+        "multi_turn_miss_func_39",
+        "multi_turn_miss_func_41",
+        "multi_turn_miss_func_42",
+        "multi_turn_miss_func_43",
+        "multi_turn_miss_func_45",
+        "multi_turn_miss_func_54",
+        "multi_turn_miss_func_7",
+        "multi_turn_miss_func_70",
+        "multi_turn_miss_func_9",
+        "multi_turn_miss_param_105",
+        "multi_turn_miss_param_109",
+        "multi_turn_miss_param_166",
+        "multi_turn_miss_param_170",
+        "multi_turn_miss_param_171",
+        "multi_turn_miss_param_174",
+        "multi_turn_miss_param_175",
+        "multi_turn_miss_param_176",
+        "multi_turn_miss_param_18",
+        "multi_turn_miss_param_180",
+        "multi_turn_miss_param_183",
+        "multi_turn_miss_param_19",
+        "multi_turn_miss_param_194",
+        "multi_turn_miss_param_197",
+        "multi_turn_miss_param_198",
+        "multi_turn_miss_param_24",
+        "multi_turn_miss_param_25",
+        "multi_turn_miss_param_3",
+        "multi_turn_miss_param_30",
+        "multi_turn_miss_param_35",
+        "multi_turn_miss_param_36",
+        "multi_turn_miss_param_38",
+        "multi_turn_miss_param_45",
+        "multi_turn_miss_param_53",
+        "multi_turn_miss_param_79",
+        "multi_turn_miss_param_87",
+        "multi_turn_miss_param_9"
+      ],
+      "generation_cap_hit_correct": 1,
+      "generation_cap_hit_wrong": 109
+    },
+    "invalid_examples": [
+      {
+        "id": "multi_turn_base_1",
+        "raw": "{\"name\": \"pwd\"}"
+      },
+      {
+        "id": "multi_turn_base_8",
+        "raw": "{\"name\": \"post_tweet\", \"arguments\": {\"content\": \"diff_lines\": \"- Observation 1: Normal Observation 2: Anomaly detected Observation 3: Normal Observation 4: Anomaly detected \\n+ Observation A: Normal Observation B: Normal Observation C: Anomaly detected\"}}"
+      },
+      {
+        "id": "multi_turn_base_17",
+        "raw": "{\"name\": \"grep\", \"arguments\": {\"file_name\": None, \"pattern\": \"Kelly's test report\"}}"
+      },
+      {
+        "id": "multi_turn_base_31",
+        "raw": "{\"name\": \"ls\"}"
+      },
+      {
+        "id": "multi_turn_base_33",
+        "raw": "{\"name\": \"view_messages_sent\"}"
+      },
+      {
+        "id": "multi_turn_base_37",
+        "raw": "{\"name\": \"pwd\"}"
+      },
+      {
+        "id": "multi_turn_base_41",
+        "raw": "{\"name\": \"pwd\"}"
+      },
+      {
+        "id": "multi_turn_base_47",
+        "raw": "{\"name\": \"find\", \"arguments\": {\"name\": None}}"
+      },
+      {
+        "id": "multi_turn_base_47",
+        "raw": "{\"name\": \"grep\", \"arguments\": {\"file_name\": \"student_record.txt\", \"pattern\": \"^[A-Z]\\: \"}}"
+      },
+      {
+        "id": "multi_turn_base_69",
+        "raw": "{\"name\": \"lockDoors\", \"arguments\": {\"unlock\": False, \"door\": [\"driver\", \"passenger\", \"rear_left\", \"rear_right\"]}}"
+      }
+    ],
+    "unknown_name_examples": [
+      {
+        "id": "multi_turn_base_7",
+        "name": "error",
+        "allowed_sample": [
+          "authenticate_twitter",
+          "cat",
+          "cd",
+          "comment",
+          "cp",
+          "diff",
+          "du",
+          "echo",
+          "find",
+          "follow_user",
+          "get_tweet",
+          "get_tweet_comments",
+          "get_user_stats",
+          "get_user_tweets",
+          "grep",
+          "list_all_following",
+          "ls",
+          "mention",
+          "mkdir",
+          "mv"
+        ]
+      },
+      {
+        "id": "multi_turn_base_56",
+        "name": "get_current_fuel_level",
+        "allowed_sample": [
+          "activateParkingBrake",
+          "adjustClimateControl",
+          "check_tire_pressure",
+          "displayCarStatus",
+          "display_log",
+          "estimate_distance",
+          "estimate_drive_feasibility_by_mileage",
+          "fillFuelTank",
+          "find_nearest_tire_shop",
+          "gallon_to_liter",
+          "get_current_speed",
+          "get_outside_temperature_from_google",
+          "get_outside_temperature_from_weather_com",
+          "get_zipcode_based_on_city",
+          "liter_to_gallon",
+          "lockDoors",
+          "pressBrakePedal",
+          "releaseBrakePedal",
+          "setCruiseControl",
+          "setHeadlights"
+        ]
+      },
+      {
+        "id": "multi_turn_base_56",
+        "name": "get_current_fuel_level",
+        "allowed_sample": [
+          "activateParkingBrake",
+          "adjustClimateControl",
+          "check_tire_pressure",
+          "displayCarStatus",
+          "display_log",
+          "estimate_distance",
+          "estimate_drive_feasibility_by_mileage",
+          "fillFuelTank",
+          "find_nearest_tire_shop",
+          "gallon_to_liter",
+          "get_current_speed",
+          "get_outside_temperature_from_google",
+          "get_outside_temperature_from_weather_com",
+          "get_zipcode_based_on_city",
+          "liter_to_gallon",
+          "lockDoors",
+          "pressBrakePedal",
+          "releaseBrakePedal",
+          "setCruiseControl",
+          "setHeadlights"
+        ]
+      },
+      {
+        "id": "multi_turn_base_61",
+        "name": "display_car_status",
+        "allowed_sample": [
+          "activateParkingBrake",
+          "add_contact",
+          "adjustClimateControl",
+          "check_tire_pressure",
+          "delete_message",
+          "displayCarStatus",
+          "display_log",
+          "estimate_distance",
+          "estimate_drive_feasibility_by_mileage",
+          "fillFuelTank",
+          "find_nearest_tire_shop",
+          "gallon_to_liter",
+          "get_current_speed",
+          "get_message_stats",
+          "get_outside_temperature_from_google",
+          "get_outside_temperature_from_weather_com",
+          "get_user_id",
+          "get_zipcode_based_on_city",
+          "list_users",
+          "liter_to_gallon"
+        ]
+      },
+      {
+        "id": "multi_turn_base_61",
+        "name": "display_car_status",
+        "allowed_sample": [
+          "activateParkingBrake",
+          "add_contact",
+          "adjustClimateControl",
+          "check_tire_pressure",
+          "delete_message",
+          "displayCarStatus",
+          "display_log",
+          "estimate_distance",
+          "estimate_drive_feasibility_by_mileage",
+          "fillFuelTank",
+          "find_nearest_tire_shop",
+          "gallon_to_liter",
+          "get_current_speed",
+          "get_message_stats",
+          "get_outside_temperature_from_google",
+          "get_outside_temperature_from_weather_com",
+          "get_user_id",
+          "get_zipcode_based_on_city",
+          "list_users",
+          "liter_to_gallon"
+        ]
+      },
+      {
+        "id": "multi_turn_base_61",
+        "name": "get_battery_voltage",
+        "allowed_sample": [
+          "activateParkingBrake",
+          "add_contact",
+          "adjustClimateControl",
+          "check_tire_pressure",
+          "delete_message",
+          "displayCarStatus",
+          "display_log",
+          "estimate_distance",
+          "estimate_drive_feasibility_by_mileage",
+          "fillFuelTank",
+          "find_nearest_tire_shop",
+          "gallon_to_liter",
+          "get_current_speed",
+          "get_message_stats",
+          "get_outside_temperature_from_google",
+          "get_outside_temperature_from_weather_com",
+          "get_user_id",
+          "get_zipcode_based_on_city",
+          "list_users",
+          "liter_to_gallon"
+        ]
+      },
+      {
+        "id": "multi_turn_base_66",
+        "name": "setNavigation",
+        "allowed_sample": [
+          "activateParkingBrake",
+          "adjustClimateControl",
+          "check_tire_pressure",
+          "displayCarStatus",
+          "display_log",
+          "estimate_distance",
+          "estimate_drive_feasibility_by_mileage",
+          "fillFuelTank",
+          "find_nearest_tire_shop",
+          "gallon_to_liter",
+          "get_current_speed",
+          "get_outside_temperature_from_google",
+          "get_outside_temperature_from_weather_com",
+          "get_zipcode_based_on_city",
+          "liter_to_gallon",
+          "lockDoors",
+          "pressBrakePedal",
+          "releaseBrakePedal",
+          "setCruiseControl",
+          "setHeadlights"
+        ]
+      },
+      {
+        "id": "multi_turn_base_68",
+        "name": "get_tank_capacity",
+        "allowed_sample": [
+          "activateParkingBrake",
+          "adjustClimateControl",
+          "authenticate_twitter",
+          "check_tire_pressure",
+          "comment",
+          "displayCarStatus",
+          "display_log",
+          "estimate_distance",
+          "estimate_drive_feasibility_by_mileage",
+          "fillFuelTank",
+          "find_nearest_tire_shop",
+          "follow_user",
+          "gallon_to_liter",
+          "get_current_speed",
+          "get_outside_temperature_from_google",
+          "get_outside_temperature_from_weather_com",
+          "get_tweet",
+          "get_tweet_comments",
+          "get_user_stats",
+          "get_user_tweets"
+        ]
+      },
+      {
+        "id": "multi_turn_base_72",
+        "name": "igniteEngine",
+        "allowed_sample": [
+          "activateParkingBrake",
+          "add_contact",
+          "adjustClimateControl",
+          "check_tire_pressure",
+          "delete_message",
+          "displayCarStatus",
+          "display_log",
+          "estimate_distance",
+          "estimate_drive_feasibility_by_mileage",
+          "fillFuelTank",
+          "find_nearest_tire_shop",
+          "gallon_to_liter",
+          "get_current_speed",
+          "get_message_stats",
+          "get_outside_temperature_from_google",
+          "get_outside_temperature_from_weather_com",
+          "get_user_id",
+          "get_zipcode_based_on_city",
+          "list_users",
+          "liter_to_gallon"
+        ]
+      },
+      {
+        "id": "multi_turn_base_72",
+        "name": "get_battery_voltage",
+        "allowed_sample": [
+          "activateParkingBrake",
+          "add_contact",
+          "adjustClimateControl",
+          "check_tire_pressure",
+          "delete_message",
+          "displayCarStatus",
+          "display_log",
+          "estimate_distance",
+          "estimate_drive_feasibility_by_mileage",
+          "fillFuelTank",
+          "find_nearest_tire_shop",
+          "gallon_to_liter",
+          "get_current_speed",
+          "get_message_stats",
+          "get_outside_temperature_from_google",
+          "get_outside_temperature_from_weather_com",
+          "get_user_id",
+          "get_zipcode_based_on_city",
+          "list_users",
+          "liter_to_gallon"
+        ]
+      }
+    ],
+    "truncation_examples": [
+      {
+        "id": "multi_turn_base_2",
+        "input_tokens": 5863,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_5",
+        "input_tokens": 6418,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_16",
+        "input_tokens": 3547,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_16",
+        "input_tokens": 7714,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_17",
+        "input_tokens": 5411,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_18",
+        "input_tokens": 6230,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_19",
+        "input_tokens": 5420,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_32",
+        "input_tokens": 6296,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_35",
+        "input_tokens": 6073,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_36",
+        "input_tokens": 6186,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_36",
+        "input_tokens": 10667,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_38",
+        "input_tokens": 3750,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_39",
+        "input_tokens": 3669,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_41",
+        "input_tokens": 5259,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_42",
+        "input_tokens": 6114,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_45",
+        "input_tokens": 6129,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_47",
+        "input_tokens": 6115,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_48",
+        "input_tokens": 5532,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_51",
+        "input_tokens": 6460,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      },
+      {
+        "id": "multi_turn_base_65",
+        "input_tokens": 7730,
+        "output_tokens": 4096,
+        "computed_request_cap": 4096
+      }
+    ],
+    "limitations": [
+      "BFCL result JSONL does not persist provider finish_reason.",
+      "Cap-hit detection uses the handler's dynamic max-token rule and is a truncation symptom, not proof.",
+      "Natural-language and unclosed-tool steps are combined because some malformed outputs omit a closing tag."
+    ]
+  },
+  "run_config_comparison": {
+    "base": {
+      "model_path": "/home/u2024311031/workspace/envfactory_repro_1p7b/repro_1p7b/models/Qwen3-1.7B",
+      "dtype": "bfloat16",
+      "context_length": "40960",
+      "max_total_tokens": "65536",
+      "tp_size": "1",
+      "random_seed": "668997380",
+      "chat_template": "None",
+      "reasoning_parser": "None",
+      "tool_call_parser": "None",
+      "sampling_defaults": "'model'",
+      "attention_backend": "'triton'",
+      "sampling_backend": "'pytorch'",
+      "enable_deterministic_inference": "False",
+      "bfcl_model_id": "Qwen/Qwen3-1.7B-FC",
+      "bfcl_backend": "sglang",
+      "temperature": "0.7",
+      "top_p_explicit": false,
+      "request_seed_explicit": false,
+      "test_category": "multi_turn",
+      "include_input_log": true
+    },
+    "sft": {
+      "model_path": "/home/u2024311031/workspace/envfactory_repro_1p7b/repro_1p7b/checkpoints/baseline_sft_8k_1p7b",
+      "dtype": "bfloat16",
+      "context_length": "40960",
+      "max_total_tokens": "65536",
+      "tp_size": "1",
+      "random_seed": "315606697",
+      "chat_template": "None",
+      "reasoning_parser": "None",
+      "tool_call_parser": "None",
+      "sampling_defaults": "'model'",
+      "attention_backend": "'triton'",
+      "sampling_backend": "'pytorch'",
+      "enable_deterministic_inference": "False",
+      "bfcl_model_id": "Qwen/Qwen3-1.7B-FC",
+      "bfcl_backend": "sglang",
+      "temperature": "0.7",
+      "top_p_explicit": false,
+      "request_seed_explicit": false,
+      "test_category": "multi_turn",
+      "include_input_log": true
+    },
+    "differences": {
+      "model_path": {
+        "base": "/home/u2024311031/workspace/envfactory_repro_1p7b/repro_1p7b/models/Qwen3-1.7B",
+        "sft": "/home/u2024311031/workspace/envfactory_repro_1p7b/repro_1p7b/checkpoints/baseline_sft_8k_1p7b"
+      },
+      "random_seed": {
+        "base": "668997380",
+        "sft": "315606697"
+      }
+    },
+    "expected_model_difference_only": false,
+    "evidence": "Resolved SGLang ServerArgs logs plus the shared BFCL driver.",
+    "limitation": "The BFCL request did not pass a seed; the two resolved server random seeds differ."
+  },
+  "constants": {
+    "context_length": 40960,
+    "max_new_tokens": 4096
+  }
+}
