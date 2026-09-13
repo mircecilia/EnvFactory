@@ -119,8 +119,24 @@ if [ -e "$BFCL_RUN_ROOT" ]; then
 fi
 
 set_status STARTING_BFCL
+
 if [ "$DRY_RUN" = 1 ]; then
   log "DRY_RUN would start BFCL: $BFCL_LAUNCHER"
   set_status DONE
   finish 0
 fi
+
+log "starting BFCL launcher: $BFCL_LAUNCHER"
+
+"$BFCL_LAUNCHER"
+bfcl_rc=$?
+
+if [ "$bfcl_rc" -eq 0 ]; then
+  log "BFCL completed successfully"
+  set_status DONE
+else
+  log "BFCL failed with exit code $bfcl_rc"
+  set_status BFCL_FAILED
+fi
+
+finish "$bfcl_rc"
