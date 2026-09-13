@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "input": "repro_1p7b/data/parameter_aware_v1/mcp_factory_sft_parameter_aware.json",
+  "sample_count": 26463,
+  "bad_indices": [],
+  "bytes": 980403044,
+  "sha256": "a043cdc651363c1dbc68da543262f92807e6940016a2c973b6b7e8131cb9517b"
+}

@@ -1,0 +1,13 @@
+{
+  "env_factory_parameter_aware_v1": {
+    "file_name": "../../data/parameter_aware_v1/mcp_factory_sft_parameter_aware.json",
+    "formatting": "alpaca",
+    "columns": {
+      "prompt": "instruction",
+      "query": "input",
+      "response": "output",
+      "history": "history",
+      "system": "system"
+    }
+  }
+}

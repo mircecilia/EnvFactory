@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "timestamp": "2026-09-13T20:04:22+08:00",
+  "base_model": "repro_1p7b/models/Qwen3-1.7B",
+  "dataset": "env_factory_parameter_aware_v1",
+  "config": "repro_1p7b/configs/llamafactory_sft_parameter_aware_smoke_8k_1p7b.yaml",
+  "environment": "/home/u2024311031/.conda/envs/envfactory_sglang_1p7b",
+  "gpus": [
+    0,
+    1
+  ],
+  "sample_count": 64,
+  "effective_batch_size": 64,
+  "optimizer_steps": 1,
+  "cutoff_len": 8192,
+  "trainable_parameters": 1720574976,
+  "all_parameters": 1720574976,
+  "finetuning_type": "full",
+  "deepspeed": "ZeRO-3",
+  "train_loss": 1.7975304126739502,
+  "grad_norm": 73.6656472048637,
+  "train_runtime_seconds": 55.7397,
+  "exit_code": 0,
+  "gpu_memory_after_mib": [
+    0,
+    0
+  ],
+  "log": "repro_1p7b/logs/parameter_aware/sft_smoke.log",
+  "output": "repro_1p7b/checkpoints/parameter_aware_sft_smoke_8k_1p7b"
+}
