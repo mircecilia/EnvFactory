@@ -1,0 +1,834 @@
+{
+  "demo_only": true,
+  "cpu_only": true,
+  "profiles": [
+    {
+      "schema_version": "graph_frontier_profile_v1",
+      "task_id": "happy",
+      "terminal_success": true,
+      "state_success": true,
+      "hint_condition": "unknown",
+      "expected_tool_nodes": [
+        "lookup_user",
+        "lookup_order",
+        "cancel_order"
+      ],
+      "actual_tool_nodes": [
+        {
+          "step_index": 0,
+          "tool_name": "lookup_user",
+          "arguments": {
+            "email": "demo@example.test"
+          },
+          "result": {
+            "user_id": "user-7"
+          },
+          "execution_success": true,
+          "state_changing": false,
+          "call_index": 0,
+          "expected": true
+        },
+        {
+          "step_index": 2,
+          "tool_name": "lookup_order",
+          "arguments": {
+            "user_id": "user-7"
+          },
+          "result": {
+            "order_id": "order-9"
+          },
+          "execution_success": true,
+          "state_changing": false,
+          "call_index": 1,
+          "expected": true
+        },
+        {
+          "step_index": 4,
+          "tool_name": "cancel_order",
+          "arguments": {
+            "order_id": "order-9"
+          },
+          "result": {
+            "cancelled": true
+          },
+          "execution_success": true,
+          "state_changing": true,
+          "call_index": 2,
+          "expected": true
+        }
+      ],
+      "expected_dependency_edges": [
+        {
+          "edge_id": "user-to-order",
+          "producer_tool": "lookup_user",
+          "consumer_tool": "lookup_order",
+          "edge_type": "parameter_flow",
+          "source_parameter": "user_id",
+          "target_parameter": "user_id",
+          "required": true,
+          "internal_parameter": true
+        },
+        {
+          "edge_id": "order-to-cancel",
+          "producer_tool": "lookup_order",
+          "consumer_tool": "cancel_order",
+          "edge_type": "parameter_flow",
+          "source_parameter": "order_id",
+          "target_parameter": "order_id",
+          "required": true,
+          "internal_parameter": true
+        }
+      ],
+      "satisfied_dependency_edges": [
+        "user-to-order",
+        "order-to-cancel"
+      ],
+      "dependency_edge_checks": [
+        {
+          "edge_id": "user-to-order",
+          "edge_type": "parameter_flow",
+          "producer_tool": "lookup_user",
+          "consumer_tool": "lookup_order",
+          "producer_step": 0,
+          "consumer_step": 2,
+          "dependency_depth": 1,
+          "required": true,
+          "internal_parameter": true,
+          "status": "satisfied",
+          "success": true,
+          "root_cause": false,
+          "propagated_from": "unknown",
+          "source_value_available": true,
+          "target_value_available": true
+        },
+        {
+          "edge_id": "order-to-cancel",
+          "edge_type": "parameter_flow",
+          "producer_tool": "lookup_order",
+          "consumer_tool": "cancel_order",
+          "producer_step": 2,
+          "consumer_step": 4,
+          "dependency_depth": 2,
+          "required": true,
+          "internal_parameter": true,
+          "status": "satisfied",
+          "success": true,
+          "root_cause": false,
+          "propagated_from": "unknown",
+          "source_value_available": true,
+          "target_value_available": true
+        }
+      ],
+      "internal_parameter_flow_checks": [
+        {
+          "edge_id": "user-to-order",
+          "edge_type": "parameter_flow",
+          "producer_tool": "lookup_user",
+          "consumer_tool": "lookup_order",
+          "producer_step": 0,
+          "consumer_step": 2,
+          "dependency_depth": 1,
+          "required": true,
+          "internal_parameter": true,
+          "status": "satisfied",
+          "success": true,
+          "root_cause": false,
+          "propagated_from": "unknown",
+          "source_value_available": true,
+          "target_value_available": true
+        },
+        {
+          "edge_id": "order-to-cancel",
+          "edge_type": "parameter_flow",
+          "producer_tool": "lookup_order",
+          "consumer_tool": "cancel_order",
+          "producer_step": 2,
+          "consumer_step": 4,
+          "dependency_depth": 2,
+          "required": true,
+          "internal_parameter": true,
+          "status": "satisfied",
+          "success": true,
+          "root_cause": false,
+          "propagated_from": "unknown",
+          "source_value_available": true,
+          "target_value_available": true
+        }
+      ],
+      "first_failed_edge": "unknown",
+      "first_failure_step": "unknown",
+      "max_dependency_depth_reached": 2,
+      "redundant_tool_calls": [],
+      "extra_tool_calls": [],
+      "missing_expected_tools": [],
+      "root_cause_failures": [],
+      "downstream_propagated_failures": [],
+      "adapter_notes": []
+    },
+    {
+      "schema_version": "graph_frontier_profile_v1",
+      "task_id": "wrong-propagation",
+      "terminal_success": false,
+      "state_success": false,
+      "hint_condition": "unknown",
+      "expected_tool_nodes": [
+        "lookup_user",
+        "lookup_order",
+        "cancel_order"
+      ],
+      "actual_tool_nodes": [
+        {
+          "step_index": 0,
+          "tool_name": "lookup_user",
+          "arguments": {
+            "email": "demo@example.test"
+          },
+          "result": {
+            "user_id": "user-7"
+          },
+          "execution_success": true,
+          "state_changing": false,
+          "call_index": 0,
+          "expected": true
+        },
+        {
+          "step_index": 2,
+          "tool_name": "lookup_order",
+          "arguments": {
+            "user_id": "wrong"
+          },
+          "result": {
+            "order_id": "order-9"
+          },
+          "execution_success": false,
+          "state_changing": false,
+          "call_index": 1,
+          "expected": true
+        },
+        {
+          "step_index": 4,
+          "tool_name": "cancel_order",
+          "arguments": {
+            "order_id": "order-9"
+          },
+          "result": {
+            "cancelled": false
+          },
+          "execution_success": false,
+          "state_changing": true,
+          "call_index": 2,
+          "expected": true
+        }
+      ],
+      "expected_dependency_edges": [
+        {
+          "edge_id": "user-to-order",
+          "producer_tool": "lookup_user",
+          "consumer_tool": "lookup_order",
+          "edge_type": "parameter_flow",
+          "source_parameter": "user_id",
+          "target_parameter": "user_id",
+          "required": true,
+          "internal_parameter": true
+        },
+        {
+          "edge_id": "order-to-cancel",
+          "producer_tool": "lookup_order",
+          "consumer_tool": "cancel_order",
+          "edge_type": "parameter_flow",
+          "source_parameter": "order_id",
+          "target_parameter": "order_id",
+          "required": true,
+          "internal_parameter": true
+        }
+      ],
+      "satisfied_dependency_edges": [],
+      "dependency_edge_checks": [
+        {
+          "edge_id": "user-to-order",
+          "edge_type": "parameter_flow",
+          "producer_tool": "lookup_user",
+          "consumer_tool": "lookup_order",
+          "producer_step": 0,
+          "consumer_step": 2,
+          "dependency_depth": 1,
+          "required": true,
+          "internal_parameter": true,
+          "status": "failed_wrong_value",
+          "success": false,
+          "root_cause": true,
+          "propagated_from": "unknown",
+          "source_value_available": true,
+          "target_value_available": true
+        },
+        {
+          "edge_id": "order-to-cancel",
+          "edge_type": "parameter_flow",
+          "producer_tool": "lookup_order",
+          "consumer_tool": "cancel_order",
+          "producer_step": 2,
+          "consumer_step": 4,
+          "dependency_depth": 2,
+          "required": true,
+          "internal_parameter": true,
+          "status": "propagated_upstream_failure",
+          "success": false,
+          "root_cause": false,
+          "propagated_from": "root-0:wrong_propagated_value",
+          "source_value_available": "unknown",
+          "target_value_available": "unknown"
+        }
+      ],
+      "internal_parameter_flow_checks": [
+        {
+          "edge_id": "user-to-order",
+          "edge_type": "parameter_flow",
+          "producer_tool": "lookup_user",
+          "consumer_tool": "lookup_order",
+          "producer_step": 0,
+          "consumer_step": 2,
+          "dependency_depth": 1,
+          "required": true,
+          "internal_parameter": true,
+          "status": "failed_wrong_value",
+          "success": false,
+          "root_cause": true,
+          "propagated_from": "unknown",
+          "source_value_available": true,
+          "target_value_available": true
+        },
+        {
+          "edge_id": "order-to-cancel",
+          "edge_type": "parameter_flow",
+          "producer_tool": "lookup_order",
+          "consumer_tool": "cancel_order",
+          "producer_step": 2,
+          "consumer_step": 4,
+          "dependency_depth": 2,
+          "required": true,
+          "internal_parameter": true,
+          "status": "propagated_upstream_failure",
+          "success": false,
+          "root_cause": false,
+          "propagated_from": "root-0:wrong_propagated_value",
+          "source_value_available": "unknown",
+          "target_value_available": "unknown"
+        }
+      ],
+      "first_failed_edge": {
+        "edge_id": "user-to-order",
+        "edge_type": "parameter_flow",
+        "producer_tool": "lookup_user",
+        "consumer_tool": "lookup_order",
+        "producer_step": 0,
+        "consumer_step": 2,
+        "dependency_depth": 1,
+        "required": true,
+        "internal_parameter": true,
+        "status": "failed_wrong_value",
+        "success": false,
+        "root_cause": true,
+        "propagated_from": "unknown",
+        "source_value_available": true,
+        "target_value_available": true
+      },
+      "first_failure_step": 2,
+      "max_dependency_depth_reached": 0,
+      "redundant_tool_calls": [],
+      "extra_tool_calls": [],
+      "missing_expected_tools": [],
+      "root_cause_failures": [
+        {
+          "failure_id": "root-0:wrong_propagated_value",
+          "type": "wrong_propagated_value",
+          "step_index": 2,
+          "tool_name": "lookup_order",
+          "edge_id": "user-to-order",
+          "detail": "Consumer argument did not equal the grounded producer result."
+        }
+      ],
+      "downstream_propagated_failures": [
+        {
+          "type": "tool_execution_failure",
+          "step_index": 2,
+          "tool_name": "lookup_order",
+          "edge_id": "unknown",
+          "propagated_from": "root-0:wrong_propagated_value"
+        },
+        {
+          "type": "dependency_edge_blocked",
+          "step_index": 4,
+          "tool_name": "cancel_order",
+          "edge_id": "order-to-cancel",
+          "propagated_from": "root-0:wrong_propagated_value"
+        },
+        {
+          "type": "tool_execution_failure",
+          "step_index": 4,
+          "tool_name": "cancel_order",
+          "edge_id": "unknown",
+          "propagated_from": "root-0:wrong_propagated_value"
+        },
+        {
+          "type": "final_state_failure",
+          "step_index": "unknown",
+          "tool_name": "unknown",
+          "edge_id": "unknown",
+          "propagated_from": "root-0:wrong_propagated_value"
+        }
+      ],
+      "adapter_notes": []
+    },
+    {
+      "schema_version": "graph_frontier_profile_v1",
+      "task_id": "final-state-only",
+      "terminal_success": false,
+      "state_success": false,
+      "hint_condition": "unknown",
+      "expected_tool_nodes": [
+        "lookup_user",
+        "lookup_order",
+        "cancel_order"
+      ],
+      "actual_tool_nodes": [
+        {
+          "step_index": 0,
+          "tool_name": "lookup_user",
+          "arguments": {
+            "email": "demo@example.test"
+          },
+          "result": {
+            "user_id": "user-7"
+          },
+          "execution_success": true,
+          "state_changing": false,
+          "call_index": 0,
+          "expected": true
+        },
+        {
+          "step_index": 2,
+          "tool_name": "lookup_order",
+          "arguments": {
+            "user_id": "user-7"
+          },
+          "result": {
+            "order_id": "order-9"
+          },
+          "execution_success": true,
+          "state_changing": false,
+          "call_index": 1,
+          "expected": true
+        },
+        {
+          "step_index": 4,
+          "tool_name": "cancel_order",
+          "arguments": {
+            "order_id": "order-9"
+          },
+          "result": {
+            "cancelled": true
+          },
+          "execution_success": true,
+          "state_changing": true,
+          "call_index": 2,
+          "expected": true
+        }
+      ],
+      "expected_dependency_edges": [
+        {
+          "edge_id": "user-to-order",
+          "producer_tool": "lookup_user",
+          "consumer_tool": "lookup_order",
+          "edge_type": "parameter_flow",
+          "source_parameter": "user_id",
+          "target_parameter": "user_id",
+          "required": true,
+          "internal_parameter": true
+        },
+        {
+          "edge_id": "order-to-cancel",
+          "producer_tool": "lookup_order",
+          "consumer_tool": "cancel_order",
+          "edge_type": "parameter_flow",
+          "source_parameter": "order_id",
+          "target_parameter": "order_id",
+          "required": true,
+          "internal_parameter": true
+        }
+      ],
+      "satisfied_dependency_edges": [
+        "user-to-order",
+        "order-to-cancel"
+      ],
+      "dependency_edge_checks": [
+        {
+          "edge_id": "user-to-order",
+          "edge_type": "parameter_flow",
+          "producer_tool": "lookup_user",
+          "consumer_tool": "lookup_order",
+          "producer_step": 0,
+          "consumer_step": 2,
+          "dependency_depth": 1,
+          "required": true,
+          "internal_parameter": true,
+          "status": "satisfied",
+          "success": true,
+          "root_cause": false,
+          "propagated_from": "unknown",
+          "source_value_available": true,
+          "target_value_available": true
+        },
+        {
+          "edge_id": "order-to-cancel",
+          "edge_type": "parameter_flow",
+          "producer_tool": "lookup_order",
+          "consumer_tool": "cancel_order",
+          "producer_step": 2,
+          "consumer_step": 4,
+          "dependency_depth": 2,
+          "required": true,
+          "internal_parameter": true,
+          "status": "satisfied",
+          "success": true,
+          "root_cause": false,
+          "propagated_from": "unknown",
+          "source_value_available": true,
+          "target_value_available": true
+        }
+      ],
+      "internal_parameter_flow_checks": [
+        {
+          "edge_id": "user-to-order",
+          "edge_type": "parameter_flow",
+          "producer_tool": "lookup_user",
+          "consumer_tool": "lookup_order",
+          "producer_step": 0,
+          "consumer_step": 2,
+          "dependency_depth": 1,
+          "required": true,
+          "internal_parameter": true,
+          "status": "satisfied",
+          "success": true,
+          "root_cause": false,
+          "propagated_from": "unknown",
+          "source_value_available": true,
+          "target_value_available": true
+        },
+        {
+          "edge_id": "order-to-cancel",
+          "edge_type": "parameter_flow",
+          "producer_tool": "lookup_order",
+          "consumer_tool": "cancel_order",
+          "producer_step": 2,
+          "consumer_step": 4,
+          "dependency_depth": 2,
+          "required": true,
+          "internal_parameter": true,
+          "status": "satisfied",
+          "success": true,
+          "root_cause": false,
+          "propagated_from": "unknown",
+          "source_value_available": true,
+          "target_value_available": true
+        }
+      ],
+      "first_failed_edge": "unknown",
+      "first_failure_step": "unknown",
+      "max_dependency_depth_reached": 2,
+      "redundant_tool_calls": [],
+      "extra_tool_calls": [],
+      "missing_expected_tools": [],
+      "root_cause_failures": [
+        {
+          "failure_id": "root-0:final_state_failure",
+          "type": "final_state_failure",
+          "step_index": "unknown",
+          "tool_name": "unknown",
+          "edge_id": "unknown",
+          "detail": "Explicit final-state verifier failed after no earlier grounded failure."
+        }
+      ],
+      "downstream_propagated_failures": [],
+      "adapter_notes": []
+    }
+  ],
+  "capability_map": {
+    "schema_version": "graph_frontier_capability_map_v1",
+    "profile_count": 3,
+    "metrics": {
+      "depth:1": {
+        "successes": 2,
+        "attempts": 3,
+        "pass_rate": 0.6,
+        "frontier_score": 0.96,
+        "weakness": 0.4,
+        "learning_progress": null,
+        "hint_regret": null,
+        "hint_evidence": null,
+        "smoothing": "Beta(1,1)"
+      },
+      "depth:2": {
+        "successes": 2,
+        "attempts": 3,
+        "pass_rate": 0.6,
+        "frontier_score": 0.96,
+        "weakness": 0.4,
+        "learning_progress": null,
+        "hint_regret": null,
+        "hint_evidence": null,
+        "smoothing": "Beta(1,1)"
+      },
+      "edge:order-to-cancel": {
+        "successes": 2,
+        "attempts": 3,
+        "pass_rate": 0.6,
+        "frontier_score": 0.96,
+        "weakness": 0.4,
+        "learning_progress": null,
+        "hint_regret": null,
+        "hint_evidence": null,
+        "smoothing": "Beta(1,1)"
+      },
+      "edge:user-to-order": {
+        "successes": 2,
+        "attempts": 3,
+        "pass_rate": 0.6,
+        "frontier_score": 0.96,
+        "weakness": 0.4,
+        "learning_progress": null,
+        "hint_regret": null,
+        "hint_evidence": null,
+        "smoothing": "Beta(1,1)"
+      },
+      "edge_type:parameter_flow": {
+        "successes": 4,
+        "attempts": 6,
+        "pass_rate": 0.625,
+        "frontier_score": 0.9375,
+        "weakness": 0.375,
+        "learning_progress": null,
+        "hint_regret": null,
+        "hint_evidence": null,
+        "smoothing": "Beta(1,1)"
+      },
+      "internal_parameter_flow": {
+        "successes": 4,
+        "attempts": 6,
+        "pass_rate": 0.625,
+        "frontier_score": 0.9375,
+        "weakness": 0.375,
+        "learning_progress": null,
+        "hint_regret": null,
+        "hint_evidence": null,
+        "smoothing": "Beta(1,1)"
+      },
+      "terminal": {
+        "successes": 1,
+        "attempts": 3,
+        "pass_rate": 0.4,
+        "frontier_score": 0.96,
+        "weakness": 0.6,
+        "learning_progress": null,
+        "hint_regret": null,
+        "hint_evidence": null,
+        "smoothing": "Beta(1,1)"
+      },
+      "tool_class:query": {
+        "successes": 5,
+        "attempts": 6,
+        "pass_rate": 0.75,
+        "frontier_score": 0.75,
+        "weakness": 0.25,
+        "learning_progress": null,
+        "hint_regret": null,
+        "hint_evidence": null,
+        "smoothing": "Beta(1,1)"
+      },
+      "tool_class:state_changing": {
+        "successes": 2,
+        "attempts": 3,
+        "pass_rate": 0.6,
+        "frontier_score": 0.96,
+        "weakness": 0.4,
+        "learning_progress": null,
+        "hint_regret": null,
+        "hint_evidence": null,
+        "smoothing": "Beta(1,1)"
+      }
+    },
+    "dependency_depth_buckets": {
+      "1": {
+        "successes": 2,
+        "attempts": 3,
+        "pass_rate": 0.6,
+        "frontier_score": 0.96,
+        "weakness": 0.4,
+        "learning_progress": null,
+        "hint_regret": null,
+        "hint_evidence": null,
+        "smoothing": "Beta(1,1)"
+      },
+      "2": {
+        "successes": 2,
+        "attempts": 3,
+        "pass_rate": 0.6,
+        "frontier_score": 0.96,
+        "weakness": 0.4,
+        "learning_progress": null,
+        "hint_regret": null,
+        "hint_evidence": null,
+        "smoothing": "Beta(1,1)"
+      }
+    },
+    "edge_type_success": {
+      "parameter_flow": {
+        "successes": 4,
+        "attempts": 6,
+        "pass_rate": 0.625,
+        "frontier_score": 0.9375,
+        "weakness": 0.375,
+        "learning_progress": null,
+        "hint_regret": null,
+        "hint_evidence": null,
+        "smoothing": "Beta(1,1)"
+      }
+    },
+    "internal_parameter_propagation": {
+      "successes": 4,
+      "attempts": 6,
+      "pass_rate": 0.625,
+      "frontier_score": 0.9375,
+      "weakness": 0.375,
+      "learning_progress": null,
+      "hint_regret": null,
+      "hint_evidence": null,
+      "smoothing": "Beta(1,1)"
+    },
+    "tool_class_success": {
+      "query": {
+        "successes": 5,
+        "attempts": 6,
+        "pass_rate": 0.75,
+        "frontier_score": 0.75,
+        "weakness": 0.25,
+        "learning_progress": null,
+        "hint_regret": null,
+        "hint_evidence": null,
+        "smoothing": "Beta(1,1)"
+      },
+      "state_changing": {
+        "successes": 2,
+        "attempts": 3,
+        "pass_rate": 0.6,
+        "frontier_score": 0.96,
+        "weakness": 0.4,
+        "learning_progress": null,
+        "hint_regret": null,
+        "hint_evidence": null,
+        "smoothing": "Beta(1,1)"
+      }
+    },
+    "root_cause_failure_frequency": {
+      "final_state_failure": 1,
+      "wrong_propagated_value": 1
+    },
+    "max_dependency_depth_reached": {
+      "0": 1,
+      "2": 2
+    },
+    "unknown_observations": {}
+  },
+  "selection": {
+    "schema_version": "graph_frontier_selection_v1",
+    "seed": 20260913,
+    "sample_count": 2,
+    "scoring_component": "frontier_score",
+    "exploration_floor": 0.1,
+    "repeat_cap": 1,
+    "group_cap": 1,
+    "selected": [
+      {
+        "draw_index": 0,
+        "task_id": "candidate-depth-1",
+        "source_index": 0,
+        "repeat_ordinal": 1,
+        "character_count": 900,
+        "token_count": 220,
+        "diversity_group": "lookup",
+        "priority": 0.964,
+        "priority_reason": {
+          "scoring_component": "frontier_score",
+          "capability_signal": 0.96,
+          "uniform_exploration_floor": 0.1,
+          "capabilities": [
+            {
+              "capability_key": "depth:1",
+              "status": "used",
+              "component": "frontier_score",
+              "value": 0.96,
+              "attempts": 3,
+              "pass_rate": 0.6
+            }
+          ]
+        }
+      },
+      {
+        "draw_index": 1,
+        "task_id": "candidate-depth-2",
+        "source_index": 1,
+        "repeat_ordinal": 1,
+        "character_count": 1100,
+        "token_count": 275,
+        "diversity_group": "mutation",
+        "priority": 0.953875,
+        "priority_reason": {
+          "scoring_component": "frontier_score",
+          "capability_signal": 0.94875,
+          "uniform_exploration_floor": 0.1,
+          "capabilities": [
+            {
+              "capability_key": "depth:2",
+              "status": "used",
+              "component": "frontier_score",
+              "value": 0.96,
+              "attempts": 3,
+              "pass_rate": 0.6
+            },
+            {
+              "capability_key": "internal_parameter_flow",
+              "status": "used",
+              "component": "frontier_score",
+              "value": 0.9375,
+              "attempts": 6,
+              "pass_rate": 0.625
+            }
+          ]
+        }
+      }
+    ],
+    "report": {
+      "candidate_count": 3,
+      "unique_task_count": 2,
+      "duplicate_draws": 0,
+      "max_observed_repeat": 1,
+      "diversity_group_counts": {
+        "lookup": 1,
+        "mutation": 1
+      },
+      "character_budget": {
+        "target": 2000,
+        "selected": 2000,
+        "ratio": 1.0
+      },
+      "token_budget": {
+        "target": 500,
+        "selected": 495,
+        "ratio": 0.99
+      },
+      "budget_tolerance": 0.02,
+      "within_budget_tolerance": true,
+      "mean_priority": 0.9589375,
+      "chosen_trial": 1
+    }
+  }
+}

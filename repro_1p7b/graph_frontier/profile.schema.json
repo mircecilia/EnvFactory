@@ -35,6 +35,13 @@
     "state_success": {
       "$ref": "#/$defs/knownBoolean"
     },
+    "hint_condition": {
+      "enum": [
+        "with_hint",
+        "without_hint",
+        "unknown"
+      ]
+    },
     "expected_tool_nodes": {
       "oneOf": [
         {
@@ -242,7 +249,7 @@
           "type": "string"
         },
         "source_parameter": {
-          "oneOf": [
+          "anyOf": [
             {
               "type": "string"
             },
@@ -252,7 +259,7 @@
           ]
         },
         "target_parameter": {
-          "oneOf": [
+          "anyOf": [
             {
               "type": "string"
             },
