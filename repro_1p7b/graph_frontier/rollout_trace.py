@@ -85,6 +85,11 @@ class TypedRolloutRecorder:
             "verifier_result": UNKNOWN,
             "verifier_details": UNKNOWN,
             "trace_notes": [],
+            "trace_quality_metrics": {
+                "events": 0,
+                "typed_value_recovery_rate": 0.0,
+                "typed_execution_status_rate": 0.0,
+            },
         }
 
     def record_tool_event(
@@ -134,6 +139,17 @@ class TypedRolloutRecorder:
             "server_id": server_id if isinstance(server_id, str) and server_id else UNKNOWN,
         }
         self.trace["events"].append(event)
+        events = self.trace["events"]
+        count = len(events)
+        self.trace["trace_quality_metrics"] = {
+            "events": count,
+            "typed_value_recovery_rate": (
+                sum(item["returned_fields"] != UNKNOWN for item in events) / count
+            ),
+            "typed_execution_status_rate": (
+                sum(isinstance(item["execution_success"], bool) for item in events) / count
+            ),
+        }
         return event
 
     def finalize(

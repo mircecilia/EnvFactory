@@ -15,7 +15,8 @@
     "final_environment_state",
     "verifier_result",
     "verifier_details",
-    "trace_notes"
+    "trace_notes",
+    "trace_quality_metrics"
   ],
   "properties": {
     "schema_version": {
@@ -112,6 +113,31 @@
       "type": "array",
       "items": {
         "type": "string"
+      }
+    },
+    "trace_quality_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "events",
+        "typed_value_recovery_rate",
+        "typed_execution_status_rate"
+      ],
+      "properties": {
+        "events": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "typed_value_recovery_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "typed_execution_status_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
       }
     }
   }

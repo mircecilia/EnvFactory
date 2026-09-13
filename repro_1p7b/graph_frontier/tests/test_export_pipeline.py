@@ -15,9 +15,10 @@ from repro_1p7b.graph_frontier.rollout_trace import TypedRolloutRecorder
 
 
 class Parameter:
-    def __init__(self, name, user_provided):
+    def __init__(self, name, user_provided, data_type="integer"):
         self.name = name
         self.user_provided = user_provided
+        self.data_type = data_type
 
 
 class Tool:
@@ -58,7 +59,7 @@ class Chain:
 
 
 def mock_source():
-    email = Parameter("email", True)
+    email = Parameter("email", True, "string")
     user_output = Parameter("user_id", False)
     user_input = Parameter("user_id", False)
     order_output = Parameter("order_id", False)
@@ -186,6 +187,11 @@ class ExportPipelineTests(unittest.TestCase):
         self.assertEqual(saved["task_id"], "probe-hook")
         self.assertEqual(saved["query"]["query_id"], "turn-0")
         self.assertEqual(len(saved["dependency_edges"]), 2)
+        self.assertEqual(
+            saved["expected_final_state_source"],
+            "selected_querygen_reference_trajectory",
+        )
+        self.assertEqual(saved["expected_final_scenario"], chain.tool_chain[0].final_scenario)
 
     def test_sync_wrapper_marks_exception_without_text_heuristic(self):
         recorder = TypedRolloutRecorder("probe-001")

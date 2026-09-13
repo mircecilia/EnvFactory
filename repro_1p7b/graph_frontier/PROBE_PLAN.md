@@ -55,3 +55,14 @@ Each run writes one typed `<task>.rollout.json` and one profiler output. Missing
 ## Deferred work
 
 Do not generate the pool until the required generation API/model access and executable environments are intentionally scheduled. This stage creates only the schemas, exporters, hook design, and CPU mock. It launches no probe rollout, LLM/API generation, SGLang service, training, or GPU workload.
+
+## Preflight required by semantic hardening
+
+The probe driver must call `sample_with_dependency_trace` instead of calling
+`ToolGraph.sample` directly, then export each sidecar before QueryGen saves the
+chain. Tasks whose sidecar says `possible_graph_unselected` are invalid for
+dependency diagnosis and must be rejected or regenerated.
+
+The executor must record the original FastMCP `CallToolResult` before any text
+flattening and must report both typed recovery rates. Run one executable task as
+a gate before creating the 200-500 task pool. See `REAL_PROBE_READINESS.md`.

@@ -124,3 +124,25 @@ python -m unittest discover -s repro_1p7b/graph_frontier/tests -v
 ```
 
 `test_export_pipeline.py` constructs the required `A -> user_id -> B -> order_id -> C` graph and verifies the `456 -> 999` first broken edge, missing producers, extra/repeated calls, final-state-only failure, unknown final state, atomic JSON files, and both schemas. It does not load a model, environment server, SGLang, or GPU runtime.
+
+## Semantic hardening (2026-09-13)
+
+The probe path now has three CPU-only adapters:
+
+- `sample_with_dependency_trace(...)` delegates to the existing sampler while
+  recording the selected producer and explicit OR alternatives.
+- `FastMCPTraceAdapter` consumes the real FastMCP `CallToolResult` before
+  text flattening, preferring `structuredContent` and typed `isError`.
+- `compare_final_states` provides canonical JSON comparison when a runtime
+  verifier result is absent.
+
+The gold sidecar marks dependency provenance as `selected_reference`,
+`unique_possible_equals_selected`, or `possible_graph_unselected`. An
+ambiguous untraced graph does not assert every possible producer as required.
+
+The profile reports reference `path_adherence` separately from `task_success`,
+and reports structural roots separately from task-level roots. It also carries
+`typed_value_recovery_rate` and `typed_execution_status_rate`.
+
+For current readiness and exact hook points, see
+`REAL_PROBE_READINESS.md`.

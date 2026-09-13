@@ -18,7 +18,10 @@
     "parameters",
     "initial_scenario",
     "expected_final_scenario",
-    "provenance"
+    "provenance",
+    "dependency_semantics",
+    "alternative_dependency_groups",
+    "expected_final_state_source"
   ],
   "properties": {
     "schema_version": {
@@ -129,7 +132,8 @@
           "tool_id",
           "tool_name",
           "server_id",
-          "sequence_positions"
+          "sequence_positions",
+          "dependency_depth"
         ],
         "properties": {
           "tool_id": {
@@ -148,6 +152,17 @@
               "minimum": 0
             },
             "minItems": 1
+          },
+          "dependency_depth": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "const": "unknown"
+              }
+            ]
           }
         }
       }
@@ -167,7 +182,9 @@
           "consumer_tool",
           "consumer_input_parameter",
           "required",
-          "optional"
+          "optional",
+          "internal_parameter",
+          "value_semantics"
         ],
         "properties": {
           "edge_id": {
@@ -212,7 +229,8 @@
             "required": [
               "parameter_id",
               "parameter_name",
-              "user_provided"
+              "user_provided",
+              "data_type"
             ],
             "properties": {
               "parameter_id": {
@@ -230,6 +248,9 @@
                     "const": "unknown"
                   }
                 ]
+              },
+              "data_type": {
+                "type": "string"
               }
             }
           },
@@ -255,7 +276,8 @@
             "required": [
               "parameter_id",
               "parameter_name",
-              "user_provided"
+              "user_provided",
+              "data_type"
             ],
             "properties": {
               "parameter_id": {
@@ -273,6 +295,9 @@
                     "const": "unknown"
                   }
                 ]
+              },
+              "data_type": {
+                "type": "string"
               }
             }
           },
@@ -295,6 +320,19 @@
                 "const": "unknown"
               }
             ]
+          },
+          "internal_parameter": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "const": "unknown"
+              }
+            ]
+          },
+          "value_semantics": {
+            "type": "string"
           }
         }
       }
@@ -312,7 +350,8 @@
           "parameter_name",
           "user_provided",
           "required",
-          "optional"
+          "optional",
+          "data_type"
         ],
         "properties": {
           "parameter_id": {
@@ -362,6 +401,9 @@
                 "const": "unknown"
               }
             ]
+          },
+          "data_type": {
+            "type": "string"
           }
         }
       }
@@ -391,6 +433,57 @@
           "type": "string"
         }
       }
+    },
+    "dependency_semantics": {
+      "enum": [
+        "selected_reference",
+        "unique_possible_equals_selected",
+        "possible_graph_unselected"
+      ]
+    },
+    "alternative_dependency_groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "group_id",
+          "semantics",
+          "consumer_tool",
+          "consumer_input_parameter",
+          "alternatives",
+          "selected_producer_tool",
+          "selected_producer_output_parameter",
+          "provenance"
+        ],
+        "properties": {
+          "group_id": {
+            "type": "string"
+          },
+          "semantics": {
+            "const": "or"
+          },
+          "consumer_tool": {
+            "type": "string"
+          },
+          "consumer_input_parameter": {
+            "type": "string"
+          },
+          "alternatives": {},
+          "selected_producer_tool": {
+            "type": "string"
+          },
+          "selected_producer_output_parameter": {
+            "type": "string"
+          },
+          "provenance": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "expected_final_state_source": {
+      "type": "string"
     }
   }
 }

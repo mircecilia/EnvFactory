@@ -39,6 +39,13 @@ def _parameter_user_provided(parameter: Any) -> Any:
         return UNKNOWN
 
 
+def _parameter_data_type(parameter: Any) -> Any:
+    value = getattr(parameter, "data_type", UNKNOWN)
+    if isinstance(value, str) and value:
+        return value
+    return UNKNOWN
+
+
 def _iter_nodes(graph: Any) -> List[Any]:
     nodes = graph.nodes
     return list(nodes() if callable(nodes) else nodes)
@@ -144,6 +151,8 @@ def tool_graph_to_spec(
                         "graph_provenance": provenance,
                         "source_parameter": source_parameter,
                         "target_parameter": target_parameter,
+                        "source_data_type": _parameter_data_type(output_parameter),
+                        "target_data_type": _parameter_data_type(input_parameter),
                         "source_parameter_user_provided": _parameter_user_provided(output_parameter),
                         "target_parameter_user_provided": user_provided,
                         "required": required,
@@ -180,6 +189,8 @@ def tool_graph_to_spec(
                     "graph_provenance": "tool_depend",
                     "source_parameter": UNKNOWN,
                     "target_parameter": UNKNOWN,
+                    "source_data_type": UNKNOWN,
+                    "target_data_type": UNKNOWN,
                     "source_parameter_user_provided": UNKNOWN,
                     "target_parameter_user_provided": UNKNOWN,
                     "required": UNKNOWN,

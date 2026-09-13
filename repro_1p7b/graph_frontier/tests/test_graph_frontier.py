@@ -20,6 +20,8 @@ GRAPH = {
             "edge_type": "parameter_flow",
             "source_parameter": "user_id",
             "target_parameter": "user_id",
+            "source_data_type": "string",
+            "target_data_type": "string",
             "required": True,
             "internal_parameter": True,
         },
@@ -30,6 +32,8 @@ GRAPH = {
             "edge_type": "parameter_flow",
             "source_parameter": "order_id",
             "target_parameter": "order_id",
+            "source_data_type": "string",
+            "target_data_type": "string",
             "required": True,
             "internal_parameter": True,
         },
@@ -61,7 +65,7 @@ class ProfilerTests(unittest.TestCase):
         self.assertEqual(profile["first_failed_edge"], UNKNOWN)
 
     def test_wrong_propagated_value_is_first_root(self):
-        bundle = make_bundle()
+        bundle = make_bundle(state=False)
         bundle["events"][1]["arguments"]["user_id"] = "WRONG"
         profile = profile_rollout(bundle)
         self.assertEqual(len(profile["root_cause_failures"]), 1)
@@ -129,14 +133,14 @@ class ProfilerTests(unittest.TestCase):
         self.assertEqual(profile["dependency_edge_checks"][0]["status"], "optional_not_observed")
         self.assertEqual(profile["dependency_edge_checks"][0]["success"], UNKNOWN)
 
-    def test_missing_expected_tools_have_single_root(self):
+    def test_missing_reference_tools_are_path_diagnostic_not_root(self):
         profile = profile_rollout(make_bundle(events=[
             {"step_index": 0, "tool_name": "get_user", "arguments": {}, "result": {"user_id": "u1"}, "execution_success": True},
         ], terminal=False, state=False))
-        self.assertEqual(len(profile["root_cause_failures"]), 1)
-        self.assertEqual(profile["root_cause_failures"][0]["tool_name"], "get_order")
-        propagated_names = {item["tool_name"] for item in profile["downstream_propagated_failures"]}
-        self.assertIn("cancel_order", propagated_names)
+        self.assertEqual([root["type"] for root in profile["root_cause_failures"]], ["final_state_failure"])
+        self.assertFalse(profile["path_adherence"])
+        divergent = {item["tool_name"] for item in profile["reference_path_divergence"]}
+        self.assertEqual(divergent, {"get_order", "cancel_order"})
 
 
 class CapabilityTests(unittest.TestCase):

@@ -8,7 +8,9 @@ from typing import Any, Dict, Mapping
 
 from .adapters import UNKNOWN
 from .profiler import profile_rollout
+from .fastmcp_adapter import trace_quality_metrics
 from .rollout_trace import load_rollout_trace
+from .state_verifier import compare_final_states
 
 
 def _load(source: str | Path | Mapping[str, Any]) -> Dict[str, Any]:
@@ -56,12 +58,11 @@ def sidecar_and_trace_to_bundle(
                 "edge_type": edge.get("edge_type", UNKNOWN),
                 "source_parameter": source.get("parameter_name", UNKNOWN),
                 "target_parameter": target.get("parameter_name", UNKNOWN),
+                "source_data_type": source.get("data_type", UNKNOWN),
+                "target_data_type": target.get("data_type", UNKNOWN),
+                "value_semantics": edge.get("value_semantics", UNKNOWN),
                 "required": edge.get("required", UNKNOWN),
-                "internal_parameter": (
-                    not target.get("user_provided")
-                    if isinstance(target.get("user_provided"), bool)
-                    else UNKNOWN
-                ),
+                "internal_parameter": edge.get("internal_parameter", UNKNOWN),
                 "dependency_depth": edge.get("dependency_depth", UNKNOWN),
             }
         )
@@ -85,15 +86,48 @@ def sidecar_and_trace_to_bundle(
             }
         )
 
+    explicit_verifier = _known_bool(trace.get("verifier_result", UNKNOWN))
+    canonical_verifier = compare_final_states(
+        trace.get("final_environment_state", UNKNOWN),
+        sidecar.get("expected_final_scenario", UNKNOWN),
+    )
+    state_success = (
+        explicit_verifier
+        if isinstance(explicit_verifier, bool)
+        else canonical_verifier
+    )
+    state_verification_source = (
+        "runtime_verifier"
+        if isinstance(explicit_verifier, bool)
+        else "canonical_final_state_comparison"
+        if isinstance(canonical_verifier, bool)
+        else UNKNOWN
+    )
+    node_depths = {
+        node["tool_name"]: node.get("dependency_depth", UNKNOWN)
+        for node in sidecar.get("required_tool_nodes", [])
+        if isinstance(node, Mapping) and isinstance(node.get("tool_name"), str)
+    }
+
     return {
         "schema_version": "graph_frontier_rollout_v1",
         "task_id": sidecar["task_id"],
         "terminal_success": _known_bool(trace.get("terminal_success", UNKNOWN)),
-        "state_success": _known_bool(trace.get("verifier_result", UNKNOWN)),
+        "state_success": state_success,
+        "state_verification_source": state_verification_source,
         "hint_condition": UNKNOWN,
         "expected_tool_nodes": expected_tools,
         "dependency_edges": edges,
-        "tool_metadata": {name: {"state_changing": UNKNOWN} for name in expected_tools},
+        "tool_metadata": {
+            name: {
+                "state_changing": UNKNOWN,
+                "dependency_depth": node_depths.get(name, UNKNOWN),
+            }
+            for name in expected_tools
+        },
+        "task_dependency_depth": sidecar.get("dependency_depth", UNKNOWN),
+        "dependency_semantics": sidecar.get("dependency_semantics", UNKNOWN),
+        "trace_quality_metrics": dict(trace_quality_metrics(trace)),
         "events": events,
         "initial_state": trace.get("initial_environment_state", sidecar.get("initial_scenario", UNKNOWN)),
         "final_state": trace.get("final_environment_state", UNKNOWN),
@@ -101,6 +135,7 @@ def sidecar_and_trace_to_bundle(
         "adapter_notes": [
             "Joined envfactory_gold_sidecar_v1 with envfactory_rollout_trace_v1.",
             "No success, verifier, response field, or graph field was inferred from human-readable text.",
+            f"State verification source: {state_verification_source}.",
         ],
     }
 

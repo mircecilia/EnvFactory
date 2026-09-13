@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence, Tuple
 
 from .adapters import UNKNOWN, tool_graph_to_spec
+from .traceable_sampler import selected_dependency_trace
 
 
 def _known_bool(value: Any) -> Any:
@@ -46,6 +47,11 @@ def _parameter_user_provided(parameter: Any) -> Any:
         return _known_bool(parameter.user_provided)
     except Exception:
         return UNKNOWN
+
+
+def _parameter_data_type(parameter: Any) -> Any:
+    value = getattr(parameter, "data_type", UNKNOWN)
+    return value if isinstance(value, str) and value else UNKNOWN
 
 
 def _required_input(tool_graph: Any, parameter: Any, tool: Any) -> Any:
@@ -133,6 +139,7 @@ def _tool_parameters(tool_graph: Any, tools: Sequence[Any]) -> List[Dict[str, An
                         "tool_name": tool_name,
                         "role": role,
                         "parameter_name": parameter_name,
+                        "data_type": _parameter_data_type(parameter),
                         "user_provided": _parameter_user_provided(parameter),
                         "required": required,
                         "optional": (not required) if isinstance(required, bool) else UNKNOWN,
@@ -173,6 +180,56 @@ def build_gold_sidecar(
 
     graph_spec = tool_graph_to_spec(tool_graph, expected_tools=unique_tools)
     graph_edges = [edge for edge in graph_spec["dependency_edges"] if _is_forward_edge(edge, positions)]
+    trace = selected_dependency_trace(tool_chain)
+    alternative_dependency_groups = []
+    if trace:
+        selected_edges = []
+        for index, record in enumerate(trace):
+            producer = record.get("selected_producer_tool")
+            consumer = record.get("consumer_tool")
+            target = record.get("consumer_input_parameter")
+            if producer not in positions or consumer not in positions:
+                continue
+            alternatives = record.get("alternatives", UNKNOWN)
+            alternative_dependency_groups.append(
+                {
+                    "group_id": f"or::{consumer}::input::{target}::{index}",
+                    "semantics": "or",
+                    "consumer_tool": consumer,
+                    "consumer_input_parameter": target,
+                    "alternatives": alternatives,
+                    "selected_producer_tool": producer,
+                    "selected_producer_output_parameter": record.get(
+                        "selected_producer_output_parameter", UNKNOWN
+                    ),
+                    "provenance": record.get("provenance", UNKNOWN),
+                }
+            )
+            candidates = [
+                edge for edge in graph_edges
+                if edge["producer_tool"] == producer
+                and edge["consumer_tool"] == consumer
+                and edge["target_parameter"] == target
+            ]
+            selected_output = record.get("selected_producer_output_parameter", UNKNOWN)
+            if selected_output != UNKNOWN:
+                candidates = [
+                    edge for edge in candidates
+                    if edge["source_parameter"] == selected_output
+                ]
+            if len(candidates) == 1:
+                selected_edges.append(candidates[0])
+        graph_edges = selected_edges
+        dependency_semantics = "selected_reference"
+    else:
+        grouped = defaultdict(list)
+        for edge in graph_edges:
+            grouped[(edge["consumer_tool"], edge["target_parameter"])].append(edge)
+        if all(len(group) == 1 for group in grouped.values()):
+            dependency_semantics = "unique_possible_equals_selected"
+        else:
+            dependency_semantics = "possible_graph_unselected"
+            graph_edges = []
     dependency_depth, edge_depths = _dependency_depths(tool_names, graph_edges)
     servers = sorted({server for server in (_server_id(tool) for tool in unique_tools) if server != UNKNOWN})
 
@@ -184,6 +241,13 @@ def build_gold_sidecar(
                 "tool_id": _tool_id(name),
                 "tool_name": name,
                 "server_id": _server_id(tool),
+                "dependency_depth": (
+                    max(
+                        (edge_depths.get(edge["edge_id"], 0) for edge in graph_edges
+                         if edge["consumer_tool"] == name),
+                        default=0,
+                    ) if dependency_depth != UNKNOWN else UNKNOWN
+                ),
                 "sequence_positions": positions[name],
             }
         )
@@ -205,15 +269,19 @@ def build_gold_sidecar(
                 "producer_output_parameter": {
                     "parameter_id": _parameter_id(producer, "output", source),
                     "parameter_name": source,
+                    "data_type": edge.get("source_data_type", UNKNOWN),
                     "user_provided": edge.get("source_parameter_user_provided", UNKNOWN),
                 },
                 "consumer_tool": {"tool_id": _tool_id(consumer), "tool_name": consumer},
                 "consumer_input_parameter": {
                     "parameter_id": _parameter_id(consumer, "input", target),
                     "parameter_name": target,
+                    "data_type": edge.get("target_data_type", UNKNOWN),
                     "user_provided": edge.get("target_parameter_user_provided", UNKNOWN),
                 },
                 "required": required,
+                "internal_parameter": edge.get("internal_parameter", UNKNOWN),
+                "value_semantics": UNKNOWN,
                 "optional": (not required) if isinstance(required, bool) else UNKNOWN,
             }
         )
@@ -222,8 +290,12 @@ def build_gold_sidecar(
     seed = _json_value(getattr(tool_chain, "seed", None))
     assigned_task_id = task_id or _task_id(seed, turn_index, query, tool_names)
     final_scenario = expected_final_scenario
+    expected_final_state_source = (
+        "explicit_argument" if final_scenario != UNKNOWN else UNKNOWN
+    )
     if isinstance(final_scenario, str) and final_scenario == UNKNOWN and trust_node_final_scenario:
         final_scenario = getattr(node, "final_scenario", None)
+        expected_final_state_source = "selected_querygen_reference_trajectory"
 
     sidecar = {
         "schema_version": "envfactory_gold_sidecar_v1",
@@ -245,12 +317,15 @@ def build_gold_sidecar(
             for index, name in enumerate(tool_names)
         ],
         "gold_tool_set": sorted(set(tool_names)),
+        "dependency_semantics": dependency_semantics,
         "dependency_depth": dependency_depth,
         "required_tool_nodes": required_nodes,
         "dependency_edges": dependency_edges,
+        "alternative_dependency_groups": alternative_dependency_groups,
         "parameters": _tool_parameters(tool_graph, unique_tools),
         "initial_scenario": _json_value(getattr(node, "initial_scenario", None)),
         "expected_final_scenario": _json_value(final_scenario),
+        "expected_final_state_source": expected_final_state_source,
         "provenance": {
             "source": "live ToolGraph + live ToolQueryChain/ToolQueryNode",
             "relevant_subgraph_only": True,
@@ -309,6 +384,7 @@ def export_chain_sidecars(
                 if expected_final_scenarios is not None
                 else UNKNOWN
             ),
+            trust_node_final_scenario=expected_final_scenarios is None,
         )
         paths.append(write_gold_sidecar(sidecar, output_dir / f"{_safe_filename(sidecar['task_id'])}.gold.json"))
     return paths
@@ -342,6 +418,7 @@ class GenerationSidecarCallback:
             task_id=task_id,
             query_id=query_id,
             expected_final_scenario=expected,
+            trust_node_final_scenario=self.expected_final_scenario_factory is None,
         )
         return write_gold_sidecar(
             sidecar,
