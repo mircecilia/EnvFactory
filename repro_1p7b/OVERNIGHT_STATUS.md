@@ -4,7 +4,7 @@ Updated: 2026-09-13T20:06:17+08:00
 
 ## Current state
 
-PRELAUNCH: the formal parameter-aware dataset and SFT smoke are complete and validated. The formal SFT launcher/configs are ready and will be launched only after this gate commit is pushed.
+PRELAUNCH: the formal parameter-aware dataset and SFT smoke are complete and validated. A preflight launch exposed Conda incompatibility with shell nounset before training started; the launcher now retains pipefail without nounset and will be committed before launch.
 
 ## Parameter-aware dataset
 
@@ -40,6 +40,7 @@ PRELAUNCH: the formal parameter-aware dataset and SFT smoke are complete and val
 ## Formal SFT task
 
 - State: PRELAUNCH
+- Preflight: first launch exited before training because Conda activation referenced unset ADDR2LINE; no GPU/output artifact was created
 - Planned tmux: `parameter_aware_sft_8k_1p7b`
 - Planned pane PID: recorded after launch
 - Config: `repro_1p7b/configs/llamafactory_sft_parameter_aware_8k_1p7b.yaml`

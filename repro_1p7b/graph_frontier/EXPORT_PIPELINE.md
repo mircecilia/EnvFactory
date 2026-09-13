@@ -37,7 +37,7 @@ tool::<tool_name>
 <tool_name>::output::<parameter_name>
 ```
 
-They never use `id(obj)`, object addresses, or NetworkX node identity. `expected_final_scenario` is `unknown` by default because the current node's `final_scenario` is the selected solver's observed state, not an independent gold verifier result. A caller may supply an expected final scenario only when its provenance is reliable.
+They never use `id(obj)`, object addresses, or NetworkX node identity. For this internship/project implementation, the selected QueryGen reference trajectory's `final_scenario` may be used as `expected_final_state` only with provenance `selected_querygen_reference_trajectory`. It is an EnvFactory engineering reference state, not an independent oracle. If absent, structural diagnosis remains available while state success is `unknown`.
 
 ### Hook A: generation-time gold export
 
@@ -76,20 +76,14 @@ The exact structured boundary is `src/manager/mcp_client_manager.py:232-247`, sp
 
 Wrapping `Gen.execute()` (`src/gen/__init__.py:374-402`) is too late for reliable status: `MCPClientManager.call_tool()` converts timeout, `ToolError`, and other exceptions to ordinary strings at lines 223-230. The repository's RL converter (`src/utils/data_process.py:290-351`) serializes selected calls plus initial/final configs; it is not an execution runtime and provides no typed executor result or verifier callback. No separate reward/rollout runtime implementation is present in this checkout.
 
-For a runtime where exceptions propagate, use the supplied wrapper:
+At this inner boundary, use the typed FastMCP adapter:
 
 ```python
-response = await recorder.record_async_call(
-    step_index=step_index,
-    tool_name=short_name,
-    tool_arguments=args,
-    executor=client.call_tool,
-    success_from_response=lambda _result: True,
-    server_id=server_name,
-)
+adapter = FastMCPTraceAdapter(recorder, client.call_tool)
+result = await adapter.call(step_index, short_name, args)
 ```
 
-`success_from_response=lambda _: True` is valid only at this inner boundary, where a return means `client.call_tool` completed without raising. It must not be used around the current outer `MCPManager.call_tool()`.
+The adapter reads typed `structuredContent` / `isError` before flattening. Exceptions are recorded as failures, strict JSON TextContent is the only fallback, and natural-language response text is never classified.
 
 ### Optional minimal core callback proposal (not applied)
 
@@ -137,8 +131,11 @@ The probe path now has three CPU-only adapters:
   verifier result is absent.
 
 The gold sidecar marks dependency provenance as `selected_reference`,
-`unique_possible_equals_selected`, or `possible_graph_unselected`. An
-ambiguous untraced graph does not assert every possible producer as required.
+`selected_reference_incomplete`, `unique_possible_equals_selected`, or
+`possible_graph_unselected`. Every selected dependency is counted in
+`dependency_resolution`. Ambiguous source parameters and missing graph edges
+remain explicit unresolved records; they are never silently converted to a
+zero-edge/depth-0 task.
 
 The profile reports reference `path_adherence` separately from `task_success`,
 and reports structural roots separately from task-level roots. It also carries
@@ -146,3 +143,18 @@ and reports structural roots separately from task-level roots. It also carries
 
 For current readiness and exact hook points, see
 `REAL_PROBE_READINESS.md`.
+
+## v1 structural eligibility
+
+Graph-Frontier v1 supports single-turn structural diagnosis only. For each turn,
+the exporter inspects every trace record whose consumer is in that turn. If its
+selected producer is outside the same `raw_tool_call`, the sidecar records a
+cross-turn dependency and `evaluate_probe_eligibility` returns
+`cross_turn_dependency_not_supported_v1`.
+
+Structural acceptance requires `selected_reference`, a present sampler trace,
+equal selected/resolved dependency counts, no unresolved or cross-turn
+dependency, non-empty `raw_tool_call`, and an available initial state. Expected
+final state availability is reported separately and is not a structural gate.
+The standalone report schema is `PROBE_ELIGIBILITY_SCHEMA.json`.
+

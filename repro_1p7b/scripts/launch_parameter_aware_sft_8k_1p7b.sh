@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -uo pipefail
+set -o pipefail
 
 WORKTREE=/home/u2024311031/workspace/envfactory_repro_1p7b
 OUTPUT_DIR="$WORKTREE/repro_1p7b/checkpoints/parameter_aware_sft_8k_1p7b"

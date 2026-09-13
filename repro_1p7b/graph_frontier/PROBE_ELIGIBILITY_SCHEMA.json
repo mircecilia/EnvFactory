@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://envfactory.local/schema/probe-eligibility-v1.json",
+  "title": "Graph-Frontier v1 probe eligibility report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eligible",
+    "reasons",
+    "checks",
+    "state_diagnosis_available"
+  ],
+  "properties": {
+    "eligible": {
+      "type": "boolean"
+    },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selected_dependency_trace_present",
+        "all_selected_dependencies_resolved",
+        "single_turn_structural_dependencies",
+        "raw_tool_call_nonempty",
+        "initial_state_available",
+        "expected_final_state_available",
+        "selected_reference_semantics"
+      ],
+      "properties": {
+        "selected_dependency_trace_present": {
+          "type": "boolean"
+        },
+        "all_selected_dependencies_resolved": {
+          "type": "boolean"
+        },
+        "single_turn_structural_dependencies": {
+          "type": "boolean"
+        },
+        "raw_tool_call_nonempty": {
+          "type": "boolean"
+        },
+        "initial_state_available": {
+          "type": "boolean"
+        },
+        "expected_final_state_available": {
+          "type": "boolean"
+        },
+        "selected_reference_semantics": {
+          "type": "boolean"
+        }
+      }
+    },
+    "state_diagnosis_available": {
+      "type": "boolean"
+    }
+  }
+}

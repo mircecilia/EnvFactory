@@ -9,6 +9,10 @@ except ImportError:
     CallToolResult = TextContent = None
 
 from repro_1p7b.graph_frontier.adapters import UNKNOWN, normalized_rollout_bundle
+from repro_1p7b.graph_frontier.eligibility import (
+    evaluate_probe_eligibility,
+    is_structurally_diagnosable,
+)
 from repro_1p7b.graph_frontier.export_pipeline import profile_sidecar_and_trace
 from repro_1p7b.graph_frontier.fastmcp_adapter import (
     fastmcp_execution_success,
@@ -19,6 +23,7 @@ from repro_1p7b.graph_frontier.gold_sidecar import build_gold_sidecar
 from repro_1p7b.graph_frontier.profiler import profile_rollout
 from repro_1p7b.graph_frontier.rollout_trace import TypedRolloutRecorder
 from repro_1p7b.graph_frontier.traceable_sampler import (
+    TRACE_ATTRIBUTE,
     sample_with_dependency_trace,
 )
 
@@ -440,6 +445,220 @@ class TypedValueMatchingTests(unittest.TestCase):
         self.assertEqual(
             profile["dependency_edge_checks"][0]["value_match"], UNKNOWN
         )
+
+
+class ProbeEligibilityTests(unittest.TestCase):
+    @staticmethod
+    def _record(
+        producer="A",
+        consumer="C",
+        target="user_id",
+        output=UNKNOWN,
+    ):
+        return {
+            "consumer_tool": consumer,
+            "consumer_input_parameter": target,
+            "consumer_input_data_type": "string",
+            "selected_producer_tool": producer,
+            "selected_producer_output_parameter": output,
+            "selected_producer_output_data_type": (
+                "string" if output != UNKNOWN else UNKNOWN
+            ),
+            "required": True,
+            "user_provided": False,
+            "internal_parameter": True,
+            "alternatives": [
+                {
+                    "producer_tool": producer,
+                    "producer_output_parameters": UNKNOWN,
+                }
+            ],
+            "alternative_semantics": "or",
+            "provenance": "test_selected_dependency",
+        }
+
+    @staticmethod
+    def _attach(chain, records):
+        setattr(chain, TRACE_ATTRIBUTE, records)
+        return chain
+
+    def _unique_sidecar(self, trust_final=False):
+        graph = FakeToolGraph()
+        chain = sample_with_dependency_trace(
+            graph, FakeTopologySampler(), seed=7
+        )
+        return build_gold_sidecar(
+            graph,
+            chain,
+            0,
+            task_id="unique-resolution",
+            trust_node_final_scenario=trust_final,
+        )
+
+    def _ambiguous_sidecar(self):
+        out_user = Parameter("user_id")
+        out_owner = Parameter("owner_id")
+        input_id = Parameter("id")
+        producer = Tool("A", outputs=[out_user, out_owner])
+        consumer = Tool("C", inputs=[input_id])
+        graph = SimpleNamespace(
+            graph=Graph(
+                {
+                    (producer, out_user): {
+                        "edge_type": "tool_to_parameter"
+                    },
+                    (out_user, input_id): {
+                        "edge_type": "parameter_to_parameter"
+                    },
+                    (producer, out_owner): {
+                        "edge_type": "tool_to_parameter"
+                    },
+                    (out_owner, input_id): {
+                        "edge_type": "parameter_to_parameter"
+                    },
+                    (input_id, consumer): {
+                        "edge_type": "parameter_to_tool",
+                        "required": True,
+                    },
+                }
+            )
+        )
+        chain = self._attach(
+            Chain([producer, consumer], 11),
+            [self._record(target="id")],
+        )
+        return build_gold_sidecar(
+            graph, chain, 0, task_id="ambiguous-resolution"
+        )
+
+    def _missing_edge_sidecar(self):
+        graph = FakeToolGraph()
+        chain = self._attach(
+            Chain([graph.a, graph.c], 13),
+            [self._record(target="not_in_graph")],
+        )
+        return build_gold_sidecar(
+            graph, chain, 0, task_id="missing-edge-resolution"
+        )
+
+    def _cross_turn_sidecar(self):
+        graph = FakeToolGraph()
+        chain = SimpleNamespace(
+            seed=17,
+            tool_chain=[
+                SimpleNamespace(
+                    raw_tool_call=[graph.a],
+                    query="lookup",
+                    initial_scenario={"done": False},
+                    final_scenario={"done": False},
+                ),
+                SimpleNamespace(
+                    raw_tool_call=[graph.c],
+                    query="consume",
+                    initial_scenario={"done": False},
+                    final_scenario={"done": True},
+                ),
+            ],
+        )
+        self._attach(
+            chain,
+            [
+                self._record(
+                    producer="A",
+                    consumer="C",
+                    target="user_id",
+                    output="user_id",
+                )
+            ],
+        )
+        return build_gold_sidecar(
+            graph, chain, 1, task_id="cross-turn"
+        )
+
+    def test_unique_source_is_resolved(self):
+        sidecar = self._unique_sidecar()
+        resolution = sidecar["dependency_resolution"]
+        self.assertEqual(resolution["status"], "resolved")
+        self.assertEqual(resolution["selected_dependency_count"], 1)
+        self.assertEqual(resolution["resolved_dependency_count"], 1)
+        self.assertEqual(len(sidecar["dependency_edges"]), 1)
+
+    def test_ambiguous_source_is_unresolved(self):
+        sidecar = self._ambiguous_sidecar()
+        resolution = sidecar["dependency_resolution"]
+        self.assertEqual(resolution["status"], "unresolved")
+        self.assertEqual(resolution["selected_dependency_count"], 1)
+        self.assertEqual(resolution["resolved_dependency_count"], 0)
+        self.assertEqual(
+            resolution["unresolved_dependencies"][0]["resolution_status"],
+            "unresolved_ambiguous_source_parameter",
+        )
+        self.assertEqual(
+            sidecar["dependency_semantics"],
+            "selected_reference_incomplete",
+        )
+        self.assertEqual(sidecar["dependency_depth"], UNKNOWN)
+
+    def test_selected_producer_missing_graph_edge_is_unresolved(self):
+        sidecar = self._missing_edge_sidecar()
+        unresolved = sidecar["dependency_resolution"][
+            "unresolved_dependencies"
+        ]
+        self.assertEqual(
+            unresolved[0]["resolution_status"],
+            "unresolved_missing_graph_edge",
+        )
+        self.assertEqual(sidecar["dependency_edges"], [])
+
+    def test_unresolved_sidecar_rejected_by_helper(self):
+        sidecar = self._ambiguous_sidecar()
+        self.assertFalse(is_structurally_diagnosable(sidecar))
+        self.assertFalse(sidecar["structural_diagnosis_eligible"])
+        self.assertIn(
+            "selected_dependency_resolution_incomplete",
+            evaluate_probe_eligibility(sidecar)["reasons"],
+        )
+
+    def test_same_turn_dependency_is_eligible(self):
+        sidecar = self._unique_sidecar()
+        self.assertFalse(sidecar["cross_turn_dependency"])
+        self.assertTrue(sidecar["structural_diagnosis_eligible"])
+        self.assertTrue(is_structurally_diagnosable(sidecar))
+
+    def test_cross_turn_dependency_is_ineligible(self):
+        sidecar = self._cross_turn_sidecar()
+        self.assertTrue(sidecar["cross_turn_dependency"])
+        self.assertEqual(
+            sidecar["dependency_resolution"]["cross_turn_dependency_count"],
+            1,
+        )
+        self.assertFalse(sidecar["structural_diagnosis_eligible"])
+
+    def test_cross_turn_rejection_reason(self):
+        reasons = self._cross_turn_sidecar()["probe_eligibility"]["reasons"]
+        self.assertIn(
+            "cross_turn_dependency_not_supported_v1", reasons
+        )
+
+    def test_state_reference_provenance(self):
+        sidecar = self._unique_sidecar(trust_final=True)
+        self.assertEqual(
+            sidecar["expected_final_state_source"],
+            "selected_querygen_reference_trajectory",
+        )
+        self.assertEqual(
+            sidecar["expected_final_scenario"], {"done": True}
+        )
+
+    def test_missing_expected_final_state_keeps_structural_eligibility(self):
+        sidecar = self._unique_sidecar(trust_final=False)
+        report = evaluate_probe_eligibility(sidecar)
+        self.assertEqual(sidecar["expected_final_scenario"], UNKNOWN)
+        self.assertFalse(
+            report["checks"]["expected_final_state_available"]
+        )
+        self.assertFalse(report["state_diagnosis_available"])
+        self.assertTrue(report["eligible"])
 
 
 if __name__ == "__main__":

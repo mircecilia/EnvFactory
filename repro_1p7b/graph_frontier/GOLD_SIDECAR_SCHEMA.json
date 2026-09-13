@@ -21,7 +21,13 @@
     "provenance",
     "dependency_semantics",
     "alternative_dependency_groups",
-    "expected_final_state_source"
+    "expected_final_state_source",
+    "selected_dependency_trace_present",
+    "dependency_resolution",
+    "cross_turn_dependency",
+    "cross_turn_dependencies",
+    "structural_diagnosis_eligible",
+    "probe_eligibility"
   ],
   "properties": {
     "schema_version": {
@@ -438,7 +444,8 @@
       "enum": [
         "selected_reference",
         "unique_possible_equals_selected",
-        "possible_graph_unselected"
+        "possible_graph_unselected",
+        "selected_reference_incomplete"
       ]
     },
     "alternative_dependency_groups": {
@@ -453,7 +460,8 @@
           "alternatives",
           "selected_producer_tool",
           "selected_producer_output_parameter",
-          "provenance"
+          "provenance",
+          "resolution_status"
         ],
         "properties": {
           "group_id": {
@@ -477,6 +485,13 @@
           },
           "provenance": {
             "type": "string"
+          },
+          "resolution_status": {
+            "enum": [
+              "resolved",
+              "unresolved_ambiguous_source_parameter",
+              "unresolved_missing_graph_edge"
+            ]
           }
         },
         "additionalProperties": false
@@ -484,6 +499,214 @@
     },
     "expected_final_state_source": {
       "type": "string"
+    },
+    "selected_dependency_trace_present": {
+      "type": "boolean"
+    },
+    "dependency_resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "selected_dependency_count",
+        "resolved_dependency_count",
+        "unresolved_dependency_count",
+        "cross_turn_dependency_count",
+        "unresolved_dependencies"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "resolved",
+            "unresolved",
+            "trace_missing"
+          ]
+        },
+        "selected_dependency_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "resolved_dependency_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unresolved_dependency_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cross_turn_dependency_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unresolved_dependencies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "trace_index",
+              "resolution_status",
+              "producer_tool",
+              "consumer_tool",
+              "consumer_input_parameter",
+              "selected_producer_output_parameter",
+              "candidate_edge_ids",
+              "provenance"
+            ],
+            "properties": {
+              "trace_index": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "resolution_status": {
+                "enum": [
+                  "resolved",
+                  "unresolved_ambiguous_source_parameter",
+                  "unresolved_missing_graph_edge"
+                ]
+              },
+              "producer_tool": {
+                "type": "string"
+              },
+              "consumer_tool": {
+                "type": "string"
+              },
+              "consumer_input_parameter": {
+                "type": "string"
+              },
+              "selected_producer_output_parameter": {
+                "type": "string"
+              },
+              "candidate_edge_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "provenance": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "cross_turn_dependency": {
+      "type": "boolean"
+    },
+    "cross_turn_dependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "trace_index",
+          "resolution_status",
+          "producer_tool",
+          "consumer_tool",
+          "consumer_input_parameter",
+          "selected_producer_output_parameter",
+          "candidate_edge_ids",
+          "provenance"
+        ],
+        "properties": {
+          "trace_index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "resolution_status": {
+            "enum": [
+              "resolved",
+              "unresolved_ambiguous_source_parameter",
+              "unresolved_missing_graph_edge"
+            ]
+          },
+          "producer_tool": {
+            "type": "string"
+          },
+          "consumer_tool": {
+            "type": "string"
+          },
+          "consumer_input_parameter": {
+            "type": "string"
+          },
+          "selected_producer_output_parameter": {
+            "type": "string"
+          },
+          "candidate_edge_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "provenance": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "structural_diagnosis_eligible": {
+      "type": "boolean"
+    },
+    "probe_eligibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "eligible",
+        "reasons",
+        "checks",
+        "state_diagnosis_available"
+      ],
+      "properties": {
+        "eligible": {
+          "type": "boolean"
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "checks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "selected_dependency_trace_present",
+            "all_selected_dependencies_resolved",
+            "single_turn_structural_dependencies",
+            "raw_tool_call_nonempty",
+            "initial_state_available",
+            "expected_final_state_available",
+            "selected_reference_semantics"
+          ],
+          "properties": {
+            "selected_dependency_trace_present": {
+              "type": "boolean"
+            },
+            "all_selected_dependencies_resolved": {
+              "type": "boolean"
+            },
+            "single_turn_structural_dependencies": {
+              "type": "boolean"
+            },
+            "raw_tool_call_nonempty": {
+              "type": "boolean"
+            },
+            "initial_state_available": {
+              "type": "boolean"
+            },
+            "expected_final_state_available": {
+              "type": "boolean"
+            },
+            "selected_reference_semantics": {
+              "type": "boolean"
+            }
+          }
+        },
+        "state_diagnosis_available": {
+          "type": "boolean"
+        }
+      }
     }
   }
 }

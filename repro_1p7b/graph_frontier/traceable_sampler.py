@@ -173,6 +173,10 @@ def sample_with_dependency_trace(tool_graph: Any, sampler: Any, **sample_kwargs:
     return DependencyTraceRecorder(sampler).sample(tool_graph, **sample_kwargs)
 
 
+def has_selected_dependency_trace(tool_chain: Any) -> bool:
+    return hasattr(tool_chain, TRACE_ATTRIBUTE)
+
+
 def selected_dependency_trace(tool_chain: Any) -> List[Dict[str, Any]]:
     value = getattr(tool_chain, TRACE_ATTRIBUTE, [])
     return deepcopy(value) if isinstance(value, list) else []

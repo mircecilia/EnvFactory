@@ -10,7 +10,11 @@ from pathlib import Path
 from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence, Tuple
 
 from .adapters import UNKNOWN, tool_graph_to_spec
-from .traceable_sampler import selected_dependency_trace
+from .eligibility import evaluate_probe_eligibility
+from .traceable_sampler import (
+    has_selected_dependency_trace,
+    selected_dependency_trace,
+)
 
 
 def _known_bool(value: Any) -> Any:
@@ -178,49 +182,102 @@ def build_gold_sidecar(
     for index, name in enumerate(tool_names):
         positions[name].append(index)
 
-    graph_spec = tool_graph_to_spec(tool_graph, expected_tools=unique_tools)
-    graph_edges = [edge for edge in graph_spec["dependency_edges"] if _is_forward_edge(edge, positions)]
+    trace_present = has_selected_dependency_trace(tool_chain)
     trace = selected_dependency_trace(tool_chain)
+    turn_trace = [
+        record for record in trace
+        if record.get("consumer_tool") in positions
+    ]
+    selected_producer_names = [
+        record.get("selected_producer_tool")
+        for record in turn_trace
+        if isinstance(record.get("selected_producer_tool"), str)
+    ]
+    relevant_names = list(dict.fromkeys(unique_names + selected_producer_names))
+    graph_spec = tool_graph_to_spec(tool_graph, expected_tools=relevant_names)
+    candidate_graph_edges = list(graph_spec["dependency_edges"])
+    graph_edges = [
+        edge for edge in candidate_graph_edges
+        if _is_forward_edge(edge, positions)
+    ]
     alternative_dependency_groups = []
-    if trace:
+    unresolved_dependencies = []
+    cross_turn_dependencies = []
+    resolved_dependency_count = 0
+
+    if trace_present:
         selected_edges = []
-        for index, record in enumerate(trace):
-            producer = record.get("selected_producer_tool")
-            consumer = record.get("consumer_tool")
-            target = record.get("consumer_input_parameter")
-            if producer not in positions or consumer not in positions:
-                continue
-            alternatives = record.get("alternatives", UNKNOWN)
+        for index, record in enumerate(turn_trace):
+            producer = record.get("selected_producer_tool", UNKNOWN)
+            consumer = record.get("consumer_tool", UNKNOWN)
+            target = record.get("consumer_input_parameter", UNKNOWN)
+            selected_output = record.get(
+                "selected_producer_output_parameter", UNKNOWN
+            )
+            cross_turn = producer not in positions
+            candidates = [
+                edge for edge in candidate_graph_edges
+                if edge["producer_tool"] == producer
+                and edge["consumer_tool"] == consumer
+                and edge["target_parameter"] == target
+            ]
+            if selected_output != UNKNOWN:
+                candidates = [
+                    edge for edge in candidates
+                    if edge["source_parameter"] == selected_output
+                ]
+
+            if len(candidates) == 1:
+                resolution_status = "resolved"
+                resolved_dependency_count += 1
+                if not cross_turn:
+                    selected_edges.append(candidates[0])
+            elif len(candidates) > 1:
+                resolution_status = "unresolved_ambiguous_source_parameter"
+            else:
+                resolution_status = "unresolved_missing_graph_edge"
+
+            dependency_record = {
+                "trace_index": index,
+                "resolution_status": resolution_status,
+                "producer_tool": producer,
+                "consumer_tool": consumer,
+                "consumer_input_parameter": target,
+                "selected_producer_output_parameter": selected_output,
+                "candidate_edge_ids": [
+                    edge.get("edge_id", UNKNOWN) for edge in candidates
+                ],
+                "provenance": record.get("provenance", UNKNOWN),
+            }
             alternative_dependency_groups.append(
                 {
                     "group_id": f"or::{consumer}::input::{target}::{index}",
                     "semantics": "or",
                     "consumer_tool": consumer,
                     "consumer_input_parameter": target,
-                    "alternatives": alternatives,
+                    "alternatives": record.get("alternatives", UNKNOWN),
                     "selected_producer_tool": producer,
-                    "selected_producer_output_parameter": record.get(
-                        "selected_producer_output_parameter", UNKNOWN
-                    ),
+                    "selected_producer_output_parameter": selected_output,
+                    "resolution_status": resolution_status,
                     "provenance": record.get("provenance", UNKNOWN),
                 }
             )
-            candidates = [
-                edge for edge in graph_edges
-                if edge["producer_tool"] == producer
-                and edge["consumer_tool"] == consumer
-                and edge["target_parameter"] == target
-            ]
-            selected_output = record.get("selected_producer_output_parameter", UNKNOWN)
-            if selected_output != UNKNOWN:
-                candidates = [
-                    edge for edge in candidates
-                    if edge["source_parameter"] == selected_output
-                ]
-            if len(candidates) == 1:
-                selected_edges.append(candidates[0])
+            if resolution_status != "resolved":
+                unresolved_dependencies.append(dependency_record)
+            if cross_turn:
+                cross_turn_dependencies.append(dependency_record)
+
         graph_edges = selected_edges
-        dependency_semantics = "selected_reference"
+        all_resolved = (
+            len(turn_trace) == resolved_dependency_count
+            and not unresolved_dependencies
+        )
+        resolution_status = "resolved" if all_resolved else "unresolved"
+        dependency_semantics = (
+            "selected_reference"
+            if all_resolved and not cross_turn_dependencies
+            else "selected_reference_incomplete"
+        )
     else:
         grouped = defaultdict(list)
         for edge in graph_edges:
@@ -230,7 +287,22 @@ def build_gold_sidecar(
         else:
             dependency_semantics = "possible_graph_unselected"
             graph_edges = []
+        resolution_status = "trace_missing"
+
+    dependency_resolution = {
+        "status": resolution_status,
+        "selected_dependency_count": len(turn_trace),
+        "resolved_dependency_count": resolved_dependency_count,
+        "unresolved_dependency_count": len(unresolved_dependencies),
+        "cross_turn_dependency_count": len(cross_turn_dependencies),
+        "unresolved_dependencies": unresolved_dependencies,
+    }
     dependency_depth, edge_depths = _dependency_depths(tool_names, graph_edges)
+    if dependency_semantics == "selected_reference_incomplete":
+        dependency_depth = UNKNOWN
+        edge_depths = {
+            str(edge["edge_id"]): UNKNOWN for edge in graph_edges
+        }
     servers = sorted({server for server in (_server_id(tool) for tool in unique_tools) if server != UNKNOWN})
 
     required_nodes = []
@@ -317,7 +389,11 @@ def build_gold_sidecar(
             for index, name in enumerate(tool_names)
         ],
         "gold_tool_set": sorted(set(tool_names)),
+        "selected_dependency_trace_present": trace_present,
         "dependency_semantics": dependency_semantics,
+        "dependency_resolution": dependency_resolution,
+        "cross_turn_dependency": bool(cross_turn_dependencies),
+        "cross_turn_dependencies": cross_turn_dependencies,
         "dependency_depth": dependency_depth,
         "required_tool_nodes": required_nodes,
         "dependency_edges": dependency_edges,
@@ -333,6 +409,9 @@ def build_gold_sidecar(
             "metadata_preservation_point": "generation-time graph metadata must be preserved before ToolQueryNode.save() discards raw_tool_call information",
         },
     }
+    eligibility = evaluate_probe_eligibility(sidecar)
+    sidecar["probe_eligibility"] = eligibility
+    sidecar["structural_diagnosis_eligible"] = eligibility["eligible"]
     return sidecar
 
 

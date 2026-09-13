@@ -25,13 +25,13 @@ Within each bucket, cap any one environment/server family so that one API family
 ## Generation protocol
 
 1. Reserve probe-only seeds and a probe output directory before generation; reject any seed/task ID found in training manifests.
-2. Sample from EnvFactory's executable environments with the normal official graph and sampler.
+2. Sample from EnvFactory's executable environments with the official graph and sampler, using `sample_with_dependency_trace` at the sampling boundary.
 3. During QueryGen, call `GenerationSidecarCallback.before_save(context)` before the lossy `ToolQueryNode.save()` path.
 4. Save the original generated query artifact and `<task>.gold.json` under the same manifest task ID.
-5. Validate each sidecar against `GOLD_SIDECAR_SCHEMA.json`; reject empty gold sequences, missing initial scenarios required for execution, task-ID collisions, and non-executable servers.
+5. Validate each sidecar against `GOLD_SIDECAR_SCHEMA.json` and `PROBE_ELIGIBILITY_SCHEMA.json`; accept structural tasks only when `is_structurally_diagnosable(sidecar)` is true, and reject empty sequences, unresolved selected dependencies, cross-turn selected dependencies, missing initial scenarios, task-ID collisions, and non-executable servers.
 6. Freeze the accepted manifest, sidecars, generation seeds, environment versions, and depth counts. Do not regenerate per model.
 
-The expected final scenario remains `unknown` unless an environment-owned deterministic oracle produces it. A selected QueryGen trajectory's observed final scenario is not automatically promoted to gold.
+For this internship/project implementation, the selected QueryGen reference trajectory's `final_scenario` may be used as `expected_final_state` when it is explicitly labeled with provenance `selected_querygen_reference_trajectory`. It is a reference state under EnvFactory's own engineering assumption, not an independent oracle. If it is unavailable, structural diagnosis may proceed while state success remains `unknown`.
 
 ## Evaluation matrix
 
@@ -60,8 +60,10 @@ Do not generate the pool until the required generation API/model access and exec
 
 The probe driver must call `sample_with_dependency_trace` instead of calling
 `ToolGraph.sample` directly, then export each sidecar before QueryGen saves the
-chain. Tasks whose sidecar says `possible_graph_unselected` are invalid for
-dependency diagnosis and must be rejected or regenerated.
+chain. Graph-Frontier v1 accepts only single-turn structural dependencies.
+`possible_graph_unselected`, `selected_reference_incomplete`, unresolved
+selected dependencies, and cross-turn selected dependencies are invalid for
+structural diagnosis and must be rejected or regenerated.
 
 The executor must record the original FastMCP `CallToolResult` before any text
 flattening and must report both typed recovery rates. Run one executable task as

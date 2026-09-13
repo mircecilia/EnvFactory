@@ -3,13 +3,13 @@ set -euo pipefail
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/common.sh"
 
 if [ "$#" -ne 3 ]; then
-  echo "usage: $0 <base|sft> <model-path> <smoke|full>" >&2
+  echo "usage: $0 <base|sft|parameter_aware> <model-path> <smoke|full>" >&2
   exit 2
 fi
 RUN_LABEL="$1"
 MODEL_PATH="$2"
 SCOPE="$3"
-case "$RUN_LABEL" in base|sft) ;; *) echo "invalid run label: $RUN_LABEL" >&2; exit 2 ;; esac
+case "$RUN_LABEL" in base|sft|parameter_aware) ;; *) echo "invalid run label: $RUN_LABEL" >&2; exit 2 ;; esac
 case "$SCOPE" in smoke|full) ;; *) echo "invalid scope: $SCOPE" >&2; exit 2 ;; esac
 
 require_clean_bfcl
@@ -17,6 +17,10 @@ require_model "$MODEL_PATH"
 
 RUN_ROOT="$EVAL_DIR/artifacts/$SCOPE/$RUN_LABEL"
 LOG_DIR="$EVAL_DIR/logs/$SCOPE"
+if [ "$RUN_LABEL" = parameter_aware ] && [ "$SCOPE" = full ] && [ -e "$RUN_ROOT" ]; then
+  echo "refusing to overwrite existing parameter-aware BFCL results: $RUN_ROOT" >&2
+  exit 3
+fi
 mkdir -p "$RUN_ROOT" "$LOG_DIR"
 export BFCL_PROJECT_ROOT="$RUN_ROOT"
 export VLLM_ENDPOINT=127.0.0.1

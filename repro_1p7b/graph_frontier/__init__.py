@@ -2,6 +2,7 @@
 
 from .adapters import normalized_rollout_bundle, querygen_artifact_to_bundle, tool_graph_to_spec
 from .capability import aggregate_profiles, beta_smoothed_metric
+from .eligibility import evaluate_probe_eligibility, is_structurally_diagnosable
 from .export_pipeline import profile_sidecar_and_trace, sidecar_and_trace_to_bundle
 from .fastmcp_adapter import FastMCPTraceAdapter, trace_quality_metrics
 from .gold_sidecar import GenerationSidecarCallback, build_gold_sidecar, export_chain_sidecars, write_gold_sidecar
@@ -20,7 +21,9 @@ __all__ = [
     "beta_smoothed_metric",
     "build_gold_sidecar",
     "compare_final_states",
+    "evaluate_probe_eligibility",
     "export_chain_sidecars",
+    "is_structurally_diagnosable",
     "load_rollout_trace",
     "normalized_rollout_bundle",
     "profile_rollout",

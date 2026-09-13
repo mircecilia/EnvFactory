@@ -2,86 +2,124 @@
 
 ## Decision
 
-**NOT READY for the 200-500 task real probe launch.**
+- **CPU SEMANTICS: READY**
+- **REAL PROBE: NOT READY**
 
-The CPU-side semantics are implemented and tested, but the production generation
-and execution entry points have not yet been wired to the adapters, and no
-single-task live environment smoke has been authorized. Starting the pool now
-would risk producing traces without selected-dependency or typed-result evidence.
+The v1 sidecar, eligibility gates, typed adapters, and profiler semantics are
+covered by CPU tests. Runtime generation/executor wiring and one real executable
+task smoke remain pending. This stage does not authorize those workloads.
 
-## Readiness checklist
+## CPU semantic readiness
 
-| Gate | Status | Evidence / remaining action |
+| Gate | Status | Evidence |
 |---|---|---|
-| Selected producer is distinguished from all possible producers | PASS | `DependencyTraceRecorder` observes the existing sampler and records the chosen producer plus an explicit OR alternative group without adding RNG calls. |
-| Sidecar contains only the selected/reference dependency | PASS | Ambiguous untraced graphs are marked `possible_graph_unselected` and emit no asserted dependency edge. |
-| Required user-provided input is not a missing producer | PASS | `missing_producer` requires both `required is True` and `internal_parameter is True`; unknown stays unknown. |
-| FastMCP result fields are verified against the installed environment | PASS | Remote environment: FastMCP 3.1.0 and MCP 1.30.0. `CallToolResult` has `structuredContent`, `isError`, and `content`; `TextContent` has `text`. |
-| Typed response recovery is conservative | PASS | Structured content first; strict JSON-only single TextContent fallback; non-JSON text unknown; exceptions false. |
-| Trace quality is measurable | PASS | Raw trace and profile expose `typed_value_recovery_rate` and `typed_execution_status_rate`. |
-| Final state has a named expected source | PASS | QueryGen node `final_scenario` is accepted only under the explicit engineering assumption `selected_querygen_reference_trajectory`. |
-| Path adherence and task success are separate | PASS | State success suppresses reference-path deviations as task-level roots while retaining structural diagnostics. |
-| Sidecar depth is authoritative | PASS | Node/edge sidecar depths override fallback; cycle fallback is unknown; optional unknown incoming edges do not block reached depth. |
-| Typed parameter values use exact semantics | PASS | Scalar exact, collection exact, object structural; collection-to-scalar needs explicit `member_selection`; ambiguous type is unknown. |
-| CPU test suite | PASS | Full result is recorded in the commit handoff; no GPU workload is used. |
-| Production QueryGen hook wired | PENDING | Use the wrapper/subclass hook below before the first real task. |
-| Production MCP executor hook wired | PENDING | Wrap the `Client.call_tool` result before MCPManager flattens `result.content`. |
-| One-task live executable smoke | PENDING | Requires later authorization because it invokes a real environment/model path. |
-| 200-500 task pool | BLOCKED BY ABOVE | Do not launch until both hooks and the one-task smoke pass. |
+| Selected producer trace | PASS | `DependencyTraceRecorder` delegates every random decision once and records the selected producer. |
+| Every selected dependency resolves | PASS | `dependency_resolution` counts selected/resolved dependencies and records ambiguous or missing graph edges explicitly. |
+| OR alternatives are not treated as AND | PASS | Alternatives remain an `or` group; only the uniquely resolved selected edge is structural gold. |
+| Required user-provided semantics | PASS | `missing_producer` requires both `required is True` and `internal_parameter is True`. |
+| FastMCP typed adapter | PASS | Verified with FastMCP 3.1.0 / MCP 1.30.0 fields `structuredContent`, `isError`, `content`, and `TextContent.text`. |
+| Conservative typed matching | PASS | Scalar exact, collection exact or schema-labeled multiset, object structural; ambiguous conversions remain unknown. |
+| Authoritative depth | PASS | Sidecar node/edge depths override fallback; cycles and incomplete dependency resolution produce unknown. |
+| v1 cross-turn rejection | PASS | A selected dependency whose producer and consumer are not in the same turn gets `cross_turn_dependency_not_supported_v1`. |
+| Path adherence versus task success | PASS | A different tool path reaching the same reference final state remains task-successful. |
+| Eligibility checker | PASS | `evaluate_probe_eligibility` and `is_structurally_diagnosable` implement a single acceptance rule. |
+| CPU tests | PASS | See the commit handoff for the exact total. |
 
-## Minimal hook points
+A task is structurally diagnosable only when:
 
-### A. Gold graph and selected dependency
-
-At the caller that currently invokes `ToolGraph.sample`, replace only the call
-boundary:
-
-```python
-chain = sample_with_dependency_trace(
-    tool_graph,
-    topology_sampler,
-    max_nodes=max_nodes,
-    start_node=start_node,
-    seed=seed,
-)
+```text
+dependency_semantics == selected_reference
+selected_dependency_trace_present == true
+selected_dependency_count == resolved_dependency_count
+unresolved_dependency_count == 0
+cross_turn_dependency_count == 0
+raw_tool_call is non-empty
+initial state is available
 ```
 
-Then use a wrapper/subclass of `QueryGenNonConv` whose `terminate` calls
-`GenerationSidecarCallback.before_save(context)` immediately before delegating
-to the existing terminate implementation. The current core save is
-`src/gen/query_gen/query_gen_non_conv.py:609`.
+A missing expected final state does not fail structural eligibility. It only makes
+state diagnosis unavailable and leaves `state_success` unknown unless the
+runtime supplies a typed verifier result.
+
+## Graph-Frontier v1 scope
+
+Graph-Frontier v1 supports **single-turn structural diagnosis only**. EnvFactory
+multi-turn tasks are not declared invalid; only sidecars with selected
+dependencies crossing a turn boundary are rejected for v1 structural diagnosis.
+Multi-turn dependency provenance is deferred to v2.
+
+Ambiguous selected dependencies are never silently dropped. They are retained
+under `dependency_resolution.unresolved_dependencies`, the sidecar becomes
+`selected_reference_incomplete`, dependency depth becomes `unknown`, and
+eligibility is false.
+
+## Final-state reference assumption
+
+For this internship/project implementation, the selected QueryGen reference
+trajectory's `final_scenario` may be used as `expected_final_state`, but it
+must be labeled with provenance
+`selected_querygen_reference_trajectory`. It is a reference state under
+EnvFactory's own engineering assumption, not an independent oracle.
+
+The profiler therefore keeps:
+
+```text
+path_adherence != task_success
+```
+
+A non-reference path that reaches the same canonical reference state may have
+`path_adherence=false` and `task_success=true`.
+
+## Runtime readiness
+
+| Gate | Status | Required action |
+|---|---|---|
+| Production QueryGen hook wiring | PENDING | Use `sample_with_dependency_trace` and export before the lossy save boundary. |
+| Production executor hook wiring | PENDING | Observe `Client.call_tool` before MCPManager flattens the result to text. |
+| One executable task smoke | PENDING | Run only after explicit authorization. |
+| 200-500 task pool | BLOCKED | Do not launch until all runtime gates pass. |
+
+No core patch is required. A probe driver plus `QueryGenNonConv` and
+`MCPManager` subclasses can install both hooks.
+
+## Future one-task smoke acceptance criteria
+
+Do not execute this smoke in the current stage. When authorized, a dependent
+task must satisfy all of:
+
+```text
+dependency_semantics = selected_reference
+
+selected_dependency_count
+==
+resolved_dependency_count
+
+structural_diagnosis_eligible = true
+cross_turn_dependency_count = 0
+typed_execution_status_rate = 1.0
+dependency edge count > 0
+```
+
+Additionally:
+
+- every key dependency has a typed source and typed target value;
+- `state_success` is boolean, or its unknown reason is explicit;
+- there is no unexpected unresolved dependency;
+- the profile exposes `path_adherence`,
+  `structural_root_cause_failures`, `task_success`, and
+  `max_dependency_depth_reached`;
+- no runtime log, checkpoint, credential, or full graph dump is committed.
+
+## Minimal lossless hook points
+
+Gold metadata must be exported before
+`src/gen/query_gen/query_gen_non_conv.py:609` calls
+`context.tool_chain.save(save_path)`.
 
 **generation-time graph metadata must be preserved before ToolQueryNode.save()
 discards raw_tool_call information**
 
-No core patch is required: both operations can be performed by the probe driver
-and a `QueryGenNonConv` subclass. If the future driver cannot inject a subclass,
-the minimal core proposal is one optional `before_save_callback` invocation
-immediately before line 609, defaulting to `None`.
-
-### B. Typed rollout
-
-The last lossless boundary is `Client.call_tool(short_name, args)` at
-`src/manager/mcp_client_manager.py:242/245`. Line 247 flattens content to text.
-Wrap the client call with `FastMCPTraceAdapter` and only then preserve the
-existing outward text conversion. The wrapper returns the original
-`CallToolResult`, so existing behavior can remain unchanged.
-
-If the probe runner must use `MCPManager` directly, subclass it and override
-`_call_tool_async`; do not patch the training checkout. A core callback proposal
-would accept an optional result observer immediately after lines 242/245 and
-before line 247.
-
-## Required one-task acceptance gate
-
-Before a real pool, one executable task must show all of:
-
-- dependency semantics is `selected_reference`;
-- selected edge count is nonzero for a dependent task;
-- OR alternatives are retained but not treated as AND requirements;
-- typed value recovery and typed execution status rates are reported;
-- final state or verifier result is typed;
-- no runtime log, checkpoint, credential, or full graph dump is committed.
-
-External BFCL remains an external evaluation only and is not used for
-capability diagnosis.
+Typed rollout evidence must be captured immediately after
+`Client.call_tool(short_name, args)` at
+`src/manager/mcp_client_manager.py:242/245`, before line 247 joins text
+content.

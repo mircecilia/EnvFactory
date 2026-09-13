@@ -27,7 +27,8 @@ A task-specific graph projection contains:
 - source and target parameter paths where the official graph supplies them;
 - official edge provenance/type;
 - required and internal-parameter flags, each allowing `unknown`;
-- optional reliable tool metadata such as `state_changing`, otherwise `unknown`.
+- optional reliable tool metadata such as `state_changing`, otherwise `unknown`;
+- selected dependency resolution counts, unresolved records, and cross-turn flags.
 
 `tool_graph_to_spec()` projects a live EnvFactory `ToolGraph` by joining official `Tool_Output`, `Parameter_Relate`, and `Tool_Input` edges. Explicit `Tool_Depend` edges with no parameter mapping remain order-only dependencies; parameter propagation for them is `unknown`.
 
@@ -53,7 +54,7 @@ Adapters never infer a typed success flag from an error-looking string. Legacy Q
 
 For the first consumer invocation of each expected edge:
 
-1. If the required producer was never called before the consumer, record `missing_producer` as a root dependency failure.
+1. If an input is explicitly both required and internal and its selected producer was never called before the consumer, record `missing_producer` as a root dependency failure. User-provided or unknown provenance never becomes a missing-producer failure.
 2. If the producer has an earlier root failure, record the consumer edge/call as downstream propagation.
 3. If the producer explicitly failed execution without an earlier dependency failure, record one producer `tool_execution_failure` root; downstream failures point to it.
 4. If source and target parameter paths and values are available, exact typed equality satisfies propagation; a mismatch is `wrong_propagated_value`.
@@ -62,6 +63,22 @@ For the first consumer invocation of each expected edge:
 7. Repeated identical `tool_name + canonical arguments` calls are exact duplicates. Calls outside a known expected set are extras. Semantic unnecessary-call detection remains unavailable without stronger metadata.
 
 Only the earliest causal failure is `first_failure_step`. Later tool failures reachable from it are listed as propagated rather than independent roots.
+
+
+
+## v1 diagnosis boundary and state reference
+
+Graph-Frontier v1 accepts structural sidecars only when every selected dependency
+is uniquely resolved and producer/consumer are in the same turn. Ambiguous
+source parameters, missing graph edges, absent sampler traces, and cross-turn
+selected dependencies are explicit rejection reasons. This restriction applies
+to v1 structural diagnosis, not to the validity of EnvFactory multi-turn tasks.
+
+For this internship/project implementation, the selected QueryGen reference
+trajectory's `final_scenario` may be used as `expected_final_state` with
+provenance `selected_querygen_reference_trajectory`. This is an EnvFactory
+engineering reference, not an independent oracle. Consequently
+`path_adherence` and `task_success` remain separate.
 
 ## Capability map
 
