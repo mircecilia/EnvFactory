@@ -1,0 +1,23 @@
+{
+  "PATHS": {
+    "base": "repro_1p7b/models/Qwen3-1.7B",
+    "original_sft": "repro_1p7b/checkpoints/baseline_sft_8k_1p7b",
+    "parameter_aware": "repro_1p7b/checkpoints/parameter_aware_sft_8k_1p7b"
+  },
+  "PROTOCOL": {
+    "environment_reset": "fresh client id and load_scenario",
+    "max_new_tokens": 1024,
+    "max_tool_calls": 8,
+    "max_tool_rounds": 4,
+    "max_turns": 1,
+    "presence_penalty": 0.0,
+    "probe_timeout_seconds": 120,
+    "retry_policy": "no outer retry",
+    "stop_condition": "first no-tool response or four rounds",
+    "temperature": 0.0,
+    "thinking": false,
+    "top_p": 1.0
+  },
+  "SEED": 20260914,
+  "schema_version": "graph_frontier_pilot_protocol_v1"
+}
