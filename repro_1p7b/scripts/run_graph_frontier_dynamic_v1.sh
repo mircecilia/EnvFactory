@@ -55,7 +55,9 @@ if [[ ! -s "$boundary/trainer_state.json" ]]; then
   source /opt/conda/etc/profile.d/conda.sh || fail conda_source $?
   conda activate "$TRAIN_ENV" || fail conda_activate_train $?
   set -u
-  export CUDA_HOME="$CONDA_PREFIX" PATH="$CUDA_HOME/bin:$PATH" PYTORCH_ALLOC_CONF=expandable_segments:True
+  export CUDA_HOME="$CONDA_PREFIX"
+  export PATH="$CUDA_HOME/bin:$PATH"
+  export PYTORCH_ALLOC_CONF=expandable_segments:True
   resume_args=()
   latest=$(latest_checkpoint)
   if [[ -n "$latest" ]]; then resume_args=(--resume-from-checkpoint "$OUTPUT/$latest"); fi
@@ -136,7 +138,9 @@ if [[ "$final_step" -lt 414 ]]; then
   source /opt/conda/etc/profile.d/conda.sh || fail conda_source $?
   conda activate "$TRAIN_ENV" || fail conda_activate_train $?
   set -u
-  export CUDA_HOME="$CONDA_PREFIX" PATH="$CUDA_HOME/bin:$PATH" PYTORCH_ALLOC_CONF=expandable_segments:True
+  export CUDA_HOME="$CONDA_PREFIX"
+  export PATH="$CUDA_HOME/bin:$PATH"
+  export PYTORCH_ALLOC_CONF=expandable_segments:True
   resume="$boundary"
   latest=$(latest_checkpoint)
   if [[ -n "$latest" ]] && [[ $(checkpoint_step "$latest") -gt 207 ]]; then resume="$OUTPUT/$latest"; fi
