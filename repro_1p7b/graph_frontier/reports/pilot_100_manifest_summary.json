@@ -1,0 +1,43 @@
+{
+  "accepted": 100,
+  "candidates_generated": 100,
+  "complexity_distribution": {
+    "1": 53,
+    "2": 35,
+    "3+": 12
+  },
+  "dependency_depth_distribution": {
+    "1": 53,
+    "2": 35,
+    "3": 12
+  },
+  "environment_distribution": {
+    "Calendar": 10,
+    "GoogleTasks": 30,
+    "TradingBot": 18,
+    "UUPaoTui": 18,
+    "Weather": 24
+  },
+  "manifest_path": "repro_1p7b/results/graph_frontier/pilot_100/frozen/pilot_100_seed_20260914.jsonl",
+  "manifest_sha256": "6ca0dd900670bd9169c7f1226b22ab99acc92dbea84e0975695bb6b7bea5682e",
+  "probe_count": 100,
+  "rejected": 0,
+  "rejection_reason_counts": {},
+  "seed": 20260914,
+  "task_kind_distribution": {
+    "create_create": 6,
+    "create_create_delete": 6,
+    "create_create_lookup": 6,
+    "create_create_update": 6,
+    "create_lookup": 6,
+    "create_update": 5,
+    "create_update_delete": 5,
+    "lookup_action": 12,
+    "lookup_action_lookup": 6,
+    "lookup_action_lookup_action": 6,
+    "lookup_lookup": 24,
+    "lookup_lookup_action": 6,
+    "lookup_lookup_action_lookup": 6
+  },
+  "template_count": 17
+}

@@ -1,0 +1,1859 @@
+{
+  "limitations": [
+    "100-task pilot; not a final benchmark.",
+    "Edges within a task are clustered; no edge-level significance claim.",
+    "Exact McNemar uses task-level binary outcomes only."
+  ],
+  "manifest": "/home/u2024311031/workspace/envfactory_repro_1p7b/repro_1p7b/results/graph_frontier/pilot_100/frozen/pilot_100_seed_20260914.jsonl",
+  "models": {
+    "base": {
+      "dependency_edges": {
+        "distribution": {
+          "consumer_not_executed": 10,
+          "dependency_failure": 9,
+          "producer_failed": 10,
+          "producer_not_executed": 159,
+          "success": 6,
+          "wrong_propagated_value": 19
+        },
+        "success": {
+          "attempts": 213,
+          "raw_rate": 0.028169014084507043,
+          "smoothed_rate": 0.03255813953488372,
+          "successes": 6
+        }
+      },
+      "depth": {
+        "1": {
+          "attempts": 124,
+          "raw_rate": 0.04838709677419355,
+          "smoothed_rate": 0.05555555555555555,
+          "successes": 6
+        },
+        "2": {
+          "attempts": 77,
+          "raw_rate": 0.0,
+          "smoothed_rate": 0.012658227848101266,
+          "successes": 0
+        },
+        "3": {
+          "attempts": 12,
+          "raw_rate": 0.0,
+          "smoothed_rate": 0.07142857142857142,
+          "successes": 0
+        }
+      },
+      "first_failed_dependency_depth": {
+        "1": 94
+      },
+      "internal_parameter_propagation": {
+        "attempts": 53,
+        "correct": 6,
+        "missing": 28,
+        "raw_accuracy": 0.11320754716981132,
+        "smoothed_accuracy": 0.12727272727272726,
+        "wrong": 19
+      },
+      "max_attempted_dependency_depth": 3,
+      "max_solved_dependency_depth": 2,
+      "overall": {
+        "completed": 100,
+        "final_state_success": {
+          "attempts": 100,
+          "raw_rate": 0.29,
+          "smoothed_rate": 0.29411764705882354,
+          "successes": 29
+        },
+        "path_adherence": {
+          "attempts": 100,
+          "raw_rate": 0.06,
+          "smoothed_rate": 0.06862745098039216,
+          "successes": 6
+        },
+        "task_success": {
+          "attempts": 100,
+          "raw_rate": 0.0,
+          "smoothed_rate": 0.00980392156862745,
+          "successes": 0
+        }
+      },
+      "per_task": {
+        "calendar-create_update-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update_delete-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update_delete-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update_delete-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update_delete-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update_delete-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_get-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_get-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_get-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_get-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_get-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_get-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_task-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_task-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_task-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_task-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_task-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_task-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-00": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-01": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-02": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-03": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-04": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-05": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_alerts-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_alerts-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_alerts-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_alerts-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_alerts-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_alerts-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_forecast-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_forecast-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_forecast-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_forecast-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_forecast-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_forecast-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_save-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_save-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_save-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_save-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_save-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_save-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_weather-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_weather-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_weather-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_weather-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_weather-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_weather-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        }
+      },
+      "probe_count": 100,
+      "root_failure_type": {
+        "final_state_failure": 51,
+        "missing_producer": 6,
+        "producer_not_executed": 24,
+        "wrong_propagated_value": 19
+      },
+      "runtime_seconds": 437.89196812175214,
+      "system_errors": {},
+      "tool_execution": {
+        "gold_node_attempts": 259,
+        "gold_node_executed": 56,
+        "node_coverage": 0.21621621621621623,
+        "redundant_calls": 42,
+        "unexpected_calls": 18
+      },
+      "valid_capability_probes": 100
+    },
+    "original_sft": {
+      "dependency_edges": {
+        "distribution": {
+          "consumer_not_executed": 30,
+          "dependency_failure": 4,
+          "producer_failed": 13,
+          "producer_not_executed": 37,
+          "success": 97,
+          "wrong_propagated_value": 32
+        },
+        "success": {
+          "attempts": 213,
+          "raw_rate": 0.45539906103286387,
+          "smoothed_rate": 0.4558139534883721,
+          "successes": 97
+        }
+      },
+      "depth": {
+        "1": {
+          "attempts": 124,
+          "raw_rate": 0.5725806451612904,
+          "smoothed_rate": 0.5714285714285714,
+          "successes": 71
+        },
+        "2": {
+          "attempts": 77,
+          "raw_rate": 0.2597402597402597,
+          "smoothed_rate": 0.26582278481012656,
+          "successes": 20
+        },
+        "3": {
+          "attempts": 12,
+          "raw_rate": 0.5,
+          "smoothed_rate": 0.5,
+          "successes": 6
+        }
+      },
+      "first_failed_dependency_depth": {
+        "1": 52,
+        "2": 3
+      },
+      "internal_parameter_propagation": {
+        "attempts": 159,
+        "correct": 97,
+        "missing": 30,
+        "raw_accuracy": 0.610062893081761,
+        "smoothed_accuracy": 0.6086956521739131,
+        "wrong": 32
+      },
+      "max_attempted_dependency_depth": 3,
+      "max_solved_dependency_depth": 3,
+      "overall": {
+        "completed": 100,
+        "final_state_success": {
+          "attempts": 100,
+          "raw_rate": 0.41,
+          "smoothed_rate": 0.4117647058823529,
+          "successes": 41
+        },
+        "path_adherence": {
+          "attempts": 100,
+          "raw_rate": 0.49,
+          "smoothed_rate": 0.49019607843137253,
+          "successes": 49
+        },
+        "task_success": {
+          "attempts": 100,
+          "raw_rate": 0.29,
+          "smoothed_rate": 0.29411764705882354,
+          "successes": 29
+        }
+      },
+      "per_task": {
+        "calendar-create_update-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update_delete-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update_delete-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update_delete-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update_delete-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update_delete-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_get-00": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "googletasks-list_get-01": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "googletasks-list_get-02": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "googletasks-list_get-03": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "googletasks-list_get-04": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "googletasks-list_get-05": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "googletasks-list_task-00": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "googletasks-list_task-01": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "googletasks-list_task-02": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "googletasks-list_task-03": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "googletasks-list_task-04": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "googletasks-list_task-05": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "googletasks-task_delete-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-00": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-01": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-02": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-03": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-04": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-05": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-00": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-01": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-02": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-04": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_alerts-00": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_alerts-01": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_alerts-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_alerts-03": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_alerts-04": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_alerts-05": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_forecast-00": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_forecast-01": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_forecast-02": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_forecast-03": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_forecast-04": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_forecast-05": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_save-00": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_save-01": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_save-02": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_save-03": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_save-04": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_save-05": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_weather-00": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_weather-01": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_weather-02": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_weather-03": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_weather-04": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_weather-05": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        }
+      },
+      "probe_count": 100,
+      "root_failure_type": {
+        "consumer_not_executed": 1,
+        "final_state_failure": 24,
+        "missing_producer": 14,
+        "producer_not_executed": 6,
+        "wrong_propagated_value": 26
+      },
+      "runtime_seconds": 339.3694850448519,
+      "system_errors": {},
+      "tool_execution": {
+        "gold_node_attempts": 259,
+        "gold_node_executed": 182,
+        "node_coverage": 0.7027027027027027,
+        "redundant_calls": 15,
+        "unexpected_calls": 56
+      },
+      "valid_capability_probes": 100
+    },
+    "parameter_aware": {
+      "dependency_edges": {
+        "distribution": {
+          "consumer_not_executed": 43,
+          "dependency_failure": 15,
+          "producer_failed": 36,
+          "producer_not_executed": 31,
+          "success": 38,
+          "wrong_propagated_value": 50
+        },
+        "success": {
+          "attempts": 213,
+          "raw_rate": 0.1784037558685446,
+          "smoothed_rate": 0.1813953488372093,
+          "successes": 38
+        }
+      },
+      "depth": {
+        "1": {
+          "attempts": 124,
+          "raw_rate": 0.3064516129032258,
+          "smoothed_rate": 0.30952380952380953,
+          "successes": 38
+        },
+        "2": {
+          "attempts": 77,
+          "raw_rate": 0.0,
+          "smoothed_rate": 0.012658227848101266,
+          "successes": 0
+        },
+        "3": {
+          "attempts": 12,
+          "raw_rate": 0.0,
+          "smoothed_rate": 0.07142857142857142,
+          "successes": 0
+        }
+      },
+      "first_failed_dependency_depth": {
+        "1": 76,
+        "2": 2
+      },
+      "internal_parameter_propagation": {
+        "attempts": 149,
+        "correct": 38,
+        "missing": 61,
+        "raw_accuracy": 0.2550335570469799,
+        "smoothed_accuracy": 0.2582781456953642,
+        "wrong": 50
+      },
+      "max_attempted_dependency_depth": 3,
+      "max_solved_dependency_depth": 2,
+      "overall": {
+        "completed": 100,
+        "final_state_success": {
+          "attempts": 100,
+          "raw_rate": 0.4,
+          "smoothed_rate": 0.4019607843137255,
+          "successes": 40
+        },
+        "path_adherence": {
+          "attempts": 100,
+          "raw_rate": 0.27,
+          "smoothed_rate": 0.27450980392156865,
+          "successes": 27
+        },
+        "task_success": {
+          "attempts": 100,
+          "raw_rate": 0.2,
+          "smoothed_rate": 0.20588235294117646,
+          "successes": 20
+        }
+      },
+      "per_task": {
+        "calendar-create_update-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update_delete-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update_delete-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update_delete-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update_delete-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "calendar-create_update_delete-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_get-00": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "googletasks-list_get-01": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "googletasks-list_get-02": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "googletasks-list_get-03": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "googletasks-list_get-04": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "googletasks-list_get-05": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "googletasks-list_task-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_task-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_task-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_task-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_task-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-list_task-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_delete-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_get-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "googletasks-task_update-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-quote_order_details-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "tradingbot-symbol_info-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_cancel-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-01": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_create-05": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "uupaotui-estimate_query-05": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_alerts-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_alerts-01": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_alerts-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_alerts-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_alerts-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_alerts-05": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_forecast-00": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_forecast-01": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_forecast-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_forecast-03": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_forecast-04": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_forecast-05": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_save-00": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_save-01": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_save-02": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_save-03": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_save-04": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_save-05": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_weather-00": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_weather-01": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_weather-02": {
+          "edge_complete": false,
+          "internal_param_complete": false,
+          "task_success": false
+        },
+        "weather-city_weather-03": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_weather-04": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        },
+        "weather-city_weather-05": {
+          "edge_complete": true,
+          "internal_param_complete": true,
+          "task_success": true
+        }
+      },
+      "probe_count": 100,
+      "root_failure_type": {
+        "consumer_not_executed": 10,
+        "final_state_failure": 6,
+        "missing_producer": 14,
+        "producer_not_executed": 6,
+        "wrong_propagated_value": 44
+      },
+      "runtime_seconds": 509.84159253165126,
+      "system_errors": {},
+      "tool_execution": {
+        "gold_node_attempts": 259,
+        "gold_node_executed": 147,
+        "node_coverage": 0.5675675675675675,
+        "redundant_calls": 202,
+        "unexpected_calls": 215
+      },
+      "valid_capability_probes": 100
+    }
+  },
+  "paired_comparison": {
+    "base_vs_original_sft": {
+      "edge_complete": {
+        "discordant": 51,
+        "exact_two_sided_p": 1.8323628836469652e-08,
+        "paired_support": 100,
+        "right_losses": 6,
+        "right_wins": 45
+      },
+      "internal_param_complete": {
+        "discordant": 51,
+        "exact_two_sided_p": 1.8323628836469652e-08,
+        "paired_support": 100,
+        "right_losses": 6,
+        "right_wins": 45
+      },
+      "task_success": {
+        "discordant": 29,
+        "exact_two_sided_p": 3.725290298461914e-09,
+        "paired_support": 100,
+        "right_losses": 0,
+        "right_wins": 29
+      }
+    },
+    "base_vs_parameter_aware": {
+      "edge_complete": {
+        "discordant": 24,
+        "exact_two_sided_p": 0.001543879508972168,
+        "paired_support": 100,
+        "right_losses": 4,
+        "right_wins": 20
+      },
+      "internal_param_complete": {
+        "discordant": 24,
+        "exact_two_sided_p": 0.001543879508972168,
+        "paired_support": 100,
+        "right_losses": 4,
+        "right_wins": 20
+      },
+      "task_success": {
+        "discordant": 20,
+        "exact_two_sided_p": 1.9073486328125e-06,
+        "paired_support": 100,
+        "right_losses": 0,
+        "right_wins": 20
+      }
+    },
+    "original_sft_vs_parameter_aware": {
+      "edge_complete": {
+        "discordant": 27,
+        "exact_two_sided_p": 5.647540092468262e-06,
+        "paired_support": 100,
+        "right_losses": 25,
+        "right_wins": 2
+      },
+      "internal_param_complete": {
+        "discordant": 27,
+        "exact_two_sided_p": 5.647540092468262e-06,
+        "paired_support": 100,
+        "right_losses": 25,
+        "right_wins": 2
+      },
+      "task_success": {
+        "discordant": 9,
+        "exact_two_sided_p": 0.00390625,
+        "paired_support": 100,
+        "right_losses": 9,
+        "right_wins": 0
+      }
+    }
+  },
+  "schema_version": "graph_frontier_capability_comparison_v1"
+}
