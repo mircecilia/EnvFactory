@@ -1,0 +1,389 @@
+{
+  "models": {
+    "base": {
+      "alternative_valid_path": {
+        "count": 28,
+        "environment_distribution": {
+          "Calendar": 14,
+          "UUPaoTui": 14
+        },
+        "pattern_counts_nonexclusive": {
+          "exact_final_state_mismatch": 14,
+          "extra_nonreference_tool": 14,
+          "gold_edge_incomplete": 14
+        },
+        "task_ids": [
+          "confirm300-calendar-create_update-100",
+          "confirm300-calendar-create_update-101",
+          "confirm300-calendar-create_update-102",
+          "confirm300-calendar-create_update-103",
+          "confirm300-calendar-create_update-104",
+          "confirm300-calendar-create_update-105",
+          "confirm300-calendar-create_update-106",
+          "confirm300-calendar-create_update-107",
+          "confirm300-calendar-create_update-108",
+          "confirm300-calendar-create_update-109",
+          "confirm300-calendar-create_update-110",
+          "confirm300-calendar-create_update-111",
+          "confirm300-calendar-create_update-112",
+          "confirm300-calendar-create_update-113",
+          "confirm300-uupaotui-estimate_create-100",
+          "confirm300-uupaotui-estimate_create-101",
+          "confirm300-uupaotui-estimate_create-102",
+          "confirm300-uupaotui-estimate_create-103",
+          "confirm300-uupaotui-estimate_create-104",
+          "confirm300-uupaotui-estimate_create-105",
+          "confirm300-uupaotui-estimate_create-106",
+          "confirm300-uupaotui-estimate_create-107",
+          "confirm300-uupaotui-estimate_create-108",
+          "confirm300-uupaotui-estimate_create-109",
+          "confirm300-uupaotui-estimate_create-110",
+          "confirm300-uupaotui-estimate_create-111",
+          "confirm300-uupaotui-estimate_create-112",
+          "confirm300-uupaotui-estimate_create-113"
+        ],
+        "template_distribution": {
+          "create_update": 14,
+          "estimate_create": 14
+        }
+      },
+      "call_audit": {
+        "cycle_patterns_nonexclusive": {
+          "a_b_a": 37,
+          "repeated_block_cycle": 105
+        },
+        "legacy_exact_redundant_calls": 141,
+        "legacy_unexpected_calls": 66,
+        "post_success_continuation": {
+          "distribution": {
+            "0": 28
+          },
+          "extra_calls": 0,
+          "mean_extra_calls_among_semantic_successes": 0.0,
+          "tasks": 0
+        },
+        "repeated_patterns_nonexclusive": {
+          "consumer_repeated_after_success": 1,
+          "duplicate_mutation_action": 48,
+          "producer_repeated_after_success": 75,
+          "retry_after_tool_error": 138,
+          "retry_after_wrong_value": 76,
+          "same_tool_different_args": 71,
+          "same_tool_same_args": 141
+        },
+        "tool_budget_exceeded": {
+          "calls": 1,
+          "tasks": 1
+        },
+        "top_repeated_tools": {
+          "Calendar-create_event": 47,
+          "Calendar-delete_event": 47,
+          "Calendar-update_event": 49,
+          "UUPaoTui-cancel_order": 6,
+          "UUPaoTui-create_order": 27,
+          "UUPaoTui-estimate_price": 27,
+          "UUPaoTui-query_order": 9
+        },
+        "top_unexpected_tools": {
+          "Calendar-list_events": 2,
+          "Calendar-search_events": 14,
+          "UUPaoTui-list_orders": 50
+        },
+        "unexpected_failure_reasons": {
+          "max_tool_calls_exceeded": 1
+        },
+        "unexpected_patterns_nonexclusive": {
+          "alternative_producer_candidate": 11,
+          "exploratory_lookup": 66,
+          "malformed_or_failed_tool_call": 1,
+          "tool_outside_gold": 66
+        }
+      },
+      "root_failure_attribution": {
+        "producer_not_executed": 200,
+        "wrong_propagated_value": 72
+      }
+    },
+    "original_sft": {
+      "alternative_valid_path": {
+        "count": 35,
+        "environment_distribution": {
+          "Calendar": 4,
+          "GoogleTasks": 17,
+          "TradingBot": 1,
+          "UUPaoTui": 13
+        },
+        "pattern_counts_nonexclusive": {
+          "exact_final_state_mismatch": 27,
+          "extra_nonreference_tool": 6,
+          "gold_edge_incomplete": 9
+        },
+        "task_ids": [
+          "confirm300-calendar-create_update-112",
+          "confirm300-calendar-create_update_delete-110",
+          "confirm300-calendar-create_update_delete-111",
+          "confirm300-calendar-create_update_delete-113",
+          "confirm300-googletasks-list_task-100",
+          "confirm300-googletasks-list_task-101",
+          "confirm300-googletasks-list_task-102",
+          "confirm300-googletasks-list_task-103",
+          "confirm300-googletasks-list_task-104",
+          "confirm300-googletasks-list_task-105",
+          "confirm300-googletasks-list_task-106",
+          "confirm300-googletasks-list_task-107",
+          "confirm300-googletasks-list_task-108",
+          "confirm300-googletasks-list_task-109",
+          "confirm300-googletasks-list_task-110",
+          "confirm300-googletasks-list_task-111",
+          "confirm300-googletasks-list_task-112",
+          "confirm300-googletasks-task_delete-100",
+          "confirm300-googletasks-task_delete-101",
+          "confirm300-googletasks-task_delete-111",
+          "confirm300-googletasks-task_delete-117",
+          "confirm300-tradingbot-quote_order-100",
+          "confirm300-uupaotui-estimate_create-100",
+          "confirm300-uupaotui-estimate_create-101",
+          "confirm300-uupaotui-estimate_create-102",
+          "confirm300-uupaotui-estimate_create-103",
+          "confirm300-uupaotui-estimate_create-104",
+          "confirm300-uupaotui-estimate_create-106",
+          "confirm300-uupaotui-estimate_create-107",
+          "confirm300-uupaotui-estimate_create-108",
+          "confirm300-uupaotui-estimate_create-109",
+          "confirm300-uupaotui-estimate_create-110",
+          "confirm300-uupaotui-estimate_create-111",
+          "confirm300-uupaotui-estimate_create-112",
+          "confirm300-uupaotui-estimate_create-113"
+        ],
+        "template_distribution": {
+          "create_update": 1,
+          "create_update_delete": 3,
+          "estimate_create": 13,
+          "list_task": 13,
+          "quote_order": 1,
+          "task_delete": 4
+        }
+      },
+      "call_audit": {
+        "cycle_patterns_nonexclusive": {
+          "a_b_a": 18,
+          "repeated_block_cycle": 4
+        },
+        "legacy_exact_redundant_calls": 19,
+        "legacy_unexpected_calls": 193,
+        "post_success_continuation": {
+          "distribution": {
+            "0": 41
+          },
+          "extra_calls": 0,
+          "mean_extra_calls_among_semantic_successes": 0.0,
+          "tasks": 0
+        },
+        "repeated_patterns_nonexclusive": {
+          "duplicate_mutation_action": 18,
+          "producer_repeated_after_success": 19,
+          "retry_after_tool_error": 68,
+          "retry_after_wrong_value": 42,
+          "same_tool_different_args": 68,
+          "same_tool_same_args": 19
+        },
+        "tool_budget_exceeded": {
+          "calls": 0,
+          "tasks": 0
+        },
+        "top_repeated_tools": {
+          "Calendar-delete_event": 3,
+          "Calendar-update_event": 4,
+          "GoogleTasks-create_task": 33,
+          "GoogleTasks-create_task_list": 18,
+          "GoogleTasks-delete_task": 4,
+          "GoogleTasks-update_task_list": 12,
+          "TradingBot-get_stock_info": 11,
+          "UUPaoTui-create_order": 1,
+          "UUPaoTui-estimate_price": 1
+        },
+        "top_unexpected_tools": {
+          "Calendar-list_events": 15,
+          "Calendar-search_events": 10,
+          "GoogleTasks-get_task_list": 18,
+          "GoogleTasks-list_task_lists": 35,
+          "GoogleTasks-list_tasks": 4,
+          "GoogleTasks-update_task_list": 30,
+          "TradingBot-check_login_status": 34,
+          "TradingBot-login": 34,
+          "UUPaoTui-list_orders": 13
+        },
+        "unexpected_failure_reasons": {
+          "Error executing tool get_task_list: Task list <tasklist_id> not found": 14,
+          "Error executing tool list_tasks: Task list <tasklist_id> not found": 4,
+          "Error executing tool update_task_list: Task list <tasklist_id> not found": 18
+        },
+        "unexpected_patterns_nonexclusive": {
+          "alternative_producer_candidate": 45,
+          "exploratory_lookup": 129,
+          "malformed_or_failed_tool_call": 36,
+          "other": 34,
+          "tool_outside_gold": 193,
+          "unnecessary_mutation": 30
+        }
+      },
+      "root_failure_attribution": {
+        "consumer_not_executed": 129,
+        "missing_internal_value": 10,
+        "observation_failure": 41,
+        "wrong_propagated_value": 79
+      }
+    },
+    "parameter_aware": {
+      "alternative_valid_path": {
+        "count": 49,
+        "environment_distribution": {
+          "Calendar": 8,
+          "GoogleTasks": 29,
+          "TradingBot": 1,
+          "UUPaoTui": 11
+        },
+        "pattern_counts_nonexclusive": {
+          "exact_final_state_mismatch": 24,
+          "extra_nonreference_tool": 37,
+          "gold_edge_incomplete": 39,
+          "repeated_call": 2
+        },
+        "task_ids": [
+          "confirm300-calendar-create_update-100",
+          "confirm300-calendar-create_update-101",
+          "confirm300-calendar-create_update-109",
+          "confirm300-calendar-create_update_delete-101",
+          "confirm300-calendar-create_update_delete-103",
+          "confirm300-calendar-create_update_delete-111",
+          "confirm300-calendar-create_update_delete-115",
+          "confirm300-calendar-create_update_delete-117",
+          "confirm300-googletasks-list_task-100",
+          "confirm300-googletasks-list_task-101",
+          "confirm300-googletasks-list_task-102",
+          "confirm300-googletasks-list_task-103",
+          "confirm300-googletasks-list_task-104",
+          "confirm300-googletasks-list_task-105",
+          "confirm300-googletasks-list_task-106",
+          "confirm300-googletasks-list_task-107",
+          "confirm300-googletasks-list_task-108",
+          "confirm300-googletasks-list_task-109",
+          "confirm300-googletasks-list_task-110",
+          "confirm300-googletasks-list_task-111",
+          "confirm300-googletasks-list_task-112",
+          "confirm300-googletasks-task_delete-100",
+          "confirm300-googletasks-task_delete-101",
+          "confirm300-googletasks-task_delete-102",
+          "confirm300-googletasks-task_delete-105",
+          "confirm300-googletasks-task_delete-106",
+          "confirm300-googletasks-task_delete-107",
+          "confirm300-googletasks-task_delete-108",
+          "confirm300-googletasks-task_delete-109",
+          "confirm300-googletasks-task_delete-110",
+          "confirm300-googletasks-task_delete-111",
+          "confirm300-googletasks-task_delete-112",
+          "confirm300-googletasks-task_delete-113",
+          "confirm300-googletasks-task_delete-114",
+          "confirm300-googletasks-task_delete-115",
+          "confirm300-googletasks-task_delete-116",
+          "confirm300-googletasks-task_delete-117",
+          "confirm300-tradingbot-symbol_info-100",
+          "confirm300-uupaotui-estimate_create-100",
+          "confirm300-uupaotui-estimate_create-103",
+          "confirm300-uupaotui-estimate_create-104",
+          "confirm300-uupaotui-estimate_create-105",
+          "confirm300-uupaotui-estimate_create-106",
+          "confirm300-uupaotui-estimate_create-107",
+          "confirm300-uupaotui-estimate_create-108",
+          "confirm300-uupaotui-estimate_create-109",
+          "confirm300-uupaotui-estimate_create-111",
+          "confirm300-uupaotui-estimate_create-112",
+          "confirm300-uupaotui-estimate_create-113"
+        ],
+        "template_distribution": {
+          "create_update": 3,
+          "create_update_delete": 5,
+          "estimate_create": 11,
+          "list_task": 13,
+          "symbol_info": 1,
+          "task_delete": 16
+        }
+      },
+      "call_audit": {
+        "cycle_patterns_nonexclusive": {
+          "a_b_a": 27,
+          "repeated_block_cycle": 4
+        },
+        "legacy_exact_redundant_calls": 20,
+        "legacy_unexpected_calls": 265,
+        "post_success_continuation": {
+          "distribution": {
+            "0": 55
+          },
+          "extra_calls": 0,
+          "mean_extra_calls_among_semantic_successes": 0.0,
+          "tasks": 0
+        },
+        "repeated_patterns_nonexclusive": {
+          "duplicate_mutation_action": 18,
+          "producer_repeated_after_success": 20,
+          "retry_after_tool_error": 115,
+          "retry_after_wrong_value": 84,
+          "same_tool_different_args": 115,
+          "same_tool_same_args": 20
+        },
+        "tool_budget_exceeded": {
+          "calls": 0,
+          "tasks": 0
+        },
+        "top_repeated_tools": {
+          "Calendar-create_event": 1,
+          "Calendar-delete_event": 6,
+          "Calendar-update_event": 9,
+          "GoogleTasks-create_task": 57,
+          "GoogleTasks-create_task_list": 17,
+          "GoogleTasks-delete_task": 16,
+          "GoogleTasks-update_task_list": 18,
+          "TradingBot-get_stock_info": 8,
+          "TradingBot-get_stock_symbol": 1,
+          "UUPaoTui-create_order": 1,
+          "UUPaoTui-estimate_price": 1
+        },
+        "top_unexpected_tools": {
+          "Calendar-get_event": 1,
+          "Calendar-list_events": 17,
+          "Calendar-search_events": 5,
+          "GoogleTasks-get_task_list": 18,
+          "GoogleTasks-list_task_lists": 54,
+          "GoogleTasks-list_tasks": 10,
+          "GoogleTasks-update_task_list": 36,
+          "TradingBot-check_login_status": 35,
+          "TradingBot-login": 38,
+          "UUPaoTui-list_orders": 51
+        },
+        "unexpected_failure_reasons": {
+          "Error executing tool get_task_list: Task list <tasklist_id> not found": 8,
+          "Error executing tool list_tasks: Task list <tasklist_id> not found": 10,
+          "Error executing tool update_task_list: Task list <tasklist_id> not found": 18,
+          "Unknown tool: get_event": 1
+        },
+        "unexpected_patterns_nonexclusive": {
+          "alternative_producer_candidate": 69,
+          "exploratory_lookup": 191,
+          "malformed_or_failed_tool_call": 37,
+          "other": 38,
+          "tool_outside_gold": 265,
+          "unnecessary_mutation": 36
+        }
+      },
+      "root_failure_attribution": {
+        "consumer_not_executed": 106,
+        "missing_internal_value": 7,
+        "observation_failure": 16,
+        "producer_not_executed": 3,
+        "wrong_propagated_value": 113
+      }
+    }
+  },
+  "schema_version": "graph_frontier_confirm_failure_patterns_v1"
+}
