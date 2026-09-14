@@ -1,0 +1,76 @@
+{
+  "checks": {
+    "checkpoint2_complete": true,
+    "checkpoint4_complete": true,
+    "fixed_scheduler_horizon": true,
+    "global_step_2_to_3_to_4": true,
+    "optimizer_restored": true,
+    "rng_restorable": true,
+    "scheduler_restored": true,
+    "stage2_dataset_changed": true,
+    "stage2_dataset_size": true
+  },
+  "status": "PASS",
+  "step_trace": [
+    {
+      "global_step": 1,
+      "learning_rate": [
+        1e-06,
+        1e-06
+      ],
+      "scheduler_last_epoch": 1
+    },
+    {
+      "global_step": 2,
+      "learning_rate": [
+        7.5e-07,
+        7.5e-07
+      ],
+      "scheduler_last_epoch": 2
+    },
+    {
+      "global_step": 3,
+      "learning_rate": [
+        2.500000000000001e-07,
+        2.500000000000001e-07
+      ],
+      "scheduler_last_epoch": 3
+    },
+    {
+      "global_step": 4,
+      "learning_rate": [
+        0.0,
+        0.0
+      ],
+      "scheduler_last_epoch": 4
+    }
+  ],
+  "train_begin_stage1": {
+    "dataset_length": 4,
+    "event": "train_begin",
+    "global_step": 0,
+    "inspected_rows": 3,
+    "learning_rate": [
+      0.0,
+      0.0
+    ],
+    "max_steps": 4,
+    "optimizer_state_entries": 0,
+    "scheduler_last_epoch": 0,
+    "tokenized_signature": "c22a1e08c07a9f958bbf11ddb4b84fab73205f3972f6695fcc1a93a9f776b922"
+  },
+  "train_begin_stage2": {
+    "dataset_length": 4,
+    "event": "train_begin",
+    "global_step": 2,
+    "inspected_rows": 3,
+    "learning_rate": [
+      7.5e-07,
+      7.5e-07
+    ],
+    "max_steps": 4,
+    "optimizer_state_entries": 2,
+    "scheduler_last_epoch": 2,
+    "tokenized_signature": "643c1926d4d92470492903c4cefb716421e9f12c4d52ca18cd01f675e63af2c1"
+  }
+}

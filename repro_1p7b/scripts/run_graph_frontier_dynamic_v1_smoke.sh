@@ -20,8 +20,10 @@ mkdir -p "$DATA_DIR" "$LOG_DIR"
   --stage1 "$DATA_DIR/smoke_stage1.json" --stage2 "$DATA_DIR/smoke_stage2.json" \
   --report "$LOG_DIR/smoke_data.json" || exit 4
 
+set +u
 source /opt/conda/etc/profile.d/conda.sh || exit 7
 conda activate "$TRAIN_ENV" || exit 8
+set -u
 export CUDA_HOME="$CONDA_PREFIX"
 export PATH="$CUDA_HOME/bin:$PATH"
 export PYTORCH_ALLOC_CONF=expandable_segments:True

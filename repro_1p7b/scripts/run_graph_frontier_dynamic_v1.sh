@@ -51,8 +51,10 @@ rc=$?; record_rc config_audit "$rc"; [[ "$rc" -eq 0 ]] || fail config_audit "$rc
 boundary="$OUTPUT/checkpoint-207"
 if [[ ! -s "$boundary/trainer_state.json" ]]; then
   set_status STAGE1_TRAINING
+  set +u
   source /opt/conda/etc/profile.d/conda.sh || fail conda_source $?
   conda activate "$TRAIN_ENV" || fail conda_activate_train $?
+  set -u
   export CUDA_HOME="$CONDA_PREFIX" PATH="$CUDA_HOME/bin:$PATH" PYTORCH_ALLOC_CONF=expandable_segments:True
   resume_args=()
   latest=$(latest_checkpoint)
@@ -130,8 +132,10 @@ final_step=0
 [[ -s "$OUTPUT/trainer_state.json" ]] && final_step=$("$RUN_PY" -c 'import json,sys; print(json.load(open(sys.argv[1])).get("global_step",0))' "$OUTPUT/trainer_state.json")
 if [[ "$final_step" -lt 414 ]]; then
   set_status STAGE2_TRAINING
+  set +u
   source /opt/conda/etc/profile.d/conda.sh || fail conda_source $?
   conda activate "$TRAIN_ENV" || fail conda_activate_train $?
+  set -u
   export CUDA_HOME="$CONDA_PREFIX" PATH="$CUDA_HOME/bin:$PATH" PYTORCH_ALLOC_CONF=expandable_segments:True
   resume="$boundary"
   latest=$(latest_checkpoint)
