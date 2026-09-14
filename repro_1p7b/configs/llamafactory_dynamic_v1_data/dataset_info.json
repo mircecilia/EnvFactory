@@ -1,0 +1,22 @@
+{
+  "graph_frontier_dynamic_v1_stage1": {
+    "file_name": "../../data/graph_frontier_dynamic_v1/stage1_general.json",
+    "formatting": "alpaca",
+    "columns": {"prompt": "instruction", "query": "input", "response": "output", "history": "history", "system": "system"}
+  },
+  "graph_frontier_dynamic_v1_stage2": {
+    "file_name": "../../data/graph_frontier_dynamic_v1/stage2_targeted.json",
+    "formatting": "alpaca",
+    "columns": {"prompt": "instruction", "query": "input", "response": "output", "history": "history", "system": "system"}
+  },
+  "graph_frontier_dynamic_v1_smoke_stage1": {
+    "file_name": "../../data/graph_frontier_dynamic_v1/smoke_stage1.json",
+    "formatting": "alpaca",
+    "columns": {"prompt": "instruction", "query": "input", "response": "output", "history": "history", "system": "system"}
+  },
+  "graph_frontier_dynamic_v1_smoke_stage2": {
+    "file_name": "../../data/graph_frontier_dynamic_v1/smoke_stage2.json",
+    "formatting": "alpaca",
+    "columns": {"prompt": "instruction", "query": "input", "response": "output", "history": "history", "system": "system"}
+  }
+}

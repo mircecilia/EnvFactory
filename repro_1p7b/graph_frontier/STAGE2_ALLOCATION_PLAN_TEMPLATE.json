@@ -1,0 +1,16 @@
+{
+  "schema_version": "graph_frontier_dynamic_allocation_v1",
+  "seed": 20260914,
+  "formula": {
+    "propagation_need": "reach_smoothed * (1 - conditional_smoothed)",
+    "semantic_frontier": "4 * p_semantic_smoothed * (1 - p_semantic_smoothed)",
+    "priority": "0.70 * propagation_need + 0.30 * semantic_frontier",
+    "support_smoothing": "Beta(1,1) posterior mean from Stage-1 diagnosis counts"
+  },
+  "consumed_split": "diagnosis",
+  "heldout_tasks_consumed": 0,
+  "exploration_floor_probability": 0.05,
+  "overlap_cap_rate": 0.2,
+  "bucket_priority": "generated after Stage-1 diagnosis",
+  "target_allocation": "generated after Stage-1 diagnosis"
+}
