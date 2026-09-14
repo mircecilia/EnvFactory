@@ -4,12 +4,13 @@
 
 - **CPU SEMANTICS: READY**
 - **REAL SINGLE-TASK PROBE: READY**
+- **12-CASE PIPELINE STABILITY PROBE: READY**
 - **200-500 TASK PROBE POOL: NOT STARTED**
 
 The v1 sidecar, eligibility gates, typed adapters, profiler semantics, production
-wrapper hooks, and one executable single-task smoke are now verified. This does
-not authorize a larger probe pool or turn the smoke result into a model-quality
-claim.
+wrapper hooks, and both single-task and 12-case executable smokes are verified.
+This does not authorize the planned probe pool or turn these fixture-driven
+results into a model-quality claim.
 
 ## CPU semantic readiness
 
@@ -81,10 +82,11 @@ A non-reference path that reaches the same canonical reference state may have
 | QueryGen hook wiring | PASS | `ProbeQueryGenNonConv.terminate()` exports through `GenerationSidecarCallback` before delegating to the lossy core save. |
 | Executor hook wiring | PASS | The probe-only wrapper observes `MCPManager._call_tool_async` at the typed `client.call_tool` boundary and restores the original method afterward. |
 | One executable task smoke | PASS | Parameter-Aware checkpoint, one CampusCard dependency, two real MCP calls, schemas and profiler all passed on GPU 1. |
+| Expanded pipeline smoke | PASS | 12/12 deterministic cases, 24 typed MCP calls, all 12 dependency edges satisfied. |
 | 200-500 task pool | PENDING | Do not launch without a separate authorization and a frozen manifest. |
 
-No core patch is required. The reusable smoke driver is
-`real_probe_smoke.py`. Runtime JSON and logs remain outside Git.
+No core patch is required. The reusable drivers are `real_probe_smoke.py` and
+`real_probe_batch.py`. Runtime JSON and logs remain outside Git.
 
 ## Real smoke evidence (2026-09-14)
 
@@ -127,6 +129,32 @@ pipeline, not autonomous model capability. Earlier unassisted attempts were
 correctly rejected: one hallucinated `user123`; another stopped after
 `query_balance`. Those failures were not relabeled as passes.
 
+## Expanded pipeline smoke evidence (2026-09-14)
+
+The opt-in batch driver completed 12/12 cases in 61.01 seconds on GPU 1. It
+covered 12 distinct user IDs, all three supported payment methods, initial
+balances from 0.0 through 1000.0 CNY, and recharge amounts from 0.01 through
+333.0 CNY.
+
+Across 12 sidecars, 12 typed rollouts, and 12 profiles:
+
+```text
+real MCP events = 24
+typed_value_recovery_rate = 1.0
+typed_execution_status_rate = 1.0
+dependency edges with both typed values = 12/12
+dependency edges with exact value match = 12/12
+state_success = 12/12
+task_success = 12/12
+path_adherence = 12/12
+root_cause_failures = 0
+```
+
+This batch uses the same explicit two-call execution fixture as the one-task
+smoke. Its purpose is to test repeated scenario reset, identifier and numeric
+value preservation, payment-method coverage, artifact isolation, and profiler
+stability. It remains explicitly excluded from model-capability claims.
+
 ## Reproduction outline
 
 Use an idle GPU and a port distinct from ongoing evaluation. Start a local
@@ -140,6 +168,11 @@ export SGLANG_MODEL=repro_1p7b/checkpoints/parameter_aware_sft_8k_1p7b
 /home/u2024311031/.conda/envs/envfactory_repro_1p7b/bin/python \
   -m repro_1p7b.graph_frontier.real_probe_smoke \
   --output-dir /tmp/envfactory_graph_frontier_real_smoke
+
+/home/u2024311031/.conda/envs/envfactory_repro_1p7b/bin/python \
+  -m repro_1p7b.graph_frontier.real_probe_batch \
+  --limit 12 \
+  --output-dir /tmp/envfactory_graph_frontier_mini_probe
 ```
 
 For a long-lived launch, put the server and driver in separate tmux sessions.

@@ -10,7 +10,8 @@ This directory is CPU-only by default. Importing the library does not start trai
 - `ROLLOUT_TRACE_SCHEMA.json` / `rollout_trace.py`: typed executor trace recorder and wrappers.
 - `export_pipeline.py`: strict task-ID join from gold sidecar and typed trace to profiler.
 - `EXPORT_PIPELINE.md`: real hook-point audit and integration instructions.
-- `real_probe_smoke.py`: opt-in one-task QueryGen -> sidecar -> typed FastMCP rollout -> profiler acceptance driver.
+- `real_probe_smoke.py`: parameterized opt-in one-task QueryGen -> sidecar -> typed FastMCP rollout -> profiler acceptance driver.
+- `real_probe_batch.py`: deterministic 12-case pipeline-stability smoke over varied IDs, numeric values, and payment methods.
 - `REAL_PROBE_READINESS.md`: current semantic/runtime gates and real-smoke evidence and limitations.
 - `PROBE_PLAN.md`: frozen 300-task diagnostic pool design; no pool is generated here.
 - `adapters.py`: live `ToolGraph`, QueryGen artifact, and typed-rollout adapters.

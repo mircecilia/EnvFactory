@@ -48,34 +48,34 @@ from src.graph.tool_chain import ToolQueryNode
 from src.manager.mcp_client_manager import MCPManager
 
 
-TASK_ID = "graph-frontier-real-smoke-001"
-SCENARIO = {
-    "CampusCard": {
-        "accounts": {
-            "student-001": {
-                "userId": "student-001",
-                "name": "Lena",
-                "password": "not-used-by-this-probe",
-                "balance": 20.0,
-                "currency": "CNY",
-                "status": 1,
-                "phone": None,
-                "email": None,
-                "address": None,
-            }
-        },
-        "transactions": {"student-001": []},
-        "statusTextMap": {
-            1: "normal",
-            2: "lost",
-            3: "system frozen",
-            4: "closed",
-            5: "pre-closed",
-            6: "manually frozen",
-        },
-        "current_time": "2026-09-14 10:00:00",
+def make_scenario(user_id: str, balance: float) -> dict[str, Any]:
+    return {
+        "CampusCard": {
+            "accounts": {
+                user_id: {
+                    "userId": user_id,
+                    "name": "Graph Frontier Probe User",
+                    "password": "not-used-by-this-probe",
+                    "balance": balance,
+                    "currency": "CNY",
+                    "status": 1,
+                    "phone": None,
+                    "email": None,
+                    "address": None,
+                }
+            },
+            "transactions": {user_id: []},
+            "statusTextMap": {
+                1: "normal",
+                2: "lost",
+                3: "system frozen",
+                4: "closed",
+                5: "pre-closed",
+                6: "manually frozen",
+            },
+            "current_time": "2026-09-14 10:00:00",
+        }
     }
-}
 
 
 class ProbeQueryGenNonConv(QueryGenNonConv):
@@ -89,7 +89,11 @@ class ProbeQueryGenNonConv(QueryGenNonConv):
         await super().terminate(context)
 
 
-def _load_smoke_graph() -> tuple[Any, Any]:
+def _load_smoke_graph(
+    scenario: dict[str, Any],
+    user_id: str,
+    seed: int,
+) -> tuple[Any, Any]:
     module = runpy.run_path(str(REPO_ROOT / "repro_1p7b/scripts/toolgraph_smoke.py"))
     graph = module["graph"]
     chain = sample_with_dependency_trace(
@@ -97,7 +101,7 @@ def _load_smoke_graph() -> tuple[Any, Any]:
         module["sampler"],
         max_nodes=2,
         start_node=module["recharge"],
-        seed=42,
+        seed=seed,
     )
     names = [tool.name for tool in chain.init_tool_chain]
     expected = ["CampusCard-query_balance", "CampusCard-recharge"]
@@ -106,11 +110,11 @@ def _load_smoke_graph() -> tuple[Any, Any]:
     chain.tool_chain = [
         ToolQueryNode(
             raw_tool_call=list(chain.init_tool_chain),
-            initial_scenario=json.loads(json.dumps(SCENARIO)),
+            initial_scenario=json.loads(json.dumps(scenario)),
         )
     ]
     chain.scenario = (
-        "Lena wants to inspect the balance of campus card student-001 and then "
+        f"The user wants to inspect the balance of campus card {user_id} and then "
         "recharge it using a supported payment method."
     )
     return graph, chain
@@ -167,18 +171,32 @@ def _validate(path: Path, schema_name: str) -> None:
     jsonschema.validate(json.loads(path.read_text(encoding="utf-8")), schema)
 
 
-async def _run(output_dir: Path) -> dict[str, Any]:
-    graph, chain = _load_smoke_graph()
+async def run_probe(
+    output_dir: Path,
+    *,
+    task_id: str = "graph-frontier-real-smoke-001",
+    user_id: str = "student-001",
+    balance: float = 20.0,
+    amount: float = 50.0,
+    payment_method: str = "bank_card",
+    seed: int = 42,
+) -> dict[str, Any]:
+    if payment_method not in {"alipay", "wechat", "bank_card"}:
+        raise ValueError(f"unsupported payment method: {payment_method}")
+    if amount <= 0:
+        raise ValueError("amount must be positive")
+    scenario = make_scenario(user_id, balance)
+    graph, chain = _load_smoke_graph(scenario, user_id, seed)
     node = chain.tool_chain[0]
     output_dir.mkdir(parents=True, exist_ok=True)
     querygen_dir = output_dir / "querygen"
     gold_dir = output_dir / "gold"
     callback = GenerationSidecarCallback(
         gold_dir,
-        task_id_factory=lambda _context: TASK_ID,
+        task_id_factory=lambda _context: task_id,
     )
     recorder = TypedRolloutRecorder(
-        TASK_ID,
+        task_id,
         environment_identifiers=["CampusCard"],
         initial_environment_state=node.initial_scenario,
         auto_timestamp=True,
@@ -227,7 +245,9 @@ async def _run(output_dir: Path) -> dict[str, Any]:
         tool_graph=graph,
         tool_chain=chain,
         idx=0,
-        conversation_id="graphfrontierrealsmoke",
+        conversation_id="graphfrontier" + "".join(
+            char for char in task_id if char.isalnum()
+        ),
         user_tools={},
     )
     generator.context_manager.add_prompt(
@@ -235,8 +255,9 @@ async def _run(output_dir: Path) -> dict[str, Any]:
         f"{context.conversation_id}{context.idx}",
         (
             "Generate a natural request that explicitly includes campus card ID "
-            "student-001, asks to check its balance first, and then recharge "
-            "exactly 50 CNY using bank_card. Preserve all three literal values."
+            f"{user_id}, asks to check its balance first, and then recharge "
+            f"exactly {amount:g} CNY using {payment_method}. "
+            "Preserve all three literal values."
         ),
     )
     original_call = _install_typed_trace(recorder)
@@ -253,8 +274,9 @@ async def _run(output_dir: Path) -> dict[str, Any]:
             f"{context.conversation_id}{context.idx}0",
             (
                 f"{node.query}\nThis is an execution smoke: call query_balance first, "
-                "then call recharge with the returned userId, amount 50, and "
-                "paymentMethod bank_card. Do not emit a natural-language response "
+                "then call recharge with the returned userId, "
+                f"amount {amount:g}, and paymentMethod {payment_method}. "
+                "Do not emit a natural-language response "
                 "until both tool calls have completed."
             ),
         )
@@ -286,9 +308,9 @@ async def _run(output_dir: Path) -> dict[str, Any]:
             "expected_state_provenance": "selected_querygen_reference_trajectory",
         },
     )
-    rollout_path = recorder.write(output_dir / f"{TASK_ID}.rollout.json")
+    rollout_path = recorder.write(output_dir / f"{task_id}.rollout.json")
     profile = profile_sidecar_and_trace(generator.gold_path, rollout_path)
-    profile_path = output_dir / f"{TASK_ID}.profile.json"
+    profile_path = output_dir / f"{task_id}.profile.json"
     profile_path.write_text(
         json.dumps(profile, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
@@ -350,7 +372,14 @@ async def _run(output_dir: Path) -> dict[str, Any]:
     }
     summary = {
         "status": "PASS" if all(checks.values()) else "FAIL",
-        "task_id": TASK_ID,
+        "task_id": task_id,
+        "case": {
+            "user_id": user_id,
+            "initial_balance": balance,
+            "amount": amount,
+            "payment_method": payment_method,
+            "seed": seed,
+        },
         "query": node.query,
         "selected_querygen_decision": node.decision,
         "selected_querygen_accuracy": node.accuracy,
@@ -382,6 +411,16 @@ def main() -> None:
         type=Path,
         default=Path("/tmp/envfactory_graph_frontier_real_smoke"),
     )
+    parser.add_argument("--task-id", default="graph-frontier-real-smoke-001")
+    parser.add_argument("--user-id", default="student-001")
+    parser.add_argument("--balance", type=float, default=20.0)
+    parser.add_argument("--amount", type=float, default=50.0)
+    parser.add_argument(
+        "--payment-method",
+        choices=("alipay", "wechat", "bank_card"),
+        default="bank_card",
+    )
+    parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
     required = ("SGLANG_BASE_URL", "SGLANG_API_KEY", "SGLANG_MODEL")
     missing = [name for name in required if not os.environ.get(name)]
@@ -398,7 +437,17 @@ def main() -> None:
     )
     future.result(timeout=60)
     try:
-        summary = asyncio.run(_run(args.output_dir))
+        summary = asyncio.run(
+            run_probe(
+                args.output_dir,
+                task_id=args.task_id,
+                user_id=args.user_id,
+                balance=args.balance,
+                amount=args.amount,
+                payment_method=args.payment_method,
+                seed=args.seed,
+            )
+        )
         print("GRAPH_FRONTIER_REAL_SMOKE=" + json.dumps(summary, ensure_ascii=False))
         if summary["status"] != "PASS":
             raise SystemExit(2)
