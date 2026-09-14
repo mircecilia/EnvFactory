@@ -1,0 +1,468 @@
+{
+  "models": {
+    "base": {
+      "alternative_valid_path": {
+        "count": 11,
+        "environment_distribution": {
+          "Calendar": 5,
+          "UUPaoTui": 6
+        },
+        "pattern_counts_nonexclusive": {
+          "exact_final_state_mismatch": 6,
+          "extra_nonreference_tool": 5,
+          "gold_edge_incomplete": 5
+        },
+        "task_ids": [
+          "calendar-create_update-00",
+          "calendar-create_update-01",
+          "calendar-create_update-02",
+          "calendar-create_update-03",
+          "calendar-create_update-04",
+          "uupaotui-estimate_create-00",
+          "uupaotui-estimate_create-01",
+          "uupaotui-estimate_create-02",
+          "uupaotui-estimate_create-03",
+          "uupaotui-estimate_create-04",
+          "uupaotui-estimate_create-05"
+        ],
+        "template_distribution": {
+          "create_update": 5,
+          "estimate_create": 6
+        }
+      },
+      "call_audit": {
+        "cycle_patterns_nonexclusive": {
+          "a_b_a": 17,
+          "a_b_b": 3,
+          "repeated_block_cycle": 20
+        },
+        "legacy_exact_redundant_calls": 42,
+        "legacy_unexpected_calls": 18,
+        "post_success_continuation": {
+          "distribution": {
+            "0": 11
+          },
+          "extra_calls": 0,
+          "mean_extra_calls_among_semantic_successes": 0.0,
+          "tasks": 0
+        },
+        "repeated_patterns_nonexclusive": {
+          "duplicate_mutation_action": 1,
+          "producer_repeated_after_success": 17,
+          "retry_after_tool_error": 51,
+          "retry_after_wrong_value": 22,
+          "same_tool_different_args": 25,
+          "same_tool_same_args": 42
+        },
+        "tool_budget_exceeded": {
+          "calls": 0,
+          "tasks": 0
+        },
+        "top_repeated_tools": {
+          "Calendar-create_event": 1,
+          "Calendar-delete_event": 1,
+          "Calendar-update_event": 6,
+          "TradingBot-get_order_details": 3,
+          "TradingBot-get_stock_info": 1,
+          "UUPaoTui-cancel_order": 10,
+          "UUPaoTui-create_order": 16,
+          "UUPaoTui-estimate_price": 16,
+          "UUPaoTui-query_order": 13
+        },
+        "top_unexpected_tools": {
+          "Calendar-list_events": 1,
+          "Calendar-search_events": 6,
+          "TradingBot-get_order_history": 1,
+          "TradingBot-make_transaction": 4,
+          "UUPaoTui-list_orders": 6
+        },
+        "unexpected_failure_reasons": {},
+        "unexpected_patterns_nonexclusive": {
+          "alternative_producer_candidate": 5,
+          "exploratory_lookup": 14,
+          "tool_outside_gold": 18,
+          "unnecessary_mutation": 4
+        }
+      }
+    },
+    "original_sft": {
+      "alternative_valid_path": {
+        "count": 20,
+        "environment_distribution": {
+          "Calendar": 3,
+          "GoogleTasks": 8,
+          "TradingBot": 5,
+          "UUPaoTui": 4
+        },
+        "pattern_counts_nonexclusive": {
+          "exact_final_state_mismatch": 10,
+          "extra_nonreference_tool": 5,
+          "gold_edge_incomplete": 10,
+          "gold_node_incomplete": 5
+        },
+        "task_ids": [
+          "calendar-create_update-00",
+          "calendar-create_update-03",
+          "calendar-create_update-04",
+          "googletasks-list_task-00",
+          "googletasks-list_task-01",
+          "googletasks-list_task-02",
+          "googletasks-list_task-03",
+          "googletasks-list_task-04",
+          "googletasks-list_task-05",
+          "googletasks-task_delete-00",
+          "googletasks-task_delete-05",
+          "tradingbot-symbol_info-00",
+          "tradingbot-symbol_info-01",
+          "tradingbot-symbol_info-03",
+          "tradingbot-symbol_info-04",
+          "tradingbot-symbol_info-05",
+          "uupaotui-estimate_query-00",
+          "uupaotui-estimate_query-01",
+          "uupaotui-estimate_query-02",
+          "uupaotui-estimate_query-04"
+        ],
+        "template_distribution": {
+          "create_update": 3,
+          "estimate_query": 4,
+          "list_task": 6,
+          "symbol_info": 5,
+          "task_delete": 2
+        }
+      },
+      "call_audit": {
+        "cycle_patterns_nonexclusive": {
+          "a_b_a": 5,
+          "a_b_b": 3,
+          "repeated_block_cycle": 2
+        },
+        "legacy_exact_redundant_calls": 15,
+        "legacy_unexpected_calls": 56,
+        "post_success_continuation": {
+          "distribution": {
+            "0": 37
+          },
+          "extra_calls": 0,
+          "mean_extra_calls_among_semantic_successes": 0.0,
+          "tasks": 0
+        },
+        "repeated_patterns_nonexclusive": {
+          "consumer_repeated_after_success": 4,
+          "duplicate_mutation_action": 7,
+          "producer_repeated_after_success": 7,
+          "retry_after_tool_error": 16,
+          "retry_after_wrong_value": 14,
+          "same_tool_different_args": 16,
+          "same_tool_same_args": 15
+        },
+        "tool_budget_exceeded": {
+          "calls": 0,
+          "tasks": 0
+        },
+        "top_repeated_tools": {
+          "Calendar-create_event": 1,
+          "Calendar-delete_event": 1,
+          "Calendar-search_events": 4,
+          "Calendar-update_event": 4,
+          "GoogleTasks-create_task": 8,
+          "GoogleTasks-create_task_list": 6,
+          "GoogleTasks-delete_task": 2,
+          "GoogleTasks-update_task_list": 1,
+          "Weather-get_forecast": 4
+        },
+        "top_unexpected_tools": {
+          "Calendar-list_events": 5,
+          "Calendar-search_events": 7,
+          "GoogleTasks-get_task_list": 10,
+          "GoogleTasks-list_task_lists": 8,
+          "GoogleTasks-list_tasks": 6,
+          "GoogleTasks-update_task_list": 7,
+          "TradingBot-check_login_status": 1,
+          "TradingBot-get_available_stocks": 1,
+          "TradingBot-get_order_history": 2,
+          "TradingBot-login": 2,
+          "TradingBot-make_transaction": 5,
+          "UUPaoTui-list_orders": 2
+        },
+        "unexpected_failure_reasons": {
+          "Error executing tool list_tasks: Task list <tasklist_id> not found": 6,
+          "Error executing tool update_task_list: Task list <tasklist_id> not found": 6
+        },
+        "unexpected_patterns_nonexclusive": {
+          "alternative_producer_candidate": 22,
+          "exploratory_lookup": 42,
+          "malformed_or_failed_tool_call": 12,
+          "other": 2,
+          "tool_outside_gold": 56,
+          "unnecessary_mutation": 12
+        }
+      }
+    },
+    "parameter_aware": {
+      "alternative_valid_path": {
+        "count": 17,
+        "environment_distribution": {
+          "Calendar": 3,
+          "GoogleTasks": 7,
+          "TradingBot": 5,
+          "UUPaoTui": 2
+        },
+        "pattern_counts_nonexclusive": {
+          "exact_final_state_mismatch": 8,
+          "extra_nonreference_tool": 10,
+          "gold_edge_incomplete": 15,
+          "gold_node_incomplete": 5
+        },
+        "task_ids": [
+          "calendar-create_update-01",
+          "calendar-create_update-02",
+          "calendar-create_update-03",
+          "googletasks-list_task-00",
+          "googletasks-list_task-01",
+          "googletasks-list_task-02",
+          "googletasks-list_task-03",
+          "googletasks-list_task-04",
+          "googletasks-list_task-05",
+          "googletasks-task_delete-00",
+          "tradingbot-symbol_info-00",
+          "tradingbot-symbol_info-01",
+          "tradingbot-symbol_info-03",
+          "tradingbot-symbol_info-04",
+          "tradingbot-symbol_info-05",
+          "uupaotui-estimate_create-01",
+          "uupaotui-estimate_create-05"
+        ],
+        "template_distribution": {
+          "create_update": 3,
+          "estimate_create": 2,
+          "list_task": 6,
+          "symbol_info": 5,
+          "task_delete": 1
+        }
+      },
+      "call_audit": {
+        "cycle_patterns_nonexclusive": {
+          "a_b_a": 11,
+          "repeated_block_cycle": 298
+        },
+        "legacy_exact_redundant_calls": 202,
+        "legacy_unexpected_calls": 215,
+        "post_success_continuation": {
+          "distribution": {
+            "0": 31
+          },
+          "extra_calls": 0,
+          "mean_extra_calls_among_semantic_successes": 0.0,
+          "tasks": 0
+        },
+        "repeated_patterns_nonexclusive": {
+          "consumer_repeated_after_success": 94,
+          "duplicate_mutation_action": 19,
+          "producer_repeated_after_success": 101,
+          "retry_after_tool_error": 165,
+          "retry_after_wrong_value": 17,
+          "same_tool_different_args": 23,
+          "same_tool_same_args": 202
+        },
+        "tool_budget_exceeded": {
+          "calls": 114,
+          "tasks": 6
+        },
+        "top_repeated_tools": {
+          "Calendar-update_event": 5,
+          "GoogleTasks-create_task": 9,
+          "GoogleTasks-create_task_list": 6,
+          "TradingBot-add_to_watchlist": 7,
+          "TradingBot-check_login_status": 7,
+          "TradingBot-get_account_info": 5,
+          "TradingBot-get_available_stocks": 5,
+          "TradingBot-get_order_details": 14,
+          "TradingBot-get_order_history": 6,
+          "TradingBot-get_stock_info": 91,
+          "TradingBot-get_transaction_history": 10,
+          "TradingBot-get_watchlist": 7,
+          "TradingBot-make_transaction": 7,
+          "TradingBot-notify_price_change": 6,
+          "TradingBot-update_stock_price": 6
+        },
+        "top_unexpected_tools": {
+          "GoogleTasks-get_task_list": 10,
+          "GoogleTasks-list_task_lists": 12,
+          "GoogleTasks-update_task_list": 8,
+          "TradingBot-add_to_watchlist": 12,
+          "TradingBot-check_login_status": 14,
+          "TradingBot-get_account_info": 13,
+          "TradingBot-get_available_stocks": 9,
+          "TradingBot-get_order_history": 10,
+          "TradingBot-get_transaction_history": 15,
+          "TradingBot-get_watchlist": 12,
+          "TradingBot-login": 8,
+          "TradingBot-make_transaction": 16,
+          "TradingBot-notify_price_change": 11,
+          "TradingBot-update_stock_price": 11,
+          "UUPaoTui-list_orders": 12
+        },
+        "unexpected_failure_reasons": {
+          "Error executing tool get_order_details: Order 123456 not found": 2,
+          "Error executing tool list_tasks: Task list <tasklist_id> not found": 6,
+          "Error executing tool update_task_list: Task list <tasklist_id> not found": 6,
+          "max_tool_calls_exceeded": 114
+        },
+        "unexpected_patterns_nonexclusive": {
+          "alternative_producer_candidate": 20,
+          "exploratory_lookup": 140,
+          "malformed_or_failed_tool_call": 128,
+          "other": 5,
+          "tool_outside_gold": 215,
+          "unnecessary_mutation": 67
+        }
+      }
+    }
+  },
+  "original_sft_vs_parameter_aware": {
+    "both_true_with_pa_efficiency_or_propagation_regression": {
+      "count": 6,
+      "task_ids": [
+        "googletasks-list_task-00",
+        "googletasks-list_task-01",
+        "googletasks-list_task-02",
+        "googletasks-list_task-03",
+        "googletasks-list_task-04",
+        "googletasks-list_task-05"
+      ]
+    },
+    "groups": {
+      "both_false": {
+        "count": 48,
+        "task_ids": [
+          "calendar-create_update_delete-00",
+          "calendar-create_update_delete-01",
+          "calendar-create_update_delete-02",
+          "calendar-create_update_delete-03",
+          "calendar-create_update_delete-04",
+          "googletasks-task_delete-01",
+          "googletasks-task_delete-02",
+          "googletasks-task_delete-03",
+          "googletasks-task_delete-04",
+          "googletasks-task_get-00",
+          "googletasks-task_get-01",
+          "googletasks-task_get-02",
+          "googletasks-task_get-03",
+          "googletasks-task_get-04",
+          "googletasks-task_get-05",
+          "googletasks-task_update-00",
+          "googletasks-task_update-01",
+          "googletasks-task_update-02",
+          "googletasks-task_update-03",
+          "googletasks-task_update-04",
+          "googletasks-task_update-05",
+          "tradingbot-quote_order-00",
+          "tradingbot-quote_order-01",
+          "tradingbot-quote_order-02",
+          "tradingbot-quote_order-03",
+          "tradingbot-quote_order-04",
+          "tradingbot-quote_order-05",
+          "tradingbot-quote_order_details-00",
+          "tradingbot-quote_order_details-01",
+          "tradingbot-quote_order_details-02",
+          "tradingbot-quote_order_details-03",
+          "tradingbot-quote_order_details-04",
+          "tradingbot-quote_order_details-05",
+          "tradingbot-symbol_info-02",
+          "uupaotui-estimate_cancel-00",
+          "uupaotui-estimate_cancel-01",
+          "uupaotui-estimate_cancel-02",
+          "uupaotui-estimate_cancel-03",
+          "uupaotui-estimate_cancel-04",
+          "uupaotui-estimate_cancel-05",
+          "uupaotui-estimate_create-00",
+          "uupaotui-estimate_create-02",
+          "uupaotui-estimate_create-03",
+          "uupaotui-estimate_create-04",
+          "uupaotui-estimate_query-03",
+          "uupaotui-estimate_query-05",
+          "weather-city_alerts-02",
+          "weather-city_alerts-03"
+        ]
+      },
+      "both_true": {
+        "count": 27,
+        "task_ids": [
+          "calendar-create_update-03",
+          "googletasks-list_get-00",
+          "googletasks-list_get-01",
+          "googletasks-list_get-02",
+          "googletasks-list_get-03",
+          "googletasks-list_get-04",
+          "googletasks-list_get-05",
+          "googletasks-list_task-00",
+          "googletasks-list_task-01",
+          "googletasks-list_task-02",
+          "googletasks-list_task-03",
+          "googletasks-list_task-04",
+          "googletasks-list_task-05",
+          "googletasks-task_delete-00",
+          "tradingbot-symbol_info-00",
+          "tradingbot-symbol_info-01",
+          "tradingbot-symbol_info-03",
+          "tradingbot-symbol_info-04",
+          "tradingbot-symbol_info-05",
+          "weather-city_alerts-05",
+          "weather-city_save-00",
+          "weather-city_save-01",
+          "weather-city_save-02",
+          "weather-city_save-03",
+          "weather-city_save-04",
+          "weather-city_save-05",
+          "weather-city_weather-05"
+        ]
+      },
+      "original_false_pa_true": {
+        "count": 4,
+        "task_ids": [
+          "calendar-create_update-01",
+          "calendar-create_update-02",
+          "uupaotui-estimate_create-01",
+          "uupaotui-estimate_create-05"
+        ]
+      },
+      "original_true_pa_false": {
+        "count": 10,
+        "task_ids": [
+          "calendar-create_update-00",
+          "calendar-create_update-04",
+          "googletasks-task_delete-05",
+          "uupaotui-estimate_query-00",
+          "uupaotui-estimate_query-01",
+          "uupaotui-estimate_query-02",
+          "uupaotui-estimate_query-04",
+          "weather-city_alerts-00",
+          "weather-city_alerts-01",
+          "weather-city_alerts-04"
+        ]
+      }
+    },
+    "regression_depth_distribution": {
+      "1": 5,
+      "2": 5
+    },
+    "regression_environment_distribution": {
+      "Calendar": 2,
+      "GoogleTasks": 1,
+      "UUPaoTui": 4,
+      "Weather": 3
+    },
+    "regression_failure_attribution": {
+      "target_observation_not_acquired": 3,
+      "wrong_propagated_value": 7
+    },
+    "regression_template_distribution": {
+      "city_alerts": 3,
+      "create_update": 2,
+      "estimate_query": 4,
+      "task_delete": 1
+    },
+    "supported_pairs": 89
+  },
+  "schema_version": "graph_frontier_failure_patterns_v2"
+}

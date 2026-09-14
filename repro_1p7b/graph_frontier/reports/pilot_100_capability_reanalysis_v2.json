@@ -1,0 +1,3709 @@
+{
+  "limitations": [
+    "No final assistant response content was persisted; observation-based semantic success verifies typed acquisition plus terminal assistant status, not the factual content of final prose.",
+    "Empty reference observations are unsupported and excluded from semantic denominators.",
+    "State predicates are template-specific deterministic predicates, not perfect semantic oracles.",
+    "Unexpected tools may be valid alternatives; alternative_producer_candidate is evidence of typed value reuse, not proof of necessity.",
+    "Call-pattern categories are deterministic and non-exclusive.",
+    "Edges within a task are clustered and are not independent statistical samples."
+  ],
+  "manifest_sha256": "6ca0dd900670bd9169c7f1226b22ab99acc92dbea84e0975695bb6b7bea5682e",
+  "metric_audit": {
+    "all_selected_edges_internal": true,
+    "edge_complete": "task-level all selected gold edges satisfied",
+    "final_state_success_limitation": "exact state equality is vacuously true for read-only tasks even when no requested observation was acquired",
+    "gold_internal_opportunities": 213,
+    "internal_param_complete": "task-level all internal parameter checks satisfied; identical to edge_complete in this all-internal manifest",
+    "legacy_internal_attempts": "number of gold internal edges whose consumer tool was called; therefore conditional on model reach and model-dependent",
+    "path_adherence": "task-level exact reference tool set/order with no extra, missing, or exact duplicate calls",
+    "task_success_legacy": "valid probe AND all required gold nodes successfully executed AND all selected gold dependency edges satisfied AND exact canonical final state matched",
+    "task_success_v2_name": "reference_path_complete_success"
+  },
+  "models": {
+    "base": {
+      "alternative_valid_path": {
+        "count": 11,
+        "environment_distribution": {
+          "Calendar": 5,
+          "UUPaoTui": 6
+        },
+        "pattern_counts_nonexclusive": {
+          "exact_final_state_mismatch": 6,
+          "extra_nonreference_tool": 5,
+          "gold_edge_incomplete": 5
+        },
+        "task_ids": [
+          "calendar-create_update-00",
+          "calendar-create_update-01",
+          "calendar-create_update-02",
+          "calendar-create_update-03",
+          "calendar-create_update-04",
+          "uupaotui-estimate_create-00",
+          "uupaotui-estimate_create-01",
+          "uupaotui-estimate_create-02",
+          "uupaotui-estimate_create-03",
+          "uupaotui-estimate_create-04",
+          "uupaotui-estimate_create-05"
+        ],
+        "template_distribution": {
+          "create_update": 5,
+          "estimate_create": 6
+        }
+      },
+      "call_audit": {
+        "cycle_patterns_nonexclusive": {
+          "a_b_a": 17,
+          "a_b_b": 3,
+          "repeated_block_cycle": 20
+        },
+        "legacy_exact_redundant_calls": 42,
+        "legacy_unexpected_calls": 18,
+        "post_success_continuation": {
+          "distribution": {
+            "0": 11
+          },
+          "extra_calls": 0,
+          "mean_extra_calls_among_semantic_successes": 0.0,
+          "tasks": 0
+        },
+        "repeated_patterns_nonexclusive": {
+          "duplicate_mutation_action": 1,
+          "producer_repeated_after_success": 17,
+          "retry_after_tool_error": 51,
+          "retry_after_wrong_value": 22,
+          "same_tool_different_args": 25,
+          "same_tool_same_args": 42
+        },
+        "tool_budget_exceeded": {
+          "calls": 0,
+          "tasks": 0
+        },
+        "top_repeated_tools": {
+          "Calendar-create_event": 1,
+          "Calendar-delete_event": 1,
+          "Calendar-update_event": 6,
+          "TradingBot-get_order_details": 3,
+          "TradingBot-get_stock_info": 1,
+          "UUPaoTui-cancel_order": 10,
+          "UUPaoTui-create_order": 16,
+          "UUPaoTui-estimate_price": 16,
+          "UUPaoTui-query_order": 13
+        },
+        "top_unexpected_tools": {
+          "Calendar-list_events": 1,
+          "Calendar-search_events": 6,
+          "TradingBot-get_order_history": 1,
+          "TradingBot-make_transaction": 4,
+          "UUPaoTui-list_orders": 6
+        },
+        "unexpected_failure_reasons": {},
+        "unexpected_patterns_nonexclusive": {
+          "alternative_producer_candidate": 5,
+          "exploratory_lookup": 14,
+          "tool_outside_gold": 18,
+          "unnecessary_mutation": 4
+        }
+      },
+      "conditional_propagation_accuracy": {
+        "attempts": 53,
+        "raw_rate": 0.11320754716981132,
+        "smoothed_rate": 0.12727272727272726,
+        "successes": 6
+      },
+      "depth_breakdown": {
+        "1": {
+          "conditional_propagation_accuracy": {
+            "attempts": 12,
+            "raw_rate": 0.5,
+            "smoothed_rate": 0.5,
+            "successes": 6
+          },
+          "internal_end_to_end": {
+            "attempts": 77,
+            "raw_rate": 0.07792207792207792,
+            "smoothed_rate": 0.08860759493670886,
+            "successes": 6
+          },
+          "internal_reach": {
+            "attempts": 77,
+            "raw_rate": 0.15584415584415584,
+            "smoothed_rate": 0.16455696202531644,
+            "successes": 12
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 53,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.01818181818181818,
+            "successes": 0
+          },
+          "semantic_supported": 42,
+          "semantic_task_success": {
+            "attempts": 42,
+            "raw_rate": 0.2619047619047619,
+            "smoothed_rate": 0.2727272727272727,
+            "successes": 11
+          },
+          "tasks": 53,
+          "unexpected_calls_per_task": 0.09433962264150944
+        },
+        "2": {
+          "conditional_propagation_accuracy": {
+            "attempts": 11,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07692307692307693,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 94,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.010416666666666666,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 94,
+            "raw_rate": 0.11702127659574468,
+            "smoothed_rate": 0.125,
+            "successes": 11
+          },
+          "redundant_calls_per_task": 0.34285714285714286,
+          "reference_path_complete_success": {
+            "attempts": 35,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.02702702702702703,
+            "successes": 0
+          },
+          "semantic_supported": 35,
+          "semantic_task_success": {
+            "attempts": 35,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.02702702702702703,
+            "successes": 0
+          },
+          "tasks": 35,
+          "unexpected_calls_per_task": 0.22857142857142856
+        },
+        "3+": {
+          "conditional_propagation_accuracy": {
+            "attempts": 30,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.03125,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 42,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.022727272727272728,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 42,
+            "raw_rate": 0.7142857142857143,
+            "smoothed_rate": 0.7045454545454546,
+            "successes": 30
+          },
+          "redundant_calls_per_task": 2.5,
+          "reference_path_complete_success": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "semantic_supported": 12,
+          "semantic_task_success": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "tasks": 12,
+          "unexpected_calls_per_task": 0.4166666666666667
+        }
+      },
+      "environment_breakdown": {
+        "Calendar": {
+          "conditional_propagation_accuracy": {
+            "attempts": 9,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.09090909090909091,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 15,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.058823529411764705,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 15,
+            "raw_rate": 0.6,
+            "smoothed_rate": 0.5882352941176471,
+            "successes": 9
+          },
+          "redundant_calls_per_task": 0.1,
+          "reference_path_complete_success": {
+            "attempts": 10,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.08333333333333333,
+            "successes": 0
+          },
+          "semantic_supported": 10,
+          "semantic_task_success": {
+            "attempts": 10,
+            "raw_rate": 0.5,
+            "smoothed_rate": 0.5,
+            "successes": 5
+          },
+          "tasks": 10,
+          "unexpected_calls_per_task": 0.7
+        },
+        "GoogleTasks": {
+          "conditional_propagation_accuracy": {
+            "attempts": 0,
+            "raw_rate": null,
+            "smoothed_rate": 0.5,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 66,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.014705882352941176,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 66,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.014705882352941176,
+            "successes": 0
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 30,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.03125,
+            "successes": 0
+          },
+          "semantic_supported": 30,
+          "semantic_task_success": {
+            "attempts": 30,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.03125,
+            "successes": 0
+          },
+          "tasks": 30,
+          "unexpected_calls_per_task": 0.0
+        },
+        "TradingBot": {
+          "conditional_propagation_accuracy": {
+            "attempts": 14,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.0625,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 48,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.02,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 48,
+            "raw_rate": 0.2916666666666667,
+            "smoothed_rate": 0.3,
+            "successes": 14
+          },
+          "redundant_calls_per_task": 0.16666666666666666,
+          "reference_path_complete_success": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "semantic_supported": 18,
+          "semantic_task_success": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "tasks": 18,
+          "unexpected_calls_per_task": 0.2777777777777778
+        },
+        "UUPaoTui": {
+          "conditional_propagation_accuracy": {
+            "attempts": 30,
+            "raw_rate": 0.2,
+            "smoothed_rate": 0.21875,
+            "successes": 6
+          },
+          "internal_end_to_end": {
+            "attempts": 36,
+            "raw_rate": 0.16666666666666666,
+            "smoothed_rate": 0.18421052631578946,
+            "successes": 6
+          },
+          "internal_reach": {
+            "attempts": 36,
+            "raw_rate": 0.8333333333333334,
+            "smoothed_rate": 0.8157894736842105,
+            "successes": 30
+          },
+          "redundant_calls_per_task": 2.111111111111111,
+          "reference_path_complete_success": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "semantic_supported": 18,
+          "semantic_task_success": {
+            "attempts": 18,
+            "raw_rate": 0.3333333333333333,
+            "smoothed_rate": 0.35,
+            "successes": 6
+          },
+          "tasks": 18,
+          "unexpected_calls_per_task": 0.3333333333333333
+        },
+        "Weather": {
+          "conditional_propagation_accuracy": {
+            "attempts": 0,
+            "raw_rate": null,
+            "smoothed_rate": 0.5,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 48,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.02,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 48,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.02,
+            "successes": 0
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 24,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.038461538461538464,
+            "successes": 0
+          },
+          "semantic_supported": 13,
+          "semantic_task_success": {
+            "attempts": 13,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.06666666666666667,
+            "successes": 0
+          },
+          "tasks": 24,
+          "unexpected_calls_per_task": 0.0
+        }
+      },
+      "internal_dependency_funnel": {
+        "conditional_propagation_accuracy": {
+          "attempts": 53,
+          "raw_rate": 0.11320754716981132,
+          "smoothed_rate": 0.12727272727272726,
+          "successes": 6
+        },
+        "consumer_input_inspectable": 53,
+        "consumer_reached": 53,
+        "consumer_reached_after_successful_producer": 34,
+        "correct_edges_with_final_semantic_success": 6,
+        "correct_propagated": 6,
+        "end_to_end_internal_edge_success": {
+          "attempts": 213,
+          "raw_rate": 0.028169014084507043,
+          "smoothed_rate": 0.03255813953488372,
+          "successes": 6
+        },
+        "gold_internal_opportunities": 213,
+        "producer_reached": 54,
+        "producer_succeeded": 44,
+        "reach_rate": {
+          "attempts": 213,
+          "raw_rate": 0.24882629107981222,
+          "smoothed_rate": 0.25116279069767444,
+          "successes": 53
+        },
+        "source_and_target_value_inspectable": 25
+      },
+      "internal_end_to_end": {
+        "attempts": 213,
+        "raw_rate": 0.028169014084507043,
+        "smoothed_rate": 0.03255813953488372,
+        "successes": 6
+      },
+      "internal_reach": {
+        "attempts": 213,
+        "raw_rate": 0.24882629107981222,
+        "smoothed_rate": 0.25116279069767444,
+        "successes": 53
+      },
+      "read_only_final_state_audit": {
+        "exact_final_state_true": 24,
+        "exact_final_state_true_with_zero_tool_calls": 23,
+        "semantic_supported": 13,
+        "tasks": 24
+      },
+      "redundant_calls_per_task": 0.42,
+      "reference_path_complete_success": {
+        "attempts": 100,
+        "raw_rate": 0.0,
+        "smoothed_rate": 0.00980392156862745,
+        "successes": 0
+      },
+      "semantic_supported": 89,
+      "semantic_task_success": {
+        "attempts": 89,
+        "raw_rate": 0.12359550561797752,
+        "smoothed_rate": 0.13186813186813187,
+        "successes": 11
+      },
+      "tasks": 100,
+      "template_breakdown": {
+        "Calendar/create_update": {
+          "conditional_propagation_accuracy": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 5,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.8571428571428571,
+            "successes": 5
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "semantic_supported": 5,
+          "semantic_task_success": {
+            "attempts": 5,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.8571428571428571,
+            "successes": 5
+          },
+          "tasks": 5,
+          "unexpected_calls_per_task": 1.0
+        },
+        "Calendar/create_update_delete": {
+          "conditional_propagation_accuracy": {
+            "attempts": 4,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.16666666666666666,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 10,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.08333333333333333,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 10,
+            "raw_rate": 0.4,
+            "smoothed_rate": 0.4166666666666667,
+            "successes": 4
+          },
+          "redundant_calls_per_task": 0.2,
+          "reference_path_complete_success": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "semantic_supported": 5,
+          "semantic_task_success": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "tasks": 5,
+          "unexpected_calls_per_task": 0.4
+        },
+        "GoogleTasks/list_get": {
+          "conditional_propagation_accuracy": {
+            "attempts": 0,
+            "raw_rate": null,
+            "smoothed_rate": 0.5,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "GoogleTasks/list_task": {
+          "conditional_propagation_accuracy": {
+            "attempts": 0,
+            "raw_rate": null,
+            "smoothed_rate": 0.5,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "GoogleTasks/task_delete": {
+          "conditional_propagation_accuracy": {
+            "attempts": 0,
+            "raw_rate": null,
+            "smoothed_rate": 0.5,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "GoogleTasks/task_get": {
+          "conditional_propagation_accuracy": {
+            "attempts": 0,
+            "raw_rate": null,
+            "smoothed_rate": 0.5,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "GoogleTasks/task_update": {
+          "conditional_propagation_accuracy": {
+            "attempts": 0,
+            "raw_rate": null,
+            "smoothed_rate": 0.5,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "TradingBot/quote_order": {
+          "conditional_propagation_accuracy": {
+            "attempts": 1,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.3333333333333333,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 18,
+            "raw_rate": 0.05555555555555555,
+            "smoothed_rate": 0.1,
+            "successes": 1
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "TradingBot/quote_order_details": {
+          "conditional_propagation_accuracy": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 24,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.038461538461538464,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 24,
+            "raw_rate": 0.5,
+            "smoothed_rate": 0.5,
+            "successes": 12
+          },
+          "redundant_calls_per_task": 0.5,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.8333333333333334
+        },
+        "TradingBot/symbol_info": {
+          "conditional_propagation_accuracy": {
+            "attempts": 1,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.3333333333333333,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 6,
+            "raw_rate": 0.16666666666666666,
+            "smoothed_rate": 0.25,
+            "successes": 1
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "UUPaoTui/estimate_cancel": {
+          "conditional_propagation_accuracy": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 18,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.95,
+            "successes": 18
+          },
+          "redundant_calls_per_task": 4.5,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "UUPaoTui/estimate_create": {
+          "conditional_propagation_accuracy": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "internal_end_to_end": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "internal_reach": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "UUPaoTui/estimate_query": {
+          "conditional_propagation_accuracy": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 12,
+            "raw_rate": 0.5,
+            "smoothed_rate": 0.5,
+            "successes": 6
+          },
+          "redundant_calls_per_task": 1.8333333333333333,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 1.0
+        },
+        "Weather/city_alerts": {
+          "conditional_propagation_accuracy": {
+            "attempts": 0,
+            "raw_rate": null,
+            "smoothed_rate": 0.5,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "Weather/city_forecast": {
+          "conditional_propagation_accuracy": {
+            "attempts": 0,
+            "raw_rate": null,
+            "smoothed_rate": 0.5,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 0,
+          "semantic_task_success": {
+            "attempts": 0,
+            "raw_rate": null,
+            "smoothed_rate": 0.5,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "Weather/city_save": {
+          "conditional_propagation_accuracy": {
+            "attempts": 0,
+            "raw_rate": null,
+            "smoothed_rate": 0.5,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "Weather/city_weather": {
+          "conditional_propagation_accuracy": {
+            "attempts": 0,
+            "raw_rate": null,
+            "smoothed_rate": 0.5,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 1,
+          "semantic_task_success": {
+            "attempts": 1,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.3333333333333333,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        }
+      },
+      "unexpected_calls_per_task": 0.18
+    },
+    "original_sft": {
+      "alternative_valid_path": {
+        "count": 20,
+        "environment_distribution": {
+          "Calendar": 3,
+          "GoogleTasks": 8,
+          "TradingBot": 5,
+          "UUPaoTui": 4
+        },
+        "pattern_counts_nonexclusive": {
+          "exact_final_state_mismatch": 10,
+          "extra_nonreference_tool": 5,
+          "gold_edge_incomplete": 10,
+          "gold_node_incomplete": 5
+        },
+        "task_ids": [
+          "calendar-create_update-00",
+          "calendar-create_update-03",
+          "calendar-create_update-04",
+          "googletasks-list_task-00",
+          "googletasks-list_task-01",
+          "googletasks-list_task-02",
+          "googletasks-list_task-03",
+          "googletasks-list_task-04",
+          "googletasks-list_task-05",
+          "googletasks-task_delete-00",
+          "googletasks-task_delete-05",
+          "tradingbot-symbol_info-00",
+          "tradingbot-symbol_info-01",
+          "tradingbot-symbol_info-03",
+          "tradingbot-symbol_info-04",
+          "tradingbot-symbol_info-05",
+          "uupaotui-estimate_query-00",
+          "uupaotui-estimate_query-01",
+          "uupaotui-estimate_query-02",
+          "uupaotui-estimate_query-04"
+        ],
+        "template_distribution": {
+          "create_update": 3,
+          "estimate_query": 4,
+          "list_task": 6,
+          "symbol_info": 5,
+          "task_delete": 2
+        }
+      },
+      "call_audit": {
+        "cycle_patterns_nonexclusive": {
+          "a_b_a": 5,
+          "a_b_b": 3,
+          "repeated_block_cycle": 2
+        },
+        "legacy_exact_redundant_calls": 15,
+        "legacy_unexpected_calls": 56,
+        "post_success_continuation": {
+          "distribution": {
+            "0": 37
+          },
+          "extra_calls": 0,
+          "mean_extra_calls_among_semantic_successes": 0.0,
+          "tasks": 0
+        },
+        "repeated_patterns_nonexclusive": {
+          "consumer_repeated_after_success": 4,
+          "duplicate_mutation_action": 7,
+          "producer_repeated_after_success": 7,
+          "retry_after_tool_error": 16,
+          "retry_after_wrong_value": 14,
+          "same_tool_different_args": 16,
+          "same_tool_same_args": 15
+        },
+        "tool_budget_exceeded": {
+          "calls": 0,
+          "tasks": 0
+        },
+        "top_repeated_tools": {
+          "Calendar-create_event": 1,
+          "Calendar-delete_event": 1,
+          "Calendar-search_events": 4,
+          "Calendar-update_event": 4,
+          "GoogleTasks-create_task": 8,
+          "GoogleTasks-create_task_list": 6,
+          "GoogleTasks-delete_task": 2,
+          "GoogleTasks-update_task_list": 1,
+          "Weather-get_forecast": 4
+        },
+        "top_unexpected_tools": {
+          "Calendar-list_events": 5,
+          "Calendar-search_events": 7,
+          "GoogleTasks-get_task_list": 10,
+          "GoogleTasks-list_task_lists": 8,
+          "GoogleTasks-list_tasks": 6,
+          "GoogleTasks-update_task_list": 7,
+          "TradingBot-check_login_status": 1,
+          "TradingBot-get_available_stocks": 1,
+          "TradingBot-get_order_history": 2,
+          "TradingBot-login": 2,
+          "TradingBot-make_transaction": 5,
+          "UUPaoTui-list_orders": 2
+        },
+        "unexpected_failure_reasons": {
+          "Error executing tool list_tasks: Task list <tasklist_id> not found": 6,
+          "Error executing tool update_task_list: Task list <tasklist_id> not found": 6
+        },
+        "unexpected_patterns_nonexclusive": {
+          "alternative_producer_candidate": 22,
+          "exploratory_lookup": 42,
+          "malformed_or_failed_tool_call": 12,
+          "other": 2,
+          "tool_outside_gold": 56,
+          "unnecessary_mutation": 12
+        }
+      },
+      "conditional_propagation_accuracy": {
+        "attempts": 159,
+        "raw_rate": 0.610062893081761,
+        "smoothed_rate": 0.6086956521739131,
+        "successes": 97
+      },
+      "depth_breakdown": {
+        "1": {
+          "conditional_propagation_accuracy": {
+            "attempts": 68,
+            "raw_rate": 0.8529411764705882,
+            "smoothed_rate": 0.8428571428571429,
+            "successes": 58
+          },
+          "internal_end_to_end": {
+            "attempts": 77,
+            "raw_rate": 0.7532467532467533,
+            "smoothed_rate": 0.7468354430379747,
+            "successes": 58
+          },
+          "internal_reach": {
+            "attempts": 77,
+            "raw_rate": 0.8831168831168831,
+            "smoothed_rate": 0.8734177215189873,
+            "successes": 68
+          },
+          "redundant_calls_per_task": 0.07547169811320754,
+          "reference_path_complete_success": {
+            "attempts": 53,
+            "raw_rate": 0.5471698113207547,
+            "smoothed_rate": 0.5454545454545454,
+            "successes": 29
+          },
+          "semantic_supported": 42,
+          "semantic_task_success": {
+            "attempts": 42,
+            "raw_rate": 0.7380952380952381,
+            "smoothed_rate": 0.7272727272727273,
+            "successes": 31
+          },
+          "tasks": 53,
+          "unexpected_calls_per_task": 0.09433962264150944
+        },
+        "2": {
+          "conditional_propagation_accuracy": {
+            "attempts": 65,
+            "raw_rate": 0.3230769230769231,
+            "smoothed_rate": 0.3283582089552239,
+            "successes": 21
+          },
+          "internal_end_to_end": {
+            "attempts": 94,
+            "raw_rate": 0.22340425531914893,
+            "smoothed_rate": 0.22916666666666666,
+            "successes": 21
+          },
+          "internal_reach": {
+            "attempts": 94,
+            "raw_rate": 0.6914893617021277,
+            "smoothed_rate": 0.6875,
+            "successes": 65
+          },
+          "redundant_calls_per_task": 0.3142857142857143,
+          "reference_path_complete_success": {
+            "attempts": 35,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.02702702702702703,
+            "successes": 0
+          },
+          "semantic_supported": 35,
+          "semantic_task_success": {
+            "attempts": 35,
+            "raw_rate": 0.17142857142857143,
+            "smoothed_rate": 0.1891891891891892,
+            "successes": 6
+          },
+          "tasks": 35,
+          "unexpected_calls_per_task": 1.1714285714285715
+        },
+        "3+": {
+          "conditional_propagation_accuracy": {
+            "attempts": 26,
+            "raw_rate": 0.6923076923076923,
+            "smoothed_rate": 0.6785714285714286,
+            "successes": 18
+          },
+          "internal_end_to_end": {
+            "attempts": 42,
+            "raw_rate": 0.42857142857142855,
+            "smoothed_rate": 0.4318181818181818,
+            "successes": 18
+          },
+          "internal_reach": {
+            "attempts": 42,
+            "raw_rate": 0.6190476190476191,
+            "smoothed_rate": 0.6136363636363636,
+            "successes": 26
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "semantic_supported": 12,
+          "semantic_task_success": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "tasks": 12,
+          "unexpected_calls_per_task": 0.8333333333333334
+        }
+      },
+      "environment_breakdown": {
+        "Calendar": {
+          "conditional_propagation_accuracy": {
+            "attempts": 14,
+            "raw_rate": 0.07142857142857142,
+            "smoothed_rate": 0.125,
+            "successes": 1
+          },
+          "internal_end_to_end": {
+            "attempts": 15,
+            "raw_rate": 0.06666666666666667,
+            "smoothed_rate": 0.11764705882352941,
+            "successes": 1
+          },
+          "internal_reach": {
+            "attempts": 15,
+            "raw_rate": 0.9333333333333333,
+            "smoothed_rate": 0.8823529411764706,
+            "successes": 14
+          },
+          "redundant_calls_per_task": 0.5,
+          "reference_path_complete_success": {
+            "attempts": 10,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.08333333333333333,
+            "successes": 0
+          },
+          "semantic_supported": 10,
+          "semantic_task_success": {
+            "attempts": 10,
+            "raw_rate": 0.3,
+            "smoothed_rate": 0.3333333333333333,
+            "successes": 3
+          },
+          "tasks": 10,
+          "unexpected_calls_per_task": 1.2
+        },
+        "GoogleTasks": {
+          "conditional_propagation_accuracy": {
+            "attempts": 52,
+            "raw_rate": 0.4230769230769231,
+            "smoothed_rate": 0.42592592592592593,
+            "successes": 22
+          },
+          "internal_end_to_end": {
+            "attempts": 66,
+            "raw_rate": 0.3333333333333333,
+            "smoothed_rate": 0.3382352941176471,
+            "successes": 22
+          },
+          "internal_reach": {
+            "attempts": 66,
+            "raw_rate": 0.7878787878787878,
+            "smoothed_rate": 0.7794117647058824,
+            "successes": 52
+          },
+          "redundant_calls_per_task": 0.2,
+          "reference_path_complete_success": {
+            "attempts": 30,
+            "raw_rate": 0.2,
+            "smoothed_rate": 0.21875,
+            "successes": 6
+          },
+          "semantic_supported": 30,
+          "semantic_task_success": {
+            "attempts": 30,
+            "raw_rate": 0.4666666666666667,
+            "smoothed_rate": 0.46875,
+            "successes": 14
+          },
+          "tasks": 30,
+          "unexpected_calls_per_task": 1.0333333333333334
+        },
+        "TradingBot": {
+          "conditional_propagation_accuracy": {
+            "attempts": 19,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.047619047619047616,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 48,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.02,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 48,
+            "raw_rate": 0.3958333333333333,
+            "smoothed_rate": 0.4,
+            "successes": 19
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "semantic_supported": 18,
+          "semantic_task_success": {
+            "attempts": 18,
+            "raw_rate": 0.2777777777777778,
+            "smoothed_rate": 0.3,
+            "successes": 5
+          },
+          "tasks": 18,
+          "unexpected_calls_per_task": 0.6111111111111112
+        },
+        "UUPaoTui": {
+          "conditional_propagation_accuracy": {
+            "attempts": 28,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9666666666666667,
+            "successes": 28
+          },
+          "internal_end_to_end": {
+            "attempts": 36,
+            "raw_rate": 0.7777777777777778,
+            "smoothed_rate": 0.7631578947368421,
+            "successes": 28
+          },
+          "internal_reach": {
+            "attempts": 36,
+            "raw_rate": 0.7777777777777778,
+            "smoothed_rate": 0.7631578947368421,
+            "successes": 28
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "semantic_supported": 18,
+          "semantic_task_success": {
+            "attempts": 18,
+            "raw_rate": 0.2222222222222222,
+            "smoothed_rate": 0.25,
+            "successes": 4
+          },
+          "tasks": 18,
+          "unexpected_calls_per_task": 0.1111111111111111
+        },
+        "Weather": {
+          "conditional_propagation_accuracy": {
+            "attempts": 46,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9791666666666666,
+            "successes": 46
+          },
+          "internal_end_to_end": {
+            "attempts": 48,
+            "raw_rate": 0.9583333333333334,
+            "smoothed_rate": 0.94,
+            "successes": 46
+          },
+          "internal_reach": {
+            "attempts": 48,
+            "raw_rate": 0.9583333333333334,
+            "smoothed_rate": 0.94,
+            "successes": 46
+          },
+          "redundant_calls_per_task": 0.16666666666666666,
+          "reference_path_complete_success": {
+            "attempts": 24,
+            "raw_rate": 0.9583333333333334,
+            "smoothed_rate": 0.9230769230769231,
+            "successes": 23
+          },
+          "semantic_supported": 13,
+          "semantic_task_success": {
+            "attempts": 13,
+            "raw_rate": 0.8461538461538461,
+            "smoothed_rate": 0.8,
+            "successes": 11
+          },
+          "tasks": 24,
+          "unexpected_calls_per_task": 0.0
+        }
+      },
+      "internal_dependency_funnel": {
+        "conditional_propagation_accuracy": {
+          "attempts": 159,
+          "raw_rate": 0.610062893081761,
+          "smoothed_rate": 0.6086956521739131,
+          "successes": 97
+        },
+        "consumer_input_inspectable": 159,
+        "consumer_reached": 159,
+        "consumer_reached_after_successful_producer": 132,
+        "correct_edges_with_final_semantic_success": 42,
+        "correct_propagated": 97,
+        "end_to_end_internal_edge_success": {
+          "attempts": 213,
+          "raw_rate": 0.45539906103286387,
+          "smoothed_rate": 0.4558139534883721,
+          "successes": 97
+        },
+        "gold_internal_opportunities": 213,
+        "producer_reached": 176,
+        "producer_succeeded": 163,
+        "reach_rate": {
+          "attempts": 213,
+          "raw_rate": 0.7464788732394366,
+          "smoothed_rate": 0.7441860465116279,
+          "successes": 159
+        },
+        "source_and_target_value_inspectable": 129
+      },
+      "internal_end_to_end": {
+        "attempts": 213,
+        "raw_rate": 0.45539906103286387,
+        "smoothed_rate": 0.4558139534883721,
+        "successes": 97
+      },
+      "internal_reach": {
+        "attempts": 213,
+        "raw_rate": 0.7464788732394366,
+        "smoothed_rate": 0.7441860465116279,
+        "successes": 159
+      },
+      "read_only_final_state_audit": {
+        "exact_final_state_true": 24,
+        "exact_final_state_true_with_zero_tool_calls": 0,
+        "semantic_supported": 13,
+        "tasks": 24
+      },
+      "redundant_calls_per_task": 0.15,
+      "reference_path_complete_success": {
+        "attempts": 100,
+        "raw_rate": 0.29,
+        "smoothed_rate": 0.29411764705882354,
+        "successes": 29
+      },
+      "semantic_supported": 89,
+      "semantic_task_success": {
+        "attempts": 89,
+        "raw_rate": 0.4157303370786517,
+        "smoothed_rate": 0.4175824175824176,
+        "successes": 37
+      },
+      "tasks": 100,
+      "template_breakdown": {
+        "Calendar/create_update": {
+          "conditional_propagation_accuracy": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 5,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.8571428571428571,
+            "successes": 5
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "semantic_supported": 5,
+          "semantic_task_success": {
+            "attempts": 5,
+            "raw_rate": 0.6,
+            "smoothed_rate": 0.5714285714285714,
+            "successes": 3
+          },
+          "tasks": 5,
+          "unexpected_calls_per_task": 0.8
+        },
+        "Calendar/create_update_delete": {
+          "conditional_propagation_accuracy": {
+            "attempts": 9,
+            "raw_rate": 0.1111111111111111,
+            "smoothed_rate": 0.18181818181818182,
+            "successes": 1
+          },
+          "internal_end_to_end": {
+            "attempts": 10,
+            "raw_rate": 0.1,
+            "smoothed_rate": 0.16666666666666666,
+            "successes": 1
+          },
+          "internal_reach": {
+            "attempts": 10,
+            "raw_rate": 0.9,
+            "smoothed_rate": 0.8333333333333334,
+            "successes": 9
+          },
+          "redundant_calls_per_task": 1.0,
+          "reference_path_complete_success": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "semantic_supported": 5,
+          "semantic_task_success": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "tasks": 5,
+          "unexpected_calls_per_task": 1.6
+        },
+        "GoogleTasks/list_get": {
+          "conditional_propagation_accuracy": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "internal_end_to_end": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "internal_reach": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "GoogleTasks/list_task": {
+          "conditional_propagation_accuracy": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "internal_end_to_end": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "internal_reach": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "GoogleTasks/task_delete": {
+          "conditional_propagation_accuracy": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 18,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.95,
+            "successes": 18
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.3333333333333333,
+            "smoothed_rate": 0.375,
+            "successes": 2
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.3333333333333333
+        },
+        "GoogleTasks/task_get": {
+          "conditional_propagation_accuracy": {
+            "attempts": 16,
+            "raw_rate": 0.625,
+            "smoothed_rate": 0.6111111111111112,
+            "successes": 10
+          },
+          "internal_end_to_end": {
+            "attempts": 18,
+            "raw_rate": 0.5555555555555556,
+            "smoothed_rate": 0.55,
+            "successes": 10
+          },
+          "internal_reach": {
+            "attempts": 18,
+            "raw_rate": 0.8888888888888888,
+            "smoothed_rate": 0.85,
+            "successes": 16
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 2.0
+        },
+        "GoogleTasks/task_update": {
+          "conditional_propagation_accuracy": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 18,
+            "raw_rate": 0.3333333333333333,
+            "smoothed_rate": 0.35,
+            "successes": 6
+          },
+          "redundant_calls_per_task": 1.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 2.8333333333333335
+        },
+        "TradingBot/quote_order": {
+          "conditional_propagation_accuracy": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 18,
+            "raw_rate": 0.3333333333333333,
+            "smoothed_rate": 0.35,
+            "successes": 6
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "TradingBot/quote_order_details": {
+          "conditional_propagation_accuracy": {
+            "attempts": 8,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.1,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 24,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.038461538461538464,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 24,
+            "raw_rate": 0.3333333333333333,
+            "smoothed_rate": 0.34615384615384615,
+            "successes": 8
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 1.6666666666666667
+        },
+        "TradingBot/symbol_info": {
+          "conditional_propagation_accuracy": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 6,
+            "raw_rate": 0.8333333333333334,
+            "smoothed_rate": 0.75,
+            "successes": 5
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.8333333333333334,
+            "smoothed_rate": 0.75,
+            "successes": 5
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.16666666666666666
+        },
+        "UUPaoTui/estimate_cancel": {
+          "conditional_propagation_accuracy": {
+            "attempts": 18,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.95,
+            "successes": 18
+          },
+          "internal_end_to_end": {
+            "attempts": 18,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.95,
+            "successes": 18
+          },
+          "internal_reach": {
+            "attempts": 18,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.95,
+            "successes": 18
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "UUPaoTui/estimate_create": {
+          "conditional_propagation_accuracy": {
+            "attempts": 0,
+            "raw_rate": null,
+            "smoothed_rate": 0.5,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "UUPaoTui/estimate_query": {
+          "conditional_propagation_accuracy": {
+            "attempts": 10,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9166666666666666,
+            "successes": 10
+          },
+          "internal_end_to_end": {
+            "attempts": 12,
+            "raw_rate": 0.8333333333333334,
+            "smoothed_rate": 0.7857142857142857,
+            "successes": 10
+          },
+          "internal_reach": {
+            "attempts": 12,
+            "raw_rate": 0.8333333333333334,
+            "smoothed_rate": 0.7857142857142857,
+            "successes": 10
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.6666666666666666,
+            "smoothed_rate": 0.625,
+            "successes": 4
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.3333333333333333
+        },
+        "Weather/city_alerts": {
+          "conditional_propagation_accuracy": {
+            "attempts": 10,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9166666666666666,
+            "successes": 10
+          },
+          "internal_end_to_end": {
+            "attempts": 12,
+            "raw_rate": 0.8333333333333334,
+            "smoothed_rate": 0.7857142857142857,
+            "successes": 10
+          },
+          "internal_reach": {
+            "attempts": 12,
+            "raw_rate": 0.8333333333333334,
+            "smoothed_rate": 0.7857142857142857,
+            "successes": 10
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.8333333333333334,
+            "smoothed_rate": 0.75,
+            "successes": 5
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.6666666666666666,
+            "smoothed_rate": 0.625,
+            "successes": 4
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "Weather/city_forecast": {
+          "conditional_propagation_accuracy": {
+            "attempts": 12,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9285714285714286,
+            "successes": 12
+          },
+          "internal_end_to_end": {
+            "attempts": 12,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9285714285714286,
+            "successes": 12
+          },
+          "internal_reach": {
+            "attempts": 12,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9285714285714286,
+            "successes": 12
+          },
+          "redundant_calls_per_task": 0.6666666666666666,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "semantic_supported": 0,
+          "semantic_task_success": {
+            "attempts": 0,
+            "raw_rate": null,
+            "smoothed_rate": 0.5,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "Weather/city_save": {
+          "conditional_propagation_accuracy": {
+            "attempts": 12,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9285714285714286,
+            "successes": 12
+          },
+          "internal_end_to_end": {
+            "attempts": 12,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9285714285714286,
+            "successes": 12
+          },
+          "internal_reach": {
+            "attempts": 12,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9285714285714286,
+            "successes": 12
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "Weather/city_weather": {
+          "conditional_propagation_accuracy": {
+            "attempts": 12,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9285714285714286,
+            "successes": 12
+          },
+          "internal_end_to_end": {
+            "attempts": 12,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9285714285714286,
+            "successes": 12
+          },
+          "internal_reach": {
+            "attempts": 12,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9285714285714286,
+            "successes": 12
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "semantic_supported": 1,
+          "semantic_task_success": {
+            "attempts": 1,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.6666666666666666,
+            "successes": 1
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        }
+      },
+      "unexpected_calls_per_task": 0.56
+    },
+    "parameter_aware": {
+      "alternative_valid_path": {
+        "count": 17,
+        "environment_distribution": {
+          "Calendar": 3,
+          "GoogleTasks": 7,
+          "TradingBot": 5,
+          "UUPaoTui": 2
+        },
+        "pattern_counts_nonexclusive": {
+          "exact_final_state_mismatch": 8,
+          "extra_nonreference_tool": 10,
+          "gold_edge_incomplete": 15,
+          "gold_node_incomplete": 5
+        },
+        "task_ids": [
+          "calendar-create_update-01",
+          "calendar-create_update-02",
+          "calendar-create_update-03",
+          "googletasks-list_task-00",
+          "googletasks-list_task-01",
+          "googletasks-list_task-02",
+          "googletasks-list_task-03",
+          "googletasks-list_task-04",
+          "googletasks-list_task-05",
+          "googletasks-task_delete-00",
+          "tradingbot-symbol_info-00",
+          "tradingbot-symbol_info-01",
+          "tradingbot-symbol_info-03",
+          "tradingbot-symbol_info-04",
+          "tradingbot-symbol_info-05",
+          "uupaotui-estimate_create-01",
+          "uupaotui-estimate_create-05"
+        ],
+        "template_distribution": {
+          "create_update": 3,
+          "estimate_create": 2,
+          "list_task": 6,
+          "symbol_info": 5,
+          "task_delete": 1
+        }
+      },
+      "call_audit": {
+        "cycle_patterns_nonexclusive": {
+          "a_b_a": 11,
+          "repeated_block_cycle": 298
+        },
+        "legacy_exact_redundant_calls": 202,
+        "legacy_unexpected_calls": 215,
+        "post_success_continuation": {
+          "distribution": {
+            "0": 31
+          },
+          "extra_calls": 0,
+          "mean_extra_calls_among_semantic_successes": 0.0,
+          "tasks": 0
+        },
+        "repeated_patterns_nonexclusive": {
+          "consumer_repeated_after_success": 94,
+          "duplicate_mutation_action": 19,
+          "producer_repeated_after_success": 101,
+          "retry_after_tool_error": 165,
+          "retry_after_wrong_value": 17,
+          "same_tool_different_args": 23,
+          "same_tool_same_args": 202
+        },
+        "tool_budget_exceeded": {
+          "calls": 114,
+          "tasks": 6
+        },
+        "top_repeated_tools": {
+          "Calendar-update_event": 5,
+          "GoogleTasks-create_task": 9,
+          "GoogleTasks-create_task_list": 6,
+          "TradingBot-add_to_watchlist": 7,
+          "TradingBot-check_login_status": 7,
+          "TradingBot-get_account_info": 5,
+          "TradingBot-get_available_stocks": 5,
+          "TradingBot-get_order_details": 14,
+          "TradingBot-get_order_history": 6,
+          "TradingBot-get_stock_info": 91,
+          "TradingBot-get_transaction_history": 10,
+          "TradingBot-get_watchlist": 7,
+          "TradingBot-make_transaction": 7,
+          "TradingBot-notify_price_change": 6,
+          "TradingBot-update_stock_price": 6
+        },
+        "top_unexpected_tools": {
+          "GoogleTasks-get_task_list": 10,
+          "GoogleTasks-list_task_lists": 12,
+          "GoogleTasks-update_task_list": 8,
+          "TradingBot-add_to_watchlist": 12,
+          "TradingBot-check_login_status": 14,
+          "TradingBot-get_account_info": 13,
+          "TradingBot-get_available_stocks": 9,
+          "TradingBot-get_order_history": 10,
+          "TradingBot-get_transaction_history": 15,
+          "TradingBot-get_watchlist": 12,
+          "TradingBot-login": 8,
+          "TradingBot-make_transaction": 16,
+          "TradingBot-notify_price_change": 11,
+          "TradingBot-update_stock_price": 11,
+          "UUPaoTui-list_orders": 12
+        },
+        "unexpected_failure_reasons": {
+          "Error executing tool get_order_details: Order 123456 not found": 2,
+          "Error executing tool list_tasks: Task list <tasklist_id> not found": 6,
+          "Error executing tool update_task_list: Task list <tasklist_id> not found": 6,
+          "max_tool_calls_exceeded": 114
+        },
+        "unexpected_patterns_nonexclusive": {
+          "alternative_producer_candidate": 20,
+          "exploratory_lookup": 140,
+          "malformed_or_failed_tool_call": 128,
+          "other": 5,
+          "tool_outside_gold": 215,
+          "unnecessary_mutation": 67
+        }
+      },
+      "conditional_propagation_accuracy": {
+        "attempts": 149,
+        "raw_rate": 0.2550335570469799,
+        "smoothed_rate": 0.2582781456953642,
+        "successes": 38
+      },
+      "depth_breakdown": {
+        "1": {
+          "conditional_propagation_accuracy": {
+            "attempts": 52,
+            "raw_rate": 0.6923076923076923,
+            "smoothed_rate": 0.6851851851851852,
+            "successes": 36
+          },
+          "internal_end_to_end": {
+            "attempts": 77,
+            "raw_rate": 0.4675324675324675,
+            "smoothed_rate": 0.46835443037974683,
+            "successes": 36
+          },
+          "internal_reach": {
+            "attempts": 77,
+            "raw_rate": 0.6753246753246753,
+            "smoothed_rate": 0.6708860759493671,
+            "successes": 52
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 53,
+            "raw_rate": 0.37735849056603776,
+            "smoothed_rate": 0.38181818181818183,
+            "successes": 20
+          },
+          "semantic_supported": 42,
+          "semantic_task_success": {
+            "attempts": 42,
+            "raw_rate": 0.7142857142857143,
+            "smoothed_rate": 0.7045454545454546,
+            "successes": 30
+          },
+          "tasks": 53,
+          "unexpected_calls_per_task": 0.22641509433962265
+        },
+        "2": {
+          "conditional_propagation_accuracy": {
+            "attempts": 62,
+            "raw_rate": 0.03225806451612903,
+            "smoothed_rate": 0.046875,
+            "successes": 2
+          },
+          "internal_end_to_end": {
+            "attempts": 94,
+            "raw_rate": 0.02127659574468085,
+            "smoothed_rate": 0.03125,
+            "successes": 2
+          },
+          "internal_reach": {
+            "attempts": 94,
+            "raw_rate": 0.6595744680851063,
+            "smoothed_rate": 0.65625,
+            "successes": 62
+          },
+          "redundant_calls_per_task": 3.7714285714285714,
+          "reference_path_complete_success": {
+            "attempts": 35,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.02702702702702703,
+            "successes": 0
+          },
+          "semantic_supported": 35,
+          "semantic_task_success": {
+            "attempts": 35,
+            "raw_rate": 0.02857142857142857,
+            "smoothed_rate": 0.05405405405405406,
+            "successes": 1
+          },
+          "tasks": 35,
+          "unexpected_calls_per_task": 2.857142857142857
+        },
+        "3+": {
+          "conditional_propagation_accuracy": {
+            "attempts": 35,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.02702702702702703,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 42,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.022727272727272728,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 42,
+            "raw_rate": 0.8333333333333334,
+            "smoothed_rate": 0.8181818181818182,
+            "successes": 35
+          },
+          "redundant_calls_per_task": 5.833333333333333,
+          "reference_path_complete_success": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "semantic_supported": 12,
+          "semantic_task_success": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "tasks": 12,
+          "unexpected_calls_per_task": 8.583333333333334
+        }
+      },
+      "environment_breakdown": {
+        "Calendar": {
+          "conditional_propagation_accuracy": {
+            "attempts": 15,
+            "raw_rate": 0.13333333333333333,
+            "smoothed_rate": 0.17647058823529413,
+            "successes": 2
+          },
+          "internal_end_to_end": {
+            "attempts": 15,
+            "raw_rate": 0.13333333333333333,
+            "smoothed_rate": 0.17647058823529413,
+            "successes": 2
+          },
+          "internal_reach": {
+            "attempts": 15,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9411764705882353,
+            "successes": 15
+          },
+          "redundant_calls_per_task": 0.4,
+          "reference_path_complete_success": {
+            "attempts": 10,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.08333333333333333,
+            "successes": 0
+          },
+          "semantic_supported": 10,
+          "semantic_task_success": {
+            "attempts": 10,
+            "raw_rate": 0.3,
+            "smoothed_rate": 0.3333333333333333,
+            "successes": 3
+          },
+          "tasks": 10,
+          "unexpected_calls_per_task": 1.0
+        },
+        "GoogleTasks": {
+          "conditional_propagation_accuracy": {
+            "attempts": 42,
+            "raw_rate": 0.14285714285714285,
+            "smoothed_rate": 0.1590909090909091,
+            "successes": 6
+          },
+          "internal_end_to_end": {
+            "attempts": 66,
+            "raw_rate": 0.09090909090909091,
+            "smoothed_rate": 0.10294117647058823,
+            "successes": 6
+          },
+          "internal_reach": {
+            "attempts": 66,
+            "raw_rate": 0.6363636363636364,
+            "smoothed_rate": 0.6323529411764706,
+            "successes": 42
+          },
+          "redundant_calls_per_task": 0.2,
+          "reference_path_complete_success": {
+            "attempts": 30,
+            "raw_rate": 0.2,
+            "smoothed_rate": 0.21875,
+            "successes": 6
+          },
+          "semantic_supported": 30,
+          "semantic_task_success": {
+            "attempts": 30,
+            "raw_rate": 0.43333333333333335,
+            "smoothed_rate": 0.4375,
+            "successes": 13
+          },
+          "tasks": 30,
+          "unexpected_calls_per_task": 1.2
+        },
+        "TradingBot": {
+          "conditional_propagation_accuracy": {
+            "attempts": 32,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.029411764705882353,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 48,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.02,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 48,
+            "raw_rate": 0.6666666666666666,
+            "smoothed_rate": 0.66,
+            "successes": 32
+          },
+          "redundant_calls_per_task": 10.555555555555555,
+          "reference_path_complete_success": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "semantic_supported": 18,
+          "semantic_task_success": {
+            "attempts": 18,
+            "raw_rate": 0.2777777777777778,
+            "smoothed_rate": 0.3,
+            "successes": 5
+          },
+          "tasks": 18,
+          "unexpected_calls_per_task": 8.722222222222221
+        },
+        "UUPaoTui": {
+          "conditional_propagation_accuracy": {
+            "attempts": 32,
+            "raw_rate": 0.0625,
+            "smoothed_rate": 0.08823529411764706,
+            "successes": 2
+          },
+          "internal_end_to_end": {
+            "attempts": 36,
+            "raw_rate": 0.05555555555555555,
+            "smoothed_rate": 0.07894736842105263,
+            "successes": 2
+          },
+          "internal_reach": {
+            "attempts": 36,
+            "raw_rate": 0.8888888888888888,
+            "smoothed_rate": 0.868421052631579,
+            "successes": 32
+          },
+          "redundant_calls_per_task": 0.1111111111111111,
+          "reference_path_complete_success": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "semantic_supported": 18,
+          "semantic_task_success": {
+            "attempts": 18,
+            "raw_rate": 0.1111111111111111,
+            "smoothed_rate": 0.15,
+            "successes": 2
+          },
+          "tasks": 18,
+          "unexpected_calls_per_task": 0.6666666666666666
+        },
+        "Weather": {
+          "conditional_propagation_accuracy": {
+            "attempts": 28,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9666666666666667,
+            "successes": 28
+          },
+          "internal_end_to_end": {
+            "attempts": 48,
+            "raw_rate": 0.5833333333333334,
+            "smoothed_rate": 0.58,
+            "successes": 28
+          },
+          "internal_reach": {
+            "attempts": 48,
+            "raw_rate": 0.5833333333333334,
+            "smoothed_rate": 0.58,
+            "successes": 28
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 24,
+            "raw_rate": 0.5833333333333334,
+            "smoothed_rate": 0.5769230769230769,
+            "successes": 14
+          },
+          "semantic_supported": 13,
+          "semantic_task_success": {
+            "attempts": 13,
+            "raw_rate": 0.6153846153846154,
+            "smoothed_rate": 0.6,
+            "successes": 8
+          },
+          "tasks": 24,
+          "unexpected_calls_per_task": 0.0
+        }
+      },
+      "internal_dependency_funnel": {
+        "conditional_propagation_accuracy": {
+          "attempts": 149,
+          "raw_rate": 0.2550335570469799,
+          "smoothed_rate": 0.2582781456953642,
+          "successes": 38
+        },
+        "consumer_input_inspectable": 149,
+        "consumer_reached": 149,
+        "consumer_reached_after_successful_producer": 101,
+        "correct_edges_with_final_semantic_success": 24,
+        "correct_propagated": 38,
+        "end_to_end_internal_edge_success": {
+          "attempts": 213,
+          "raw_rate": 0.1784037558685446,
+          "smoothed_rate": 0.1813953488372093,
+          "successes": 38
+        },
+        "gold_internal_opportunities": 213,
+        "producer_reached": 182,
+        "producer_succeeded": 146,
+        "reach_rate": {
+          "attempts": 213,
+          "raw_rate": 0.6995305164319249,
+          "smoothed_rate": 0.6976744186046512,
+          "successes": 149
+        },
+        "source_and_target_value_inspectable": 88
+      },
+      "internal_end_to_end": {
+        "attempts": 213,
+        "raw_rate": 0.1784037558685446,
+        "smoothed_rate": 0.1813953488372093,
+        "successes": 38
+      },
+      "internal_reach": {
+        "attempts": 213,
+        "raw_rate": 0.6995305164319249,
+        "smoothed_rate": 0.6976744186046512,
+        "successes": 149
+      },
+      "read_only_final_state_audit": {
+        "exact_final_state_true": 24,
+        "exact_final_state_true_with_zero_tool_calls": 0,
+        "semantic_supported": 13,
+        "tasks": 24
+      },
+      "redundant_calls_per_task": 2.02,
+      "reference_path_complete_success": {
+        "attempts": 100,
+        "raw_rate": 0.2,
+        "smoothed_rate": 0.20588235294117646,
+        "successes": 20
+      },
+      "semantic_supported": 89,
+      "semantic_task_success": {
+        "attempts": 89,
+        "raw_rate": 0.34831460674157305,
+        "smoothed_rate": 0.3516483516483517,
+        "successes": 31
+      },
+      "tasks": 100,
+      "template_breakdown": {
+        "Calendar/create_update": {
+          "conditional_propagation_accuracy": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 5,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.8571428571428571,
+            "successes": 5
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "semantic_supported": 5,
+          "semantic_task_success": {
+            "attempts": 5,
+            "raw_rate": 0.6,
+            "smoothed_rate": 0.5714285714285714,
+            "successes": 3
+          },
+          "tasks": 5,
+          "unexpected_calls_per_task": 1.0
+        },
+        "Calendar/create_update_delete": {
+          "conditional_propagation_accuracy": {
+            "attempts": 10,
+            "raw_rate": 0.2,
+            "smoothed_rate": 0.25,
+            "successes": 2
+          },
+          "internal_end_to_end": {
+            "attempts": 10,
+            "raw_rate": 0.2,
+            "smoothed_rate": 0.25,
+            "successes": 2
+          },
+          "internal_reach": {
+            "attempts": 10,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9166666666666666,
+            "successes": 10
+          },
+          "redundant_calls_per_task": 0.8,
+          "reference_path_complete_success": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "semantic_supported": 5,
+          "semantic_task_success": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "tasks": 5,
+          "unexpected_calls_per_task": 1.0
+        },
+        "GoogleTasks/list_get": {
+          "conditional_propagation_accuracy": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "internal_end_to_end": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "internal_reach": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "GoogleTasks/list_task": {
+          "conditional_propagation_accuracy": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 1.0
+        },
+        "GoogleTasks/task_delete": {
+          "conditional_propagation_accuracy": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 18,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.95,
+            "successes": 18
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.16666666666666666,
+            "smoothed_rate": 0.25,
+            "successes": 1
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.16666666666666666
+        },
+        "GoogleTasks/task_get": {
+          "conditional_propagation_accuracy": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 18,
+            "raw_rate": 0.3333333333333333,
+            "smoothed_rate": 0.35,
+            "successes": 6
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 2.0
+        },
+        "GoogleTasks/task_update": {
+          "conditional_propagation_accuracy": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 18,
+            "raw_rate": 0.3333333333333333,
+            "smoothed_rate": 0.35,
+            "successes": 6
+          },
+          "redundant_calls_per_task": 1.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 2.8333333333333335
+        },
+        "TradingBot/quote_order": {
+          "conditional_propagation_accuracy": {
+            "attempts": 10,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.08333333333333333,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 18,
+            "raw_rate": 0.5555555555555556,
+            "smoothed_rate": 0.55,
+            "successes": 10
+          },
+          "redundant_calls_per_task": 20.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 9.833333333333334
+        },
+        "TradingBot/quote_order_details": {
+          "conditional_propagation_accuracy": {
+            "attempts": 17,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05263157894736842,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 24,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.038461538461538464,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 24,
+            "raw_rate": 0.7083333333333334,
+            "smoothed_rate": 0.6923076923076923,
+            "successes": 17
+          },
+          "redundant_calls_per_task": 11.666666666666666,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 16.166666666666668
+        },
+        "TradingBot/symbol_info": {
+          "conditional_propagation_accuracy": {
+            "attempts": 5,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.14285714285714285,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 6,
+            "raw_rate": 0.8333333333333334,
+            "smoothed_rate": 0.75,
+            "successes": 5
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.8333333333333334,
+            "smoothed_rate": 0.75,
+            "successes": 5
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.16666666666666666
+        },
+        "UUPaoTui/estimate_cancel": {
+          "conditional_propagation_accuracy": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 18,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.05,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 18,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.95,
+            "successes": 18
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 1.0
+        },
+        "UUPaoTui/estimate_create": {
+          "conditional_propagation_accuracy": {
+            "attempts": 2,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.75,
+            "successes": 2
+          },
+          "internal_end_to_end": {
+            "attempts": 6,
+            "raw_rate": 0.3333333333333333,
+            "smoothed_rate": 0.375,
+            "successes": 2
+          },
+          "internal_reach": {
+            "attempts": 6,
+            "raw_rate": 0.3333333333333333,
+            "smoothed_rate": 0.375,
+            "successes": 2
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.3333333333333333,
+            "smoothed_rate": 0.375,
+            "successes": 2
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "UUPaoTui/estimate_query": {
+          "conditional_propagation_accuracy": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "internal_end_to_end": {
+            "attempts": 12,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.07142857142857142,
+            "successes": 0
+          },
+          "internal_reach": {
+            "attempts": 12,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9285714285714286,
+            "successes": 12
+          },
+          "redundant_calls_per_task": 0.3333333333333333,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.0,
+            "smoothed_rate": 0.125,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 1.0
+        },
+        "Weather/city_alerts": {
+          "conditional_propagation_accuracy": {
+            "attempts": 2,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.75,
+            "successes": 2
+          },
+          "internal_end_to_end": {
+            "attempts": 12,
+            "raw_rate": 0.16666666666666666,
+            "smoothed_rate": 0.21428571428571427,
+            "successes": 2
+          },
+          "internal_reach": {
+            "attempts": 12,
+            "raw_rate": 0.16666666666666666,
+            "smoothed_rate": 0.21428571428571427,
+            "successes": 2
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.16666666666666666,
+            "smoothed_rate": 0.25,
+            "successes": 1
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 0.16666666666666666,
+            "smoothed_rate": 0.25,
+            "successes": 1
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "Weather/city_forecast": {
+          "conditional_propagation_accuracy": {
+            "attempts": 4,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.8333333333333334,
+            "successes": 4
+          },
+          "internal_end_to_end": {
+            "attempts": 12,
+            "raw_rate": 0.3333333333333333,
+            "smoothed_rate": 0.35714285714285715,
+            "successes": 4
+          },
+          "internal_reach": {
+            "attempts": 12,
+            "raw_rate": 0.3333333333333333,
+            "smoothed_rate": 0.35714285714285715,
+            "successes": 4
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.3333333333333333,
+            "smoothed_rate": 0.375,
+            "successes": 2
+          },
+          "semantic_supported": 0,
+          "semantic_task_success": {
+            "attempts": 0,
+            "raw_rate": null,
+            "smoothed_rate": 0.5,
+            "successes": 0
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "Weather/city_save": {
+          "conditional_propagation_accuracy": {
+            "attempts": 12,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9285714285714286,
+            "successes": 12
+          },
+          "internal_end_to_end": {
+            "attempts": 12,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9285714285714286,
+            "successes": 12
+          },
+          "internal_reach": {
+            "attempts": 12,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9285714285714286,
+            "successes": 12
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "semantic_supported": 6,
+          "semantic_task_success": {
+            "attempts": 6,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.875,
+            "successes": 6
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        },
+        "Weather/city_weather": {
+          "conditional_propagation_accuracy": {
+            "attempts": 10,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.9166666666666666,
+            "successes": 10
+          },
+          "internal_end_to_end": {
+            "attempts": 12,
+            "raw_rate": 0.8333333333333334,
+            "smoothed_rate": 0.7857142857142857,
+            "successes": 10
+          },
+          "internal_reach": {
+            "attempts": 12,
+            "raw_rate": 0.8333333333333334,
+            "smoothed_rate": 0.7857142857142857,
+            "successes": 10
+          },
+          "redundant_calls_per_task": 0.0,
+          "reference_path_complete_success": {
+            "attempts": 6,
+            "raw_rate": 0.8333333333333334,
+            "smoothed_rate": 0.75,
+            "successes": 5
+          },
+          "semantic_supported": 1,
+          "semantic_task_success": {
+            "attempts": 1,
+            "raw_rate": 1.0,
+            "smoothed_rate": 0.6666666666666666,
+            "successes": 1
+          },
+          "tasks": 6,
+          "unexpected_calls_per_task": 0.0
+        }
+      },
+      "unexpected_calls_per_task": 2.15
+    }
+  },
+  "original_sft_vs_parameter_aware": {
+    "both_true_with_pa_efficiency_or_propagation_regression": {
+      "count": 6,
+      "task_ids": [
+        "googletasks-list_task-00",
+        "googletasks-list_task-01",
+        "googletasks-list_task-02",
+        "googletasks-list_task-03",
+        "googletasks-list_task-04",
+        "googletasks-list_task-05"
+      ]
+    },
+    "groups": {
+      "both_false": {
+        "count": 48,
+        "task_ids": [
+          "calendar-create_update_delete-00",
+          "calendar-create_update_delete-01",
+          "calendar-create_update_delete-02",
+          "calendar-create_update_delete-03",
+          "calendar-create_update_delete-04",
+          "googletasks-task_delete-01",
+          "googletasks-task_delete-02",
+          "googletasks-task_delete-03",
+          "googletasks-task_delete-04",
+          "googletasks-task_get-00",
+          "googletasks-task_get-01",
+          "googletasks-task_get-02",
+          "googletasks-task_get-03",
+          "googletasks-task_get-04",
+          "googletasks-task_get-05",
+          "googletasks-task_update-00",
+          "googletasks-task_update-01",
+          "googletasks-task_update-02",
+          "googletasks-task_update-03",
+          "googletasks-task_update-04",
+          "googletasks-task_update-05",
+          "tradingbot-quote_order-00",
+          "tradingbot-quote_order-01",
+          "tradingbot-quote_order-02",
+          "tradingbot-quote_order-03",
+          "tradingbot-quote_order-04",
+          "tradingbot-quote_order-05",
+          "tradingbot-quote_order_details-00",
+          "tradingbot-quote_order_details-01",
+          "tradingbot-quote_order_details-02",
+          "tradingbot-quote_order_details-03",
+          "tradingbot-quote_order_details-04",
+          "tradingbot-quote_order_details-05",
+          "tradingbot-symbol_info-02",
+          "uupaotui-estimate_cancel-00",
+          "uupaotui-estimate_cancel-01",
+          "uupaotui-estimate_cancel-02",
+          "uupaotui-estimate_cancel-03",
+          "uupaotui-estimate_cancel-04",
+          "uupaotui-estimate_cancel-05",
+          "uupaotui-estimate_create-00",
+          "uupaotui-estimate_create-02",
+          "uupaotui-estimate_create-03",
+          "uupaotui-estimate_create-04",
+          "uupaotui-estimate_query-03",
+          "uupaotui-estimate_query-05",
+          "weather-city_alerts-02",
+          "weather-city_alerts-03"
+        ]
+      },
+      "both_true": {
+        "count": 27,
+        "task_ids": [
+          "calendar-create_update-03",
+          "googletasks-list_get-00",
+          "googletasks-list_get-01",
+          "googletasks-list_get-02",
+          "googletasks-list_get-03",
+          "googletasks-list_get-04",
+          "googletasks-list_get-05",
+          "googletasks-list_task-00",
+          "googletasks-list_task-01",
+          "googletasks-list_task-02",
+          "googletasks-list_task-03",
+          "googletasks-list_task-04",
+          "googletasks-list_task-05",
+          "googletasks-task_delete-00",
+          "tradingbot-symbol_info-00",
+          "tradingbot-symbol_info-01",
+          "tradingbot-symbol_info-03",
+          "tradingbot-symbol_info-04",
+          "tradingbot-symbol_info-05",
+          "weather-city_alerts-05",
+          "weather-city_save-00",
+          "weather-city_save-01",
+          "weather-city_save-02",
+          "weather-city_save-03",
+          "weather-city_save-04",
+          "weather-city_save-05",
+          "weather-city_weather-05"
+        ]
+      },
+      "original_false_pa_true": {
+        "count": 4,
+        "task_ids": [
+          "calendar-create_update-01",
+          "calendar-create_update-02",
+          "uupaotui-estimate_create-01",
+          "uupaotui-estimate_create-05"
+        ]
+      },
+      "original_true_pa_false": {
+        "count": 10,
+        "task_ids": [
+          "calendar-create_update-00",
+          "calendar-create_update-04",
+          "googletasks-task_delete-05",
+          "uupaotui-estimate_query-00",
+          "uupaotui-estimate_query-01",
+          "uupaotui-estimate_query-02",
+          "uupaotui-estimate_query-04",
+          "weather-city_alerts-00",
+          "weather-city_alerts-01",
+          "weather-city_alerts-04"
+        ]
+      }
+    },
+    "regression_depth_distribution": {
+      "1": 5,
+      "2": 5
+    },
+    "regression_environment_distribution": {
+      "Calendar": 2,
+      "GoogleTasks": 1,
+      "UUPaoTui": 4,
+      "Weather": 3
+    },
+    "regression_failure_attribution": {
+      "target_observation_not_acquired": 3,
+      "wrong_propagated_value": 7
+    },
+    "regression_template_distribution": {
+      "city_alerts": 3,
+      "create_update": 2,
+      "estimate_query": 4,
+      "task_delete": 1
+    },
+    "supported_pairs": 89
+  },
+  "schema_version": "graph_frontier_capability_reanalysis_v2",
+  "semantic_paired_mcnemar": {
+    "base_vs_original_sft": {
+      "discordant": 42,
+      "exact_two_sided_p": 6.877111491121468e-05,
+      "paired_support": 89,
+      "right_losses": 8,
+      "right_wins": 34
+    },
+    "base_vs_parameter_aware": {
+      "discordant": 32,
+      "exact_two_sided_p": 0.0005350527353584766,
+      "paired_support": 89,
+      "right_losses": 6,
+      "right_wins": 26
+    },
+    "original_sft_vs_parameter_aware": {
+      "discordant": 14,
+      "exact_two_sided_p": 0.1795654296875,
+      "paired_support": 89,
+      "right_losses": 10,
+      "right_wins": 4
+    }
+  },
+  "semantic_verifier_templates": {
+    "Calendar/create_update": {
+      "ambiguity_flag": false,
+      "checked_fields": [
+        "events[*].calendar_id",
+        "events[*].end_time",
+        "events[*].start_time",
+        "events[*].summary"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 5,
+      "total_tasks": 5,
+      "unsupported_reasons": {},
+      "verifier_type": "state_predicate"
+    },
+    "Calendar/create_update_delete": {
+      "ambiguity_flag": false,
+      "checked_fields": [
+        "create_event.event_id",
+        "delete_event.event_id",
+        "events[target] absent",
+        "update_event.event_id"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 5,
+      "total_tasks": 5,
+      "unsupported_reasons": {},
+      "verifier_type": "state_predicate"
+    },
+    "GoogleTasks/list_get": {
+      "ambiguity_flag": true,
+      "checked_fields": [
+        "get_task_list.typed_result",
+        "tasklists[*].title",
+        "terminal_success"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 6,
+      "total_tasks": 6,
+      "unsupported_reasons": {},
+      "verifier_type": "state_plus_observation"
+    },
+    "GoogleTasks/list_task": {
+      "ambiguity_flag": false,
+      "checked_fields": [
+        "tasklists[*].title",
+        "tasks[*].tasklist_id",
+        "tasks[*].title"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 6,
+      "total_tasks": 6,
+      "unsupported_reasons": {},
+      "verifier_type": "state_predicate"
+    },
+    "GoogleTasks/task_delete": {
+      "ambiguity_flag": false,
+      "checked_fields": [
+        "create_task.task_id",
+        "delete_task.task_id",
+        "tasklists[*].title",
+        "tasks[target] absent"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 6,
+      "total_tasks": 6,
+      "unsupported_reasons": {},
+      "verifier_type": "state_predicate"
+    },
+    "GoogleTasks/task_get": {
+      "ambiguity_flag": true,
+      "checked_fields": [
+        "get_task.typed_result",
+        "tasklists[*].title",
+        "tasks[*].title",
+        "terminal_success"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 6,
+      "total_tasks": 6,
+      "unsupported_reasons": {},
+      "verifier_type": "state_plus_observation"
+    },
+    "GoogleTasks/task_update": {
+      "ambiguity_flag": false,
+      "checked_fields": [
+        "tasklists[*].title",
+        "tasks[*].tasklist_id",
+        "tasks[*].title"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 6,
+      "total_tasks": 6,
+      "unsupported_reasons": {},
+      "verifier_type": "state_predicate"
+    },
+    "TradingBot/quote_order": {
+      "ambiguity_flag": false,
+      "checked_fields": [
+        "orders[*].order_type",
+        "orders[*].price",
+        "orders[*].quantity",
+        "orders[*].status",
+        "orders[*].symbol"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 6,
+      "total_tasks": 6,
+      "unsupported_reasons": {},
+      "verifier_type": "state_predicate"
+    },
+    "TradingBot/quote_order_details": {
+      "ambiguity_flag": true,
+      "checked_fields": [
+        "get_order_details.typed_result",
+        "orders[*].order_type",
+        "orders[*].price",
+        "orders[*].quantity",
+        "orders[*].status",
+        "orders[*].symbol",
+        "terminal_success"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 6,
+      "total_tasks": 6,
+      "unsupported_reasons": {},
+      "verifier_type": "state_plus_observation"
+    },
+    "TradingBot/symbol_info": {
+      "ambiguity_flag": true,
+      "checked_fields": [
+        "get_stock_info.arguments",
+        "get_stock_info.typed_result",
+        "terminal_success"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 6,
+      "total_tasks": 6,
+      "unsupported_reasons": {},
+      "verifier_type": "typed_observation_predicate"
+    },
+    "UUPaoTui/estimate_cancel": {
+      "ambiguity_flag": true,
+      "checked_fields": [
+        "cancel_order.orderCode",
+        "orders[*].adCode",
+        "orders[*].fromAddress",
+        "orders[*].receiverPhone",
+        "orders[*].sendType",
+        "orders[*].senderPhone",
+        "orders[*].state",
+        "orders[*].toAddress",
+        "query_order.typed_result",
+        "terminal_success"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 6,
+      "total_tasks": 6,
+      "unsupported_reasons": {},
+      "verifier_type": "state_plus_observation"
+    },
+    "UUPaoTui/estimate_create": {
+      "ambiguity_flag": false,
+      "checked_fields": [
+        "orders[*].adCode",
+        "orders[*].fromAddress",
+        "orders[*].receiverPhone",
+        "orders[*].sendType",
+        "orders[*].senderPhone",
+        "orders[*].toAddress"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 6,
+      "total_tasks": 6,
+      "unsupported_reasons": {},
+      "verifier_type": "state_predicate"
+    },
+    "UUPaoTui/estimate_query": {
+      "ambiguity_flag": true,
+      "checked_fields": [
+        "orders[*].adCode",
+        "orders[*].fromAddress",
+        "orders[*].receiverPhone",
+        "orders[*].sendType",
+        "orders[*].senderPhone",
+        "orders[*].toAddress",
+        "query_order.typed_result",
+        "terminal_success"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 6,
+      "total_tasks": 6,
+      "unsupported_reasons": {},
+      "verifier_type": "state_plus_observation"
+    },
+    "Weather/city_alerts": {
+      "ambiguity_flag": true,
+      "checked_fields": [
+        "get_alerts.arguments",
+        "get_alerts.typed_result",
+        "terminal_success"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 6,
+      "total_tasks": 6,
+      "unsupported_reasons": {},
+      "verifier_type": "typed_observation_predicate"
+    },
+    "Weather/city_forecast": {
+      "ambiguity_flag": true,
+      "checked_fields": [
+        "get_forecast.typed_result",
+        "terminal_success"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 0,
+      "total_tasks": 6,
+      "unsupported_reasons": {
+        "empty_reference_observation": 6
+      },
+      "verifier_type": "typed_observation_predicate"
+    },
+    "Weather/city_save": {
+      "ambiguity_flag": false,
+      "checked_fields": [
+        "saved_locations[pilot-00-city_save].alias",
+        "saved_locations[pilot-00-city_save].latitude",
+        "saved_locations[pilot-00-city_save].longitude",
+        "saved_locations[pilot-00-city_save].name",
+        "saved_locations[pilot-01-city_save].alias",
+        "saved_locations[pilot-01-city_save].latitude",
+        "saved_locations[pilot-01-city_save].longitude",
+        "saved_locations[pilot-01-city_save].name",
+        "saved_locations[pilot-02-city_save].alias",
+        "saved_locations[pilot-02-city_save].latitude",
+        "saved_locations[pilot-02-city_save].longitude",
+        "saved_locations[pilot-02-city_save].name",
+        "saved_locations[pilot-03-city_save].alias",
+        "saved_locations[pilot-03-city_save].latitude",
+        "saved_locations[pilot-03-city_save].longitude",
+        "saved_locations[pilot-03-city_save].name",
+        "saved_locations[pilot-04-city_save].alias",
+        "saved_locations[pilot-04-city_save].latitude",
+        "saved_locations[pilot-04-city_save].longitude",
+        "saved_locations[pilot-04-city_save].name",
+        "saved_locations[pilot-05-city_save].alias",
+        "saved_locations[pilot-05-city_save].latitude",
+        "saved_locations[pilot-05-city_save].longitude",
+        "saved_locations[pilot-05-city_save].name"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 6,
+      "total_tasks": 6,
+      "unsupported_reasons": {},
+      "verifier_type": "state_predicate"
+    },
+    "Weather/city_weather": {
+      "ambiguity_flag": true,
+      "checked_fields": [
+        "get_current_weather.arguments",
+        "get_current_weather.typed_result",
+        "terminal_success"
+      ],
+      "reference_source": "frozen typed reference trace and deterministic final state",
+      "supported_tasks": 1,
+      "total_tasks": 6,
+      "unsupported_reasons": {
+        "empty_reference_observation": 5
+      },
+      "verifier_type": "typed_observation_predicate"
+    }
+  },
+  "source_policy": "read_only_existing_artifacts"
+}
