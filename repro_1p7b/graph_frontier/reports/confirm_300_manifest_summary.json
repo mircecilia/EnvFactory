@@ -1,0 +1,114 @@
+{
+  "accepted": 300,
+  "candidates_generated": 300,
+  "compact_manifest_path": "repro_1p7b/graph_frontier/manifests/confirm_300_seed_20260914.jsonl",
+  "depth_distribution": {
+    "1": 120,
+    "2": 110,
+    "3+": 70
+  },
+  "environment_distribution": {
+    "Calendar": 32,
+    "GoogleTasks": 80,
+    "TradingBot": 68,
+    "UUPaoTui": 68,
+    "Weather": 52
+  },
+  "gold_internal_edges": 710,
+  "inference_protocol": {
+    "environment_reset": "fresh client id and load_scenario",
+    "max_new_tokens": 1024,
+    "max_tool_calls": 8,
+    "max_tool_rounds": 4,
+    "max_turns": 1,
+    "presence_penalty": 0.0,
+    "probe_timeout_seconds": 120,
+    "retry_policy": "no outer retry",
+    "stop_condition": "first no-tool response or four rounds",
+    "temperature": 0.0,
+    "thinking": false,
+    "top_p": 1.0
+  },
+  "internal_parameter_count": 710,
+  "manifest_path": "repro_1p7b/results/graph_frontier/confirm_300/frozen/confirm_300_seed_20260914.jsonl",
+  "manifest_sha256": "4ea5304d6f76294d70166260986767795fa0bf3fcf54b6196ee0c3f71e70f51c",
+  "model_artifacts": {
+    "base": {
+      "config": "config.json",
+      "path": "repro_1p7b/models/Qwen3-1.7B",
+      "safetensors": [
+        "model-00001-of-00002.safetensors",
+        "model-00002-of-00002.safetensors"
+      ],
+      "tokenizer": [
+        "tokenizer.json",
+        "tokenizer_config.json"
+      ]
+    },
+    "original_sft": {
+      "config": "config.json",
+      "path": "repro_1p7b/checkpoints/baseline_sft_8k_1p7b",
+      "safetensors": [
+        "model.safetensors"
+      ],
+      "tokenizer": [
+        "tokenizer.json",
+        "tokenizer_config.json"
+      ]
+    },
+    "parameter_aware": {
+      "config": "config.json",
+      "path": "repro_1p7b/checkpoints/parameter_aware_sft_8k_1p7b",
+      "safetensors": [
+        "model.safetensors"
+      ],
+      "tokenizer": [
+        "tokenizer.json",
+        "tokenizer_config.json"
+      ]
+    }
+  },
+  "rejected": 0,
+  "rejection_reason_counts": {},
+  "schema_version": "graph_frontier_confirm_manifest_summary_v1",
+  "seed": 20260914,
+  "semantic_verifier_support": 300,
+  "split_distribution": {
+    "diagnosis": 240,
+    "heldout": 60
+  },
+  "task_kind_distribution": {
+    "create_create": 13,
+    "create_create_delete": 18,
+    "create_create_lookup": 18,
+    "create_create_update": 18,
+    "create_lookup": 13,
+    "create_update": 14,
+    "create_update_delete": 18,
+    "lookup_action": 27,
+    "lookup_action_lookup": 19,
+    "lookup_action_lookup_action": 35,
+    "lookup_lookup": 53,
+    "lookup_lookup_action": 19,
+    "lookup_lookup_action_lookup": 35
+  },
+  "template_distribution": {
+    "city_alerts": 13,
+    "city_forecast": 13,
+    "city_save": 13,
+    "city_weather": 13,
+    "create_update": 14,
+    "create_update_delete": 18,
+    "estimate_cancel": 35,
+    "estimate_create": 14,
+    "estimate_query": 19,
+    "list_get": 13,
+    "list_task": 13,
+    "quote_order": 19,
+    "quote_order_details": 35,
+    "symbol_info": 14,
+    "task_delete": 18,
+    "task_get": 18,
+    "task_update": 18
+  }
+}

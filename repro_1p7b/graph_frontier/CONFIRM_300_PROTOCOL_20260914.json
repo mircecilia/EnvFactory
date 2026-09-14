@@ -1,0 +1,46 @@
+{
+  "count": 300,
+  "depth_targets": {
+    "1": 120,
+    "2": 110,
+    "3+": 70
+  },
+  "inference": {
+    "environment_reset": "fresh client id and load_scenario",
+    "max_new_tokens": 1024,
+    "max_tool_calls": 8,
+    "max_tool_rounds": 4,
+    "max_turns": 1,
+    "presence_penalty": 0.0,
+    "probe_timeout_seconds": 120,
+    "retry_policy": "no outer retry",
+    "stop_condition": "first no-tool response or four rounds",
+    "temperature": 0.0,
+    "thinking": false,
+    "top_p": 1.0
+  },
+  "models": {
+    "base": "repro_1p7b/models/Qwen3-1.7B",
+    "original_sft": "repro_1p7b/checkpoints/baseline_sft_8k_1p7b",
+    "parameter_aware": "repro_1p7b/checkpoints/parameter_aware_sft_8k_1p7b"
+  },
+  "pool_policy": {
+    "environments": [
+      "Calendar",
+      "GoogleTasks",
+      "TradingBot",
+      "UUPaoTui",
+      "Weather"
+    ],
+    "final_assistant_content_persisted": true,
+    "semantic_grader": "deterministic state, typed observation, and normalized text only",
+    "single_turn": true
+  },
+  "seed": 20260914,
+  "split": {
+    "diagnosis": 240,
+    "heldout": 60,
+    "heldout_semantics": "task-disjoint"
+  },
+  "schema_version": "graph_frontier_confirm_protocol_v1"
+}
