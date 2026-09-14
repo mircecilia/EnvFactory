@@ -37,7 +37,7 @@ tool::<tool_name>
 <tool_name>::output::<parameter_name>
 ```
 
-They never use `id(obj)`, object addresses, or NetworkX node identity. For this internship/project implementation, the selected QueryGen reference trajectory's `final_scenario` may be used as `expected_final_state` only with provenance `selected_querygen_reference_trajectory`. It is an EnvFactory engineering reference state, not an independent oracle. If absent, structural diagnosis remains available while state success is `unknown`.
+They never use `id(obj)`, object addresses, or NetworkX node identity. For this internship/project implementation, the selected QueryGen reference trajectory's `final_scenario` may be used as `expected_final_state` only with provenance `selected_querygen_reference_trajectory`. It is an EnvFactory engineering reference state, not an independent oracle. The canonical sidecar field is `expected_final_state`; `expected_final_scenario` remains a backward-compatible alias. If absent, structural diagnosis remains available while state success is `unknown`.
 
 ### Hook A: generation-time gold export
 

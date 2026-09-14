@@ -140,6 +140,8 @@ class ExportPipelineTests(unittest.TestCase):
         recorder = recorder_for(happy_prefix())
         base = Path(__file__).resolve().parents[1]
         gold_schema = json.loads((base / "GOLD_SIDECAR_SCHEMA.json").read_text(encoding="utf-8"))
+        eligibility_schema = json.loads(
+            (base / "PROBE_ELIGIBILITY_SCHEMA.json").read_text(encoding="utf-8"))
         rollout_schema = json.loads((base / "ROLLOUT_TRACE_SCHEMA.json").read_text(encoding="utf-8"))
         with tempfile.TemporaryDirectory() as directory:
             gold_path = write_gold_sidecar(sidecar, Path(directory) / "task.gold.json")
@@ -147,7 +149,9 @@ class ExportPipelineTests(unittest.TestCase):
             saved_gold = json.loads(gold_path.read_text(encoding="utf-8"))
             saved_rollout = json.loads(rollout_path.read_text(encoding="utf-8"))
         jsonschema.validate(saved_gold, gold_schema)
+        jsonschema.validate(saved_gold["probe_eligibility"], eligibility_schema)
         jsonschema.validate(saved_rollout, rollout_schema)
+        self.assertEqual(saved_gold["expected_final_state"], UNKNOWN)
         self.assertEqual(saved_gold["expected_final_scenario"], UNKNOWN)
         self.assertIn("before ToolQueryNode.save()", saved_gold["provenance"]["metadata_preservation_point"])
         self.assertTrue(all("0x" not in parameter["parameter_id"] for parameter in saved_gold["parameters"]))

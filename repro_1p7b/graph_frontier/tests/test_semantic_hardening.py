@@ -647,12 +647,16 @@ class ProbeEligibilityTests(unittest.TestCase):
             "selected_querygen_reference_trajectory",
         )
         self.assertEqual(
+            sidecar["expected_final_state"], {"done": True}
+        )
+        self.assertEqual(
             sidecar["expected_final_scenario"], {"done": True}
         )
 
     def test_missing_expected_final_state_keeps_structural_eligibility(self):
         sidecar = self._unique_sidecar(trust_final=False)
         report = evaluate_probe_eligibility(sidecar)
+        self.assertEqual(sidecar["expected_final_state"], UNKNOWN)
         self.assertEqual(sidecar["expected_final_scenario"], UNKNOWN)
         self.assertFalse(
             report["checks"]["expected_final_state_available"]

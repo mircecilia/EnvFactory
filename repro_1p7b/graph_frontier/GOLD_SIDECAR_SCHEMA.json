@@ -17,6 +17,7 @@
     "dependency_edges",
     "parameters",
     "initial_scenario",
+    "expected_final_state",
     "expected_final_scenario",
     "provenance",
     "dependency_semantics",
@@ -415,6 +416,7 @@
       }
     },
     "initial_scenario": {},
+    "expected_final_state": {},
     "expected_final_scenario": {},
     "provenance": {
       "type": "object",

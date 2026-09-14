@@ -87,9 +87,13 @@ def sidecar_and_trace_to_bundle(
         )
 
     explicit_verifier = _known_bool(trace.get("verifier_result", UNKNOWN))
+    expected_final_state = sidecar.get(
+        "expected_final_state",
+        sidecar.get("expected_final_scenario", UNKNOWN),
+    )
     canonical_verifier = compare_final_states(
         trace.get("final_environment_state", UNKNOWN),
-        sidecar.get("expected_final_scenario", UNKNOWN),
+        expected_final_state,
     )
     state_success = (
         explicit_verifier
@@ -131,7 +135,7 @@ def sidecar_and_trace_to_bundle(
         "events": events,
         "initial_state": trace.get("initial_environment_state", sidecar.get("initial_scenario", UNKNOWN)),
         "final_state": trace.get("final_environment_state", UNKNOWN),
-        "expected_final_state": sidecar.get("expected_final_scenario", UNKNOWN),
+        "expected_final_state": expected_final_state,
         "adapter_notes": [
             "Joined envfactory_gold_sidecar_v1 with envfactory_rollout_trace_v1.",
             "No success, verifier, response field, or graph field was inferred from human-readable text.",

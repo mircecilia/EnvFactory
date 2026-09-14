@@ -37,7 +37,10 @@ def evaluate_probe_eligibility(sidecar: Mapping[str, Any]) -> Dict[str, Any]:
             sidecar.get("initial_scenario", UNKNOWN)
         ),
         "expected_final_state_available": _available(
-            sidecar.get("expected_final_scenario", UNKNOWN)
+            sidecar.get(
+                "expected_final_state",
+                sidecar.get("expected_final_scenario", UNKNOWN),
+            )
         ),
         "selected_reference_semantics": (
             sidecar.get("dependency_semantics") == "selected_reference"

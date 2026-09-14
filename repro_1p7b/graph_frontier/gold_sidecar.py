@@ -400,6 +400,7 @@ def build_gold_sidecar(
         "alternative_dependency_groups": alternative_dependency_groups,
         "parameters": _tool_parameters(tool_graph, unique_tools),
         "initial_scenario": _json_value(getattr(node, "initial_scenario", None)),
+        "expected_final_state": _json_value(final_scenario),
         "expected_final_scenario": _json_value(final_scenario),
         "expected_final_state_source": expected_final_state_source,
         "provenance": {

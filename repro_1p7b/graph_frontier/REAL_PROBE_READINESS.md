@@ -59,7 +59,7 @@ For this internship/project implementation, the selected QueryGen reference
 trajectory's `final_scenario` may be used as `expected_final_state`, but it
 must be labeled with provenance
 `selected_querygen_reference_trajectory`. It is a reference state under
-EnvFactory's own engineering assumption, not an independent oracle.
+EnvFactory's own engineering assumption, not an independent oracle. The canonical sidecar field is `expected_final_state`; `expected_final_scenario` is retained only as a backward-compatible alias.
 
 The profiler therefore keeps:
 
