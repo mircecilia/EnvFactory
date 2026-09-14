@@ -1,6 +1,6 @@
 # Graph-Frontier CPU Prototype
 
-This directory contains offline infrastructure only. It does not start training, model inference, rollout execution, Ray, vLLM, or GPU work.
+This directory is CPU-only by default. Importing the library does not start training, model inference, rollout execution, Ray, vLLM, or GPU work. The explicit `real_probe_smoke.py` entry point connects to a caller-started SGLang endpoint only when invoked.
 
 ## Components
 
@@ -10,6 +10,8 @@ This directory contains offline infrastructure only. It does not start training,
 - `ROLLOUT_TRACE_SCHEMA.json` / `rollout_trace.py`: typed executor trace recorder and wrappers.
 - `export_pipeline.py`: strict task-ID join from gold sidecar and typed trace to profiler.
 - `EXPORT_PIPELINE.md`: real hook-point audit and integration instructions.
+- `real_probe_smoke.py`: opt-in one-task QueryGen -> sidecar -> typed FastMCP rollout -> profiler acceptance driver.
+- `REAL_PROBE_READINESS.md`: current semantic/runtime gates and real-smoke evidence and limitations.
 - `PROBE_PLAN.md`: frozen 300-task diagnostic pool design; no pool is generated here.
 - `adapters.py`: live `ToolGraph`, QueryGen artifact, and typed-rollout adapters.
 - `profiler.py`: programmatic dependency checks and first-root/downstream attribution.

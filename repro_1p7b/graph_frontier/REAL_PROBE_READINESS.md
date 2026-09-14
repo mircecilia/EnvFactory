@@ -3,11 +3,13 @@
 ## Decision
 
 - **CPU SEMANTICS: READY**
-- **REAL PROBE: NOT READY**
+- **REAL SINGLE-TASK PROBE: READY**
+- **200-500 TASK PROBE POOL: NOT STARTED**
 
-The v1 sidecar, eligibility gates, typed adapters, and profiler semantics are
-covered by CPU tests. Runtime generation/executor wiring and one real executable
-task smoke remain pending. This stage does not authorize those workloads.
+The v1 sidecar, eligibility gates, typed adapters, profiler semantics, production
+wrapper hooks, and one executable single-task smoke are now verified. This does
+not authorize a larger probe pool or turn the smoke result into a model-quality
+claim.
 
 ## CPU semantic readiness
 
@@ -17,13 +19,13 @@ task smoke remain pending. This stage does not authorize those workloads.
 | Every selected dependency resolves | PASS | `dependency_resolution` counts selected/resolved dependencies and records ambiguous or missing graph edges explicitly. |
 | OR alternatives are not treated as AND | PASS | Alternatives remain an `or` group; only the uniquely resolved selected edge is structural gold. |
 | Required user-provided semantics | PASS | `missing_producer` requires both `required is True` and `internal_parameter is True`. |
-| FastMCP typed adapter | PASS | Verified with FastMCP 3.1.0 / MCP 1.30.0 fields `structuredContent`, `isError`, `content`, and `TextContent.text`. |
+| FastMCP typed adapter | PASS | Verified against actual `CallToolResult` fields `structuredContent`, `isError`, `content`, and `TextContent.text`. |
 | Conservative typed matching | PASS | Scalar exact, collection exact or schema-labeled multiset, object structural; ambiguous conversions remain unknown. |
 | Authoritative depth | PASS | Sidecar node/edge depths override fallback; cycles and incomplete dependency resolution produce unknown. |
 | v1 cross-turn rejection | PASS | A selected dependency whose producer and consumer are not in the same turn gets `cross_turn_dependency_not_supported_v1`. |
 | Path adherence versus task success | PASS | A different tool path reaching the same reference final state remains task-successful. |
 | Eligibility checker | PASS | `evaluate_probe_eligibility` and `is_structurally_diagnosable` implement a single acceptance rule. |
-| CPU tests | PASS | See the commit handoff for the exact total. |
+| CPU tests | PASS | 52 tests passed in the project environment before the real smoke. |
 
 A task is structurally diagnosable only when:
 
@@ -37,8 +39,8 @@ raw_tool_call is non-empty
 initial state is available
 ```
 
-A missing expected final state does not fail structural eligibility. It only makes
-state diagnosis unavailable and leaves `state_success` unknown unless the
+A missing expected final state does not fail structural eligibility. It only
+makes state diagnosis unavailable and leaves `state_success` unknown unless the
 runtime supplies a typed verifier result.
 
 ## Graph-Frontier v1 scope
@@ -59,7 +61,9 @@ For this internship/project implementation, the selected QueryGen reference
 trajectory's `final_scenario` may be used as `expected_final_state`, but it
 must be labeled with provenance
 `selected_querygen_reference_trajectory`. It is a reference state under
-EnvFactory's own engineering assumption, not an independent oracle. The canonical sidecar field is `expected_final_state`; `expected_final_scenario` is retained only as a backward-compatible alias.
+EnvFactory's own engineering assumption, not an independent oracle. The
+canonical sidecar field is `expected_final_state`;
+`expected_final_scenario` is retained only as a backward-compatible alias.
 
 The profiler therefore keeps:
 
@@ -72,54 +76,85 @@ A non-reference path that reaches the same canonical reference state may have
 
 ## Runtime readiness
 
-| Gate | Status | Required action |
+| Gate | Status | Evidence |
 |---|---|---|
-| Production QueryGen hook wiring | PENDING | Use `sample_with_dependency_trace` and export before the lossy save boundary. |
-| Production executor hook wiring | PENDING | Observe `Client.call_tool` before MCPManager flattens the result to text. |
-| One executable task smoke | PENDING | Run only after explicit authorization. |
-| 200-500 task pool | BLOCKED | Do not launch until all runtime gates pass. |
+| QueryGen hook wiring | PASS | `ProbeQueryGenNonConv.terminate()` exports through `GenerationSidecarCallback` before delegating to the lossy core save. |
+| Executor hook wiring | PASS | The probe-only wrapper observes `MCPManager._call_tool_async` at the typed `client.call_tool` boundary and restores the original method afterward. |
+| One executable task smoke | PASS | Parameter-Aware checkpoint, one CampusCard dependency, two real MCP calls, schemas and profiler all passed on GPU 1. |
+| 200-500 task pool | PENDING | Do not launch without a separate authorization and a frozen manifest. |
 
-No core patch is required. A probe driver plus `QueryGenNonConv` and
-`MCPManager` subclasses can install both hooks.
+No core patch is required. The reusable smoke driver is
+`real_probe_smoke.py`. Runtime JSON and logs remain outside Git.
 
-## Future one-task smoke acceptance criteria
+## Real smoke evidence (2026-09-14)
 
-Do not execute this smoke in the current stage. When authorized, a dependent
-task must satisfy all of:
+Task `graph-frontier-real-smoke-001` used the gold dependency:
+
+```text
+CampusCard-query_balance.userId
+  -> CampusCard-recharge.userId
+```
+
+Observed typed execution:
+
+```text
+step 0 query_balance(userId="student-001")
+       -> userId="student-001", balance=20.0, currency="CNY"
+
+step 1 recharge(userId="student-001", amount=50, paymentMethod="bank_card")
+       -> success=true, balanceAfter=70.0
+```
+
+Acceptance results:
 
 ```text
 dependency_semantics = selected_reference
-
-selected_dependency_count
-==
-resolved_dependency_count
-
+selected_dependency_count = resolved_dependency_count = 1
 structural_diagnosis_eligible = true
 cross_turn_dependency_count = 0
+typed_value_recovery_rate = 1.0
 typed_execution_status_rate = 1.0
-dependency edge count > 0
+dependency edge status = satisfied
+path_adherence = true
+task_success = true
+max_dependency_depth_reached = 1
+root_cause_failures = []
 ```
 
-Additionally:
+The smoke uses an explicit execution-fixture instruction requiring both target
+calls and exact literal inputs. Therefore it verifies the export/runtime/profile
+pipeline, not autonomous model capability. Earlier unassisted attempts were
+correctly rejected: one hallucinated `user123`; another stopped after
+`query_balance`. Those failures were not relabeled as passes.
 
-- every key dependency has a typed source and typed target value;
-- `state_success` is boolean, or its unknown reason is explicit;
-- there is no unexpected unresolved dependency;
-- the profile exposes `path_adherence`,
-  `structural_root_cause_failures`, `task_success`, and
-  `max_dependency_depth_reached`;
-- no runtime log, checkpoint, credential, or full graph dump is committed.
+## Reproduction outline
+
+Use an idle GPU and a port distinct from ongoing evaluation. Start a local
+OpenAI-compatible SGLang endpoint for the checkpoint, then run:
+
+```bash
+export SGLANG_BASE_URL=http://127.0.0.1:1054/v1
+export SGLANG_API_KEY=graph-frontier-smoke
+export SGLANG_MODEL=repro_1p7b/checkpoints/parameter_aware_sft_8k_1p7b
+
+/home/u2024311031/.conda/envs/envfactory_repro_1p7b/bin/python \
+  -m repro_1p7b.graph_frontier.real_probe_smoke \
+  --output-dir /tmp/envfactory_graph_frontier_real_smoke
+```
+
+For a long-lived launch, put the server and driver in separate tmux sessions.
+Stop only the smoke server after the driver completes; never attach to or stop
+the production evaluation server.
 
 ## Minimal lossless hook points
 
-Gold metadata must be exported before
+Gold metadata is exported before
 `src/gen/query_gen/query_gen_non_conv.py:609` calls
 `context.tool_chain.save(save_path)`.
 
 **generation-time graph metadata must be preserved before ToolQueryNode.save()
 discards raw_tool_call information**
 
-Typed rollout evidence must be captured immediately after
-`Client.call_tool(short_name, args)` at
-`src/manager/mcp_client_manager.py:242/245`, before line 247 joins text
-content.
+Typed rollout evidence is captured immediately around
+`Client.call_tool(short_name, args)` in
+`src/manager/mcp_client_manager.py`, before the result is flattened to text.
