@@ -106,17 +106,29 @@ def quality_audit(sample: Mapping[str, Any]) -> dict[str, Any]:
             )
     seen: set[str] = set()
     repeated = 0
+    consecutive_repeated = 0
+    previous: str | None = None
     signature = []
     for call in calls:
         canonical = json.dumps(call, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         repeated += int(canonical in seen)
+        consecutive_repeated += int(canonical == previous)
         seen.add(canonical)
+        previous = canonical
         signature.append(call["name"])
     return {
-        "eligible": not malformed_example and malformed_calls == 0 and repeated == 0,
+        # A tool may be revisited with the same arguments after intervening work or
+        # an environment mutation.  Only an immediate exact retry is evidence of
+        # the no-progress repetition this gate is intended to exclude.
+        "eligible": (
+            not malformed_example
+            and malformed_calls == 0
+            and consecutive_repeated == 0
+        ),
         "malformed_example": malformed_example,
         "malformed_tool_calls": malformed_calls,
         "repeated_exact_tool_calls": repeated,
+        "consecutive_exact_tool_calls": consecutive_repeated,
         "tool_sequence_signature": " -> ".join(signature) if signature else "no_tool_call",
     }
 
@@ -343,6 +355,21 @@ def priorities(capability: Mapping[str, Any], floor: float) -> dict[str, Any]:
 
 
 def constrain_allocation(requested, total_capacity, unseen_capacity, count, max_overlap, floor_count, priority_rows):
+    if any(total_capacity[b] < floor_count for b in BUCKETS):
+        raise RuntimeError("Insufficient per-bucket capacity for exploration floor")
+    if sum(total_capacity.values()) < count:
+        raise RuntimeError("Insufficient total quality-eligible capacity")
+
+    floor_overlap = sum(max(0, floor_count - unseen_capacity[b]) for b in BUCKETS)
+    unseen_above_floor = sum(max(0, unseen_capacity[b] - floor_count) for b in BUCKETS)
+    remaining_after_floor = count - floor_count * len(BUCKETS)
+    minimum_overlap = floor_overlap + max(0, remaining_after_floor - unseen_above_floor)
+    if minimum_overlap > max_overlap:
+        raise RuntimeError(
+            "Cannot satisfy overlap cap and exploration floor: "
+            f"minimum_overlap={minimum_overlap} max_overlap={max_overlap}"
+        )
+
     allocation = dict(requested)
     while True:
         over = next((b for b in BUCKETS if allocation[b] > total_capacity[b]), None)
@@ -394,7 +421,7 @@ def build_stage2(args: argparse.Namespace) -> None:
         seen_source_hashes.add(digest)
         audit = quality_audit(sample)
         if not audit["eligible"]:
-            rejection["malformed_or_repeated_trace"] += 1
+            rejection["malformed_or_consecutive_repeat_trace"] += 1
             continue
         bucket = bucket_name(feature)
         if bucket != "shallow_general" and int(feature.get("dependent_calls", 0)) <= 0:

@@ -112,11 +112,13 @@ fi
 diag_valid=$("$RUN_PY" -c 'import json,sys; x=json.load(open(sys.argv[1])); print(x.get("valid",0) if x.get("split")=="diagnosis" else 0)' "$diag_summary")
 [[ "$diag_valid" -ge 228 ]] || fail diagnosis_valid_gate 9
 
-if [[ ! -e "$STAGE2" && ! -e "$CAPABILITY" && ! -e "$PLAN" && ! -e "$STATS" && ! -e "$VALIDATION" ]]; then
+if [[ ! -e "$STAGE2" && ! -e "$PLAN" && ! -e "$STATS" && ! -e "$VALIDATION" ]]; then
   set_status BUILDING_STAGE2
-  "$RUN_PY" -m repro_1p7b.graph_frontier.dynamic_v1 capability --manifest "$MANIFEST" \
-    --result-root "$DIAG_ROOT" --label stage1 --output "$CAPABILITY"
-  rc=$?; record_rc capability_map "$rc"; [[ "$rc" -eq 0 ]] || fail capability_map "$rc"
+  if [[ ! -s "$CAPABILITY" ]]; then
+    "$RUN_PY" -m repro_1p7b.graph_frontier.dynamic_v1 capability --manifest "$MANIFEST" \
+      --result-root "$DIAG_ROOT" --label stage1 --output "$CAPABILITY"
+    rc=$?; record_rc capability_map "$rc"; [[ "$rc" -eq 0 ]] || fail capability_map "$rc"
+  fi
   "$RUN_PY" -m repro_1p7b.graph_frontier.dynamic_v1 stage2 \
     --source repro_1p7b/datasets/EnvFactory-SFT-FILTERED/mcp_factory_sft_nips.json \
     --features repro_1p7b/results/parameter_aware/baseline_features.jsonl \

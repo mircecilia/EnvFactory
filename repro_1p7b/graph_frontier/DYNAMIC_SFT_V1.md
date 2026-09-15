@@ -30,8 +30,11 @@ The structural training buckets are `shallow_general`, `depth1_internal`,
 corresponding probe edge, so its propagation need is zero and it uses the global
 diagnosis semantic frontier.  Every bucket receives a 5% exploration floor.
 
-Stage 2 is sampled without replacement by content identity.  Exact duplicate
-tool calls, mismatched tool-call tags, and malformed tool-call JSON are rejected.
+Stage 2 is sampled without replacement by content identity.  Immediately
+consecutive exact tool-call retries, mismatched tool-call tags, and malformed
+tool-call JSON are rejected. A nonconsecutive revisit after intervening work is
+retained because it may observe changed environment state and is not by itself a
+no-progress loop.
 The available flattened SFT metadata cannot recover gold graph edges; therefore
 the training-bucket mapping uses the documented exact scalar-reuse dependency
 proxy, not guessed graph structure. Cross-stage overlap is

@@ -57,12 +57,52 @@ def test_overlap_projection_respects_cap_and_floor():
     assert min(answer.values()) >= 5
 
 
+def test_formal_capacity_regression_respects_all_constraints():
+    requested = dict(zip(dynamic.BUCKETS, (2596, 3802, 5133, 1700)))
+    total = dict(zip(dynamic.BUCKETS, (7656, 6257, 3843, 5784)))
+    unseen = dict(zip(dynamic.BUCKETS, (3790, 3118, 1921, 2908)))
+    priorities = {
+        bucket: {"raw_priority": priority}
+        for bucket, priority in zip(dynamic.BUCKETS, (0.20, 0.29, 0.39, 0.13))
+    }
+    answer = dynamic.constrain_allocation(
+        requested, total, unseen, 13231, 2646, 661, priorities
+    )
+    assert sum(answer.values()) == 13231
+    assert min(answer.values()) >= 661
+    assert all(answer[bucket] <= total[bucket] for bucket in dynamic.BUCKETS)
+    assert sum(max(0, answer[b] - unseen[b]) for b in dynamic.BUCKETS) <= 2646
+
+
+def test_allocator_reports_global_overlap_infeasibility():
+    requested = {bucket: 25 for bucket in dynamic.BUCKETS}
+    total = {bucket: 100 for bucket in dynamic.BUCKETS}
+    unseen = {bucket: 10 for bucket in dynamic.BUCKETS}
+    priorities = {bucket: {"raw_priority": 1.0} for bucket in dynamic.BUCKETS}
+    with pytest.raises(RuntimeError, match="minimum_overlap=60 max_overlap=20"):
+        dynamic.constrain_allocation(
+            requested, total, unseen, 100, 20, 5, priorities
+        )
+
+
 def test_quality_gate_rejects_malformed_and_repeated_calls():
     assert dynamic.quality_audit(sample())["eligible"]
     repeated = sample()
     repeated["output"] += repeated["output"]
     assert not dynamic.quality_audit(repeated)["eligible"]
     assert not dynamic.quality_audit(sample("not-json"))["eligible"]
+
+
+def test_quality_gate_allows_nonconsecutive_tool_revisit():
+    call_a = '{"name":"a","arguments":{"x":"same"}}'
+    call_b = '{"name":"b","arguments":{"y":"progress"}}'
+    revisited = sample(
+        f'{call_a}</tool_call><tool_call>{call_b}</tool_call><tool_call>{call_a}'
+    )
+    audit = dynamic.quality_audit(revisited)
+    assert audit["eligible"]
+    assert audit["repeated_exact_tool_calls"] == 1
+    assert audit["consecutive_exact_tool_calls"] == 0
 
 
 def test_content_identity_is_key_order_stable():
