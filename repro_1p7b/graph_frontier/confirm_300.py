@@ -683,12 +683,30 @@ async def run_one(manifest: Mapping[str, Any], label: str, output: Path) -> dict
     return result
 
 
-async def run(manifest_path: Path, label: str, output: Path) -> dict[str, Any]:
+def select_shard_rows(
+    rows: list[dict[str, Any]], shard_count: int, shard_index: int
+) -> list[dict[str, Any]]:
+    if shard_count < 1:
+        raise ValueError("shard_count_must_be_positive")
+    if not 0 <= shard_index < shard_count:
+        raise ValueError("shard_index_out_of_range")
+    return [row for index, row in enumerate(rows) if index % shard_count == shard_index]
+
+
+async def run(
+    manifest_path: Path,
+    label: str,
+    output: Path,
+    shard_count: int = 1,
+    shard_index: int = 0,
+) -> dict[str, Any]:
     rows = load_jsonl(manifest_path)
     if len(rows) != COUNT:
         raise RuntimeError(f"manifest_count:{len(rows)}")
+    selected_rows = select_shard_rows(rows, shard_count, shard_index)
     output.mkdir(parents=True, exist_ok=True)
-    (output / "run_config.json").write_text(
+    suffix = "" if shard_count == 1 else f".shard{shard_index}"
+    (output / f"run_config{suffix}.json").write_text(
         json.dumps(
             {
                 "model": label,
@@ -696,6 +714,9 @@ async def run(manifest_path: Path, label: str, output: Path) -> dict[str, Any]:
                 "manifest": str(manifest_path),
                 "manifest_sha256": sha256_path(manifest_path),
                 "inference": PROTOCOL,
+                "shard_count": shard_count,
+                "shard_index": shard_index,
+                "selected_count": len(selected_rows),
             },
             indent=2,
             sort_keys=True,
@@ -704,7 +725,7 @@ async def run(manifest_path: Path, label: str, output: Path) -> dict[str, Any]:
     )
     answers = []
     started = time.monotonic()
-    for index, row in enumerate(rows, 1):
+    for index, row in enumerate(selected_rows, 1):
         try:
             result = await run_one(row, label, output)
         except Exception as exc:
@@ -724,7 +745,8 @@ async def run(manifest_path: Path, label: str, output: Path) -> dict[str, Any]:
             task_path.write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
         answers.append(result)
         print(
-            f"CONFIRM_PROGRESS model={label} completed={index}/{COUNT} "
+            f"CONFIRM_PROGRESS model={label} shard={shard_index}/{shard_count} "
+            f"completed={index}/{len(selected_rows)} "
             f"valid={sum(item.get('valid_capability_probe') is True for item in answers)} "
             f"reference={sum(item.get('reference_path_complete_success') is True for item in answers)}",
             flush=True,
@@ -732,6 +754,8 @@ async def run(manifest_path: Path, label: str, output: Path) -> dict[str, Any]:
     summary = {
         "model": label,
         "completed": len(answers),
+        "shard_count": shard_count,
+        "shard_index": shard_index,
         "valid": sum(item.get("valid_capability_probe") is True for item in answers),
         "system_error_counts": dict(Counter(
             item.get("system_status", "unknown")
@@ -743,7 +767,7 @@ async def run(manifest_path: Path, label: str, output: Path) -> dict[str, Any]:
         ),
         "runtime_seconds": time.monotonic() - started,
     }
-    (output / "run_summary.json").write_text(
+    (output / f"run_summary{suffix}.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
     )
     return summary
@@ -792,6 +816,8 @@ def main() -> None:
     )
     run_parser.add_argument("--model", choices=tuple(PATHS), required=True)
     run_parser.add_argument("--output-dir", type=Path, required=True)
+    run_parser.add_argument("--shard-count", type=int, default=1)
+    run_parser.add_argument("--shard-index", type=int, default=0)
     args = parser.parse_args()
     validate_models()
     if args.command == "validate":
@@ -806,7 +832,15 @@ def main() -> None:
         answer = (
             freeze(args.root, args.compact, args.summary)
             if args.command == "freeze"
-            else asyncio.run(run(args.manifest, args.model, args.output_dir))
+            else asyncio.run(
+                run(
+                    args.manifest,
+                    args.model,
+                    args.output_dir,
+                    args.shard_count,
+                    args.shard_index,
+                )
+            )
         )
         print(json.dumps(answer, ensure_ascii=False, indent=2))
     finally:

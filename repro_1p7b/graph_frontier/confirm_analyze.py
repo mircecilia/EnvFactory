@@ -304,6 +304,24 @@ def efficiency_summary(task_rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]
     unexpected = sum(
         row["calls"]["legacy_unexpected_calls"] for row in task_rows
     )
+    outcomes_by_call_count = {}
+    for call_count in sorted(set(call_counts)):
+        bucket = [
+            row for row in task_rows if len(events(row["rollout"])) == call_count
+        ]
+        outcomes_by_call_count[str(call_count)] = {
+            "tasks": len(bucket),
+            "semantic_task_success": rate(
+                sum(row["semantic"]["semantic_success"] for row in bucket), len(bucket)
+            ),
+            "reference_path_complete_success": rate(
+                sum(row["reference_path_complete_success"] for row in bucket),
+                len(bucket),
+            ),
+            "task_level_internal_edge_complete": rate(
+                sum(row["internal_task_complete"] for row in bucket), len(bucket)
+            ),
+        }
     return {
         "total_tool_calls": sum(call_counts),
         "calls_per_task": statistics.mean(call_counts) if call_counts else None,
@@ -336,6 +354,7 @@ def efficiency_summary(task_rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]
         "tool_budget_exhaustion_tasks": sum(
             row["calls"]["hit_tool_budget"] for row in task_rows
         ),
+        "outcomes_by_call_count": outcomes_by_call_count,
     }
 
 
@@ -460,8 +479,24 @@ def build_report(root: Path) -> tuple[dict[str, Any], dict[str, Any]]:
         and models["dynamic_v1"]["conditional_propagation_accuracy"]["raw_rate"]
         > models["parameter_aware"]["conditional_propagation_accuracy"]["raw_rate"]
     )
+    bfcl_better_than_original = BFCL["dynamic_v1"]["overall"] > BFCL["original_sft"]["overall"]
+    efficiency_acceptable = bool(
+        valid_gate
+        and dynamic_available
+        and models["dynamic_v1"]["efficiency"]["redundant_calls_per_task"]
+        <= models["parameter_aware"]["efficiency"]["redundant_calls_per_task"]
+        and models["dynamic_v1"]["efficiency"]["unexpected_calls_per_task"]
+        <= models["parameter_aware"]["efficiency"]["unexpected_calls_per_task"]
+        and models["dynamic_v1"]["efficiency"]["calls_per_task"]
+        <= models["parameter_aware"]["efficiency"]["calls_per_task"]
+    )
     case = (
-        "A" if semantic_preserved and propagation_repaired
+        "A" if (
+            bfcl_better_than_original
+            and semantic_preserved
+            and propagation_repaired
+            and efficiency_acceptable
+        )
         else "B" if propagation_repaired
         else "C" if semantic_preserved
         else "D"
@@ -490,7 +525,17 @@ def build_report(root: Path) -> tuple[dict[str, Any], dict[str, Any]]:
         ),
         "dynamic_semantic_preserved_or_improved_vs_original": semantic_preserved,
         "dynamic_propagation_improved_vs_parameter_aware": propagation_repaired,
+        "dynamic_bfcl_better_than_original": bfcl_better_than_original,
+        "dynamic_efficiency_acceptable_vs_parameter_aware": efficiency_acceptable,
+        "dynamic_extra_execution_judgment": (
+            "mostly_useful_depth_with_some_retry_overhead"
+            if semantic_preserved and propagation_repaired and efficiency_acceptable
+            else "primarily_inefficient_or_inconclusive"
+        ),
         "dynamic_case": case,
+        "recommended_next_step": (
+            "enter_dynamic_v2_before_rl" if case == "A" else "adjust_sampler"
+        ),
     }
     report = {
         "schema_version": "graph_frontier_confirm_capability_v1",

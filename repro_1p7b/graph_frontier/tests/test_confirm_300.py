@@ -3,6 +3,7 @@ from repro_1p7b.graph_frontier.confirm_300 import (
     PATHS,
     TARGET_COUNTS,
     assign_splits,
+    select_shard_rows,
 )
 from repro_1p7b.graph_frontier.confirm_analyze import (
     MODELS,
@@ -40,6 +41,19 @@ def test_split_is_exact_and_deterministic():
     }
 
 
+def test_two_way_shards_are_disjoint_and_complete():
+    rows = [{"task_id": f"task-{index:03d}"} for index in range(300)]
+    left = select_shard_rows(rows, 2, 0)
+    right = select_shard_rows(rows, 2, 1)
+    assert len(left) == len(right) == 150
+    assert {row["task_id"] for row in left}.isdisjoint(
+        row["task_id"] for row in right
+    )
+    assert {row["task_id"] for row in left + right} == {
+        row["task_id"] for row in rows
+    }
+
+
 def test_normalized_text_and_paired_exact_counts():
     assert normalize_text("  AAPL, 150.25  ") == "aapl 150.25"
     result = paired_metric(
@@ -64,6 +78,9 @@ def test_efficiency_summary_uses_discrete_nearest_rank_percentiles():
                     for index in range(call_count)
                 ]
             },
+            "semantic": {"semantic_success": call_count == 10},
+            "reference_path_complete": call_count == 10,
+            "internal_task_complete": call_count == 10,
             "calls": {
                 "legacy_exact_redundant_calls": 1 if call_count == 10 else 0,
                 "legacy_unexpected_calls": 2 if call_count == 10 else 0,
@@ -84,6 +101,8 @@ def test_efficiency_summary_uses_discrete_nearest_rank_percentiles():
     assert summary["p95_calls_per_task"] == 10
     assert summary["max_calls_per_task"] == 10
     assert summary["retry_after_error"] == 1
+    assert summary["outcomes_by_call_count"]["10"]["tasks"] == 1
+    assert summary["outcomes_by_call_count"]["1"]["tasks"] == 1
 
 
 def test_read_only_semantic_requires_typed_observation_and_final_text():
