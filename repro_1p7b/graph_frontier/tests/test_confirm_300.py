@@ -1,9 +1,12 @@
 from repro_1p7b.graph_frontier.confirm_300 import (
     EXPECTED_DEPTH,
+    PATHS,
     TARGET_COUNTS,
     assign_splits,
 )
 from repro_1p7b.graph_frontier.confirm_analyze import (
+    MODELS,
+    efficiency_summary,
     normalize_text,
     paired_metric,
     semantic_verify_with_text,
@@ -16,6 +19,13 @@ def test_target_counts_and_depth_quota():
     for template, count in TARGET_COUNTS.items():
         by_depth[EXPECTED_DEPTH[template]] += count
     assert by_depth == {"1": 120, "2": 110, "3+": 70}
+
+
+def test_dynamic_model_is_analysis_only_path_extension():
+    assert MODELS == ("base", "original_sft", "parameter_aware", "dynamic_v1")
+    assert PATHS["dynamic_v1"].endswith(
+        "checkpoints/graph_frontier_dynamic_v1_8k_1p7b"
+    )
 
 
 def test_split_is_exact_and_deterministic():
@@ -42,6 +52,38 @@ def test_normalized_text_and_paired_exact_counts():
     assert result["ties_both_failure"] == 1
     assert result["effect_size_pp_right_minus_left"] == 0.0
     assert result["exact_two_sided_p"] == 1.0
+
+
+def test_efficiency_summary_uses_discrete_nearest_rank_percentiles():
+    rows = []
+    for call_count in range(1, 11):
+        rows.append({
+            "rollout": {
+                "events": [
+                    {"step_index": index, "tool_name": "Tool-call"}
+                    for index in range(call_count)
+                ]
+            },
+            "calls": {
+                "legacy_exact_redundant_calls": 1 if call_count == 10 else 0,
+                "legacy_unexpected_calls": 2 if call_count == 10 else 0,
+                "repeated_pattern_counts": {
+                    "retry_after_tool_error": 1 if call_count == 10 else 0,
+                    "same_tool_same_args": 1 if call_count == 10 else 0,
+                },
+                "cycle_pattern_counts": {
+                    "repeated_block_cycle": 1 if call_count == 10 else 0,
+                },
+                "hit_tool_budget": call_count == 10,
+            },
+        })
+    summary = efficiency_summary(rows)
+    assert summary["calls_per_task"] == 5.5
+    assert summary["median_calls_per_task"] == 5.5
+    assert summary["p90_calls_per_task"] == 9
+    assert summary["p95_calls_per_task"] == 10
+    assert summary["max_calls_per_task"] == 10
+    assert summary["retry_after_error"] == 1
 
 
 def test_read_only_semantic_requires_typed_observation_and_final_text():

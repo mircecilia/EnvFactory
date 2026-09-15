@@ -4,6 +4,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
+import statistics
 import unicodedata
 from collections import Counter
 from pathlib import Path
@@ -26,6 +28,13 @@ from repro_1p7b.graph_frontier.pilot_reanalysis_v2 import (
 
 ROOT = Path(__file__).resolve().parents[2]
 SEED = 20260914
+MODELS = (*LABELS, "dynamic_v1")
+BFCL = {
+    "base": {"overall": 8.75, "missing_parameter": 8.5},
+    "original_sft": {"overall": 9.75, "missing_parameter": 8.0},
+    "parameter_aware": {"overall": 11.00, "missing_parameter": 15.0},
+    "dynamic_v1": {"overall": 10.38, "missing_parameter": 10.5},
+}
 
 
 def normalize_text(value: Any) -> str:
@@ -278,6 +287,58 @@ def metric_maps(
     }
 
 
+def nearest_rank(values: Sequence[int], percentile: float) -> int | None:
+    """Return a deterministic nearest-rank percentile for discrete call counts."""
+    if not values:
+        return None
+    ordered = sorted(values)
+    index = max(0, math.ceil(percentile * len(ordered)) - 1)
+    return ordered[index]
+
+
+def efficiency_summary(task_rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+    call_counts = [len(events(row["rollout"])) for row in task_rows]
+    redundant = sum(
+        row["calls"]["legacy_exact_redundant_calls"] for row in task_rows
+    )
+    unexpected = sum(
+        row["calls"]["legacy_unexpected_calls"] for row in task_rows
+    )
+    return {
+        "total_tool_calls": sum(call_counts),
+        "calls_per_task": statistics.mean(call_counts) if call_counts else None,
+        "median_calls_per_task": statistics.median(call_counts) if call_counts else None,
+        "p90_calls_per_task": nearest_rank(call_counts, 0.90),
+        "p95_calls_per_task": nearest_rank(call_counts, 0.95),
+        "max_calls_per_task": max(call_counts) if call_counts else None,
+        "redundant_calls": redundant,
+        "redundant_calls_per_task": redundant / len(task_rows) if task_rows else None,
+        "unexpected_calls": unexpected,
+        "unexpected_calls_per_task": unexpected / len(task_rows) if task_rows else None,
+        "retry_after_error": sum(
+            row["calls"]["repeated_pattern_counts"].get(
+                "retry_after_tool_error", 0
+            )
+            for row in task_rows
+        ),
+        "repeated_same_tool_args": sum(
+            row["calls"]["repeated_pattern_counts"].get(
+                "same_tool_same_args", 0
+            )
+            for row in task_rows
+        ),
+        "repeated_block_cycles": sum(
+            row["calls"]["cycle_pattern_counts"].get(
+                "repeated_block_cycle", 0
+            )
+            for row in task_rows
+        ),
+        "tool_budget_exhaustion_tasks": sum(
+            row["calls"]["hit_tool_budget"] for row in task_rows
+        ),
+    }
+
+
 def aggregate(
     task_rows: Mapping[str, Mapping[str, Any]]
 ) -> dict[str, Any]:
@@ -292,27 +353,15 @@ def aggregate(
     model["task_level_internal_edge_complete"] = rate(
         sum(row["internal_task_complete"] for row in values), len(values)
     )
-    total_calls = sum(len(events(row["rollout"])) for row in values)
-    model["efficiency"] = {
-        "total_tool_calls": total_calls,
-        "calls_per_task": total_calls / len(values) if values else None,
-        "redundant_calls": model["call_audit"]["legacy_exact_redundant_calls"],
-        "redundant_calls_per_task": model["redundant_calls_per_task"],
-        "unexpected_calls": model["call_audit"]["legacy_unexpected_calls"],
-        "unexpected_calls_per_task": model["unexpected_calls_per_task"],
-        "retry_after_error": model["call_audit"]["repeated_patterns_nonexclusive"].get(
-            "retry_after_tool_error", 0
-        ),
-        "repeated_same_tool_args": model["call_audit"][
-            "repeated_patterns_nonexclusive"
-        ].get("same_tool_same_args", 0),
-        "repeated_block_cycles": model["call_audit"][
-            "cycle_patterns_nonexclusive"
-        ].get("repeated_block_cycle", 0),
-        "tool_budget_exhaustion_tasks": model["call_audit"]["tool_budget_exceeded"][
-            "tasks"
-        ],
-    }
+    model["efficiency"] = efficiency_summary(values)
+    for depth, bucket in model["depth_breakdown"].items():
+        selected = [
+            row
+            for row in values
+            if ("3+" if row["dependency_depth"] >= 3 else str(row["dependency_depth"]))
+            == depth
+        ]
+        bucket["efficiency"] = efficiency_summary(selected)
     failures = [
         row for row in values
         if row["semantic"]["semantic_verifier_supported"]
@@ -333,13 +382,15 @@ def paired_report(
     split: str | None = None,
 ) -> dict[str, Any]:
     maps = {
-        label: metric_maps(task_maps[label], split=split) for label in LABELS
+        label: metric_maps(task_maps[label], split=split) for label in MODELS
     }
     answer = {}
     for left, right in (
         ("base", "original_sft"),
         ("base", "parameter_aware"),
         ("original_sft", "parameter_aware"),
+        ("original_sft", "dynamic_v1"),
+        ("parameter_aware", "dynamic_v1"),
     ):
         answer[f"{left}_vs_{right}"] = {
             metric: paired_metric(maps[left][metric], maps[right][metric])
@@ -387,15 +438,34 @@ def build_report(root: Path) -> tuple[dict[str, Any], dict[str, Any]]:
     task_maps = {}
     runtime = {}
     models = {}
-    for label in LABELS:
+    for label in MODELS:
         task_maps[label], runtime[label] = task_rows_for_model(root, manifests, label)
         models[label] = aggregate(task_maps[label]) if task_maps[label] else {}
-    valid_gate = all(runtime[label]["valid"] >= 285 for label in LABELS)
+    valid_gate = all(runtime[label]["valid"] >= 285 for label in MODELS)
     paired = paired_report(task_maps) if all(task_maps.values()) else {}
     split_paired = {
         split: paired_report(task_maps, split=split)
         for split in ("diagnosis", "heldout")
     } if all(task_maps.values()) else {}
+    dynamic_available = bool(models["dynamic_v1"])
+    semantic_preserved = bool(
+        valid_gate
+        and dynamic_available
+        and models["dynamic_v1"]["semantic_task_success"]["raw_rate"]
+        >= models["original_sft"]["semantic_task_success"]["raw_rate"]
+    )
+    propagation_repaired = bool(
+        valid_gate
+        and dynamic_available
+        and models["dynamic_v1"]["conditional_propagation_accuracy"]["raw_rate"]
+        > models["parameter_aware"]["conditional_propagation_accuracy"]["raw_rate"]
+    )
+    case = (
+        "A" if semantic_preserved and propagation_repaired
+        else "B" if propagation_repaired
+        else "C" if semantic_preserved
+        else "D"
+    ) if valid_gate else "not_interpretable"
     conclusions = {
         "validity_gate_passed": valid_gate,
         "interpretation_allowed": valid_gate,
@@ -415,9 +485,12 @@ def build_report(root: Path) -> tuple[dict[str, Any], dict[str, Any]]:
             > models["original_sft"]["efficiency"]["redundant_calls_per_task"]
         ),
         "bfcl_context": (
-            "BFCL Missing Parameter Original=8.0%, PA=15.0%; comparison is "
-            "descriptive only and no causal claim is made."
+            "BFCL Missing Parameter Original=8.0%, PA=15.0%, Dynamic v1=10.5%; "
+            "comparison is descriptive only and no causal claim is made."
         ),
+        "dynamic_semantic_preserved_or_improved_vs_original": semantic_preserved,
+        "dynamic_propagation_improved_vs_parameter_aware": propagation_repaired,
+        "dynamic_case": case,
     }
     report = {
         "schema_version": "graph_frontier_confirm_capability_v1",
@@ -428,6 +501,7 @@ def build_report(root: Path) -> tuple[dict[str, Any], dict[str, Any]]:
             "minimum_valid_per_model": 285,
             "passed": valid_gate,
         },
+        "bfcl": BFCL,
         "models": models,
         "paired_statistics": paired,
         "split_paired_statistics": split_paired,
@@ -452,7 +526,7 @@ def build_report(root: Path) -> tuple[dict[str, Any], dict[str, Any]]:
                     "alternative_valid_path", {}
                 ),
             }
-            for label in LABELS
+            for label in MODELS
         },
     }
     return report, failures
@@ -471,7 +545,7 @@ def render_markdown(report: Mapping[str, Any]) -> str:
     manifest = report["manifest"]
     models = report["models"]
     lines = [
-        "# Graph-Frontier 300-Probe Confirmation Study",
+        "# Dynamic Graph-Frontier v1: Frozen 300-Probe Comparison",
         "",
         "## Manifest",
         "",
@@ -489,7 +563,7 @@ def render_markdown(report: Mapping[str, Any]) -> str:
         "| Model | Completed | Valid | Runtime seconds | System errors |",
         "|---|---:|---:|---:|---|",
     ]
-    for label in LABELS:
+    for label in MODELS:
         runtime = report["runtime"][label]
         lines.append(
             f"| {label} | {runtime['completed']} | {runtime['valid']} | "
@@ -499,17 +573,20 @@ def render_markdown(report: Mapping[str, Any]) -> str:
         "",
         "## Core metrics",
         "",
-        "| Model | Semantic | Reference path | Internal reach | Conditional propagation | Internal end-to-end | Redundant/task | Unexpected/task |",
-        "|---|---:|---:|---:|---:|---:|---:|---:|",
+        "| Model | BFCL | BFCL miss param | Semantic | Reference path | Internal reach | Conditional propagation | Internal end-to-end | Calls/task | Redundant/task | Unexpected/task |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
-    for label in LABELS:
+    for label in MODELS:
         model = models[label]
         lines.append(
-            f"| {label} | {fmt(model['semantic_task_success'])} | "
+            f"| {label} | {report['bfcl'][label]['overall']:.2f}% | "
+            f"{report['bfcl'][label]['missing_parameter']:.1f}% | "
+            f"{fmt(model['semantic_task_success'])} | "
             f"{fmt(model['reference_path_complete_success'])} | "
             f"{fmt(model['internal_reach'])} | "
             f"{fmt(model['conditional_propagation_accuracy'])} | "
             f"{fmt(model['internal_end_to_end'])} | "
+            f"{model['efficiency']['calls_per_task']:.2f} | "
             f"{model['efficiency']['redundant_calls_per_task']:.2f} | "
             f"{model['efficiency']['unexpected_calls_per_task']:.2f} |"
         )
@@ -518,38 +595,71 @@ def render_markdown(report: Mapping[str, Any]) -> str:
         lines += [
             f"### Depth {depth}",
             "",
-            "| Model | Semantic | Reach | Conditional | End-to-end | Redundant/task | Unexpected/task |",
-            "|---|---:|---:|---:|---:|---:|---:|",
+            "| Model | Semantic | Reach | Conditional | End-to-end | Calls/task | Redundant/task | Unexpected/task |",
+            "|---|---:|---:|---:|---:|---:|---:|---:|",
         ]
-        for label in LABELS:
+        for label in MODELS:
             bucket = models[label]["depth_breakdown"][depth]
             lines.append(
                 f"| {label} | {fmt(bucket['semantic_task_success'])} | "
                 f"{fmt(bucket['internal_reach'])} | "
                 f"{fmt(bucket['conditional_propagation_accuracy'])} | "
                 f"{fmt(bucket['internal_end_to_end'])} | "
+                f"{bucket['efficiency']['calls_per_task']:.2f} | "
                 f"{bucket['redundant_calls_per_task']:.2f} | "
                 f"{bucket['unexpected_calls_per_task']:.2f} |"
             )
         lines.append("")
-    lines += ["## Paired Original vs PA", ""]
-    paired = report["paired_statistics"]["original_sft_vs_parameter_aware"]
-    for name, metric in paired.items():
-        lines.append(
-            f"- {name}: PA wins={metric['right_wins']}, losses={metric['right_losses']}, "
-            f"effect={metric['effect_size_pp_right_minus_left']:.2f}pp, "
-            f"exact p={metric['exact_two_sided_p']:.6g}"
-        )
+    lines += ["## Dynamic paired statistics", ""]
+    for comparison, right_name in (
+        ("original_sft_vs_dynamic_v1", "Dynamic"),
+        ("parameter_aware_vs_dynamic_v1", "Dynamic"),
+    ):
+        lines.append(f"### {comparison}")
+        lines.append("")
+        for name, metric in report["paired_statistics"][comparison].items():
+            lines.append(
+                f"- {name}: {right_name}-only wins={metric['right_wins']}, "
+                f"comparator-only wins={metric['right_losses']}, "
+                f"ties={metric['ties_both_success'] + metric['ties_both_failure']}, "
+                f"effect={metric['effect_size_pp_right_minus_left']:.2f}pp, "
+                f"exact p={metric['exact_two_sided_p']:.6g}"
+            )
+        lines.append("")
     lines += ["", "## Diagnosis vs held-out", ""]
     for split in ("diagnosis", "heldout"):
-        metric = report["split_paired_statistics"][split][
-            "original_sft_vs_parameter_aware"
-        ]["semantic_task_success"]
-        lines.append(
-            f"- {split}: PA wins={metric['right_wins']}, losses={metric['right_losses']}, "
-            f"effect={metric['effect_size_pp_right_minus_left']:.2f}pp, "
-            f"exact p={metric['exact_two_sided_p']:.6g}"
-        )
+        for comparison in (
+            "original_sft_vs_dynamic_v1",
+            "parameter_aware_vs_dynamic_v1",
+        ):
+            for metric_name in (
+                "semantic_task_success",
+                "task_level_internal_edge_complete",
+            ):
+                metric = report["split_paired_statistics"][split][comparison][
+                    metric_name
+                ]
+                lines.append(
+                    f"- {split} {comparison} {metric_name}: "
+                    f"Dynamic-only={metric['right_wins']}, comparator-only={metric['right_losses']}, "
+                    f"effect={metric['effect_size_pp_right_minus_left']:.2f}pp, "
+                    f"exact p={metric['exact_two_sided_p']:.6g}"
+                )
+    lines += ["", "## Dynamic failure and efficiency", ""]
+    dynamic = models["dynamic_v1"]
+    lines += [
+        f"- Root failure attribution: {dynamic['root_failure_attribution']}",
+        f"- Call-count distribution: mean={dynamic['efficiency']['calls_per_task']:.2f}, "
+        f"median={dynamic['efficiency']['median_calls_per_task']}, "
+        f"p90={dynamic['efficiency']['p90_calls_per_task']}, "
+        f"p95={dynamic['efficiency']['p95_calls_per_task']}, "
+        f"max={dynamic['efficiency']['max_calls_per_task']}",
+        f"- Repeated/retry: same-tool-same-args={dynamic['efficiency']['repeated_same_tool_args']}, "
+        f"retry-after-error={dynamic['efficiency']['retry_after_error']}, "
+        f"repeated-block-cycle={dynamic['efficiency']['repeated_block_cycles']}, "
+        f"tool-budget-exhaustion-tasks={dynamic['efficiency']['tool_budget_exhaustion_tasks']}",
+        f"- Internal dependency funnel: {dynamic['internal_dependency_funnel']}",
+    ]
     lines += [
         "",
         "## Conclusions",
@@ -578,9 +688,9 @@ def main() -> None:
     args = parser.parse_args()
     report, failures = build_report(args.root)
     args.reports.mkdir(parents=True, exist_ok=True)
-    json_path = args.reports / "confirm_300_capability_comparison.json"
-    markdown_path = args.reports / "confirm_300_capability_comparison.md"
-    failure_path = args.reports / "confirm_300_failure_patterns.json"
+    json_path = args.reports / "confirm_300_dynamic_v1_comparison.json"
+    markdown_path = args.reports / "confirm_300_dynamic_v1_comparison.md"
+    failure_path = args.reports / "confirm_300_dynamic_v1_failure_patterns.json"
     json_path.write_text(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
     markdown_path.write_text(render_markdown(report))
     failure_path.write_text(

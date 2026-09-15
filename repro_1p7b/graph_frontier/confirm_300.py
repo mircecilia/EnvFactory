@@ -37,6 +37,7 @@ PATHS = {
     "base": "repro_1p7b/models/Qwen3-1.7B",
     "original_sft": "repro_1p7b/checkpoints/baseline_sft_8k_1p7b",
     "parameter_aware": "repro_1p7b/checkpoints/parameter_aware_sft_8k_1p7b",
+    "dynamic_v1": "repro_1p7b/checkpoints/graph_frontier_dynamic_v1_8k_1p7b",
 }
 PROTOCOL = {
     "temperature": 0.0, "top_p": 1.0, "presence_penalty": 0.0,
