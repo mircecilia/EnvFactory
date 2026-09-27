@@ -5,9 +5,9 @@ ROOT=/home/u2024311031/workspace/envfactory_repro_1p7b
 ENV=/home/u2024311031/.conda/envs/envfactory_sglang_1p7b
 RUN=$ROOT/repro_1p7b/graph_frontier/recursive_opd_v2_run
 CYCLE=${1:-0}
-[[ $CYCLE = 0 || $CYCLE = 1 ]] || { echo 'only V2 cycles 0 and 1 may smoke' >&2; exit 2; }
+[[ $CYCLE =~ ^[0-3]$ ]] || { echo 'only V2 cycles 0 through 3 may smoke' >&2; exit 2; }
 TAG=
-if [[ $CYCLE = 1 ]]; then TAG=cycle1_; fi
+if [[ $CYCLE != 0 ]]; then TAG=cycle${CYCLE}_; fi
 cd "$ROOT"
 mkdir -p "$RUN/gpu_smoke"
 exec 9>"$RUN/gpu_smoke/.${TAG}lock"

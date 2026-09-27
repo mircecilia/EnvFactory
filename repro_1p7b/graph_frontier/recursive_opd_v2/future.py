@@ -30,8 +30,8 @@ from repro_1p7b.graph_frontier.recursive_opd_v2.prepare import (
 
 
 def previous_v2(cycle: int, model: Path) -> dict:
-    if cycle not in (1, 2, 3):
-        raise ValueError("future V2 policy cycle must be 1..3")
+    if cycle not in (1, 2, 3, 4):
+        raise ValueError("future V2 policy cycle must be 1..4")
     checkpoint = RUN / f"cycle{cycle}/checkpoint"
     state = json.loads((checkpoint / "trainer_state.json").read_text())
     if (model.resolve() != checkpoint.resolve()
@@ -150,8 +150,8 @@ def mine_build(cycle: int) -> dict:
     """
     from transformers import AutoTokenizer
 
-    if cycle not in (1, 2):
-        raise ValueError("this experiment mines only V2 D1 and D2")
+    if cycle not in (1, 2, 3, 4):
+        raise ValueError("this experiment mines only V2 D1 through D4")
 
     manifest, manifest_sha = checked_manifest(cycle)
     repaired_path = RUN / f"cycle{cycle}/rollout_integrity_repaired.json"
@@ -237,6 +237,7 @@ def mine_build(cycle: int) -> dict:
         if len(records) % 100 == 0:
             print(stable({"cycle": cycle, "mined": len(records), "total": len(task_ids)}), flush=True)
     train, heldout = set(protocol["train_task_ids"]), set(protocol["heldout_task_ids"])
+    skipped_ids = set(repaired.get("skipped_student_error_task_ids", [])) if repaired else set()
     if (len(records) != 2158 or len({r["task_id"] for r in records}) != 2158
             or len({r["task_id"] for r in encoded}) != len(encoded)
             or len({r["task_id"] for r in overflow}) != len(overflow)
@@ -245,6 +246,10 @@ def mine_build(cycle: int) -> dict:
             or {r["query_hash"] for r in records if r["pool"] == "train"}
                & {r["query_hash"] for r in records if r["pool"] == "heldout"}):
         raise RuntimeError("future V2 task/split/unique/query gate failed")
+    if (len(skipped_ids) != (repaired["student_error_count"] if repaired else 0)
+            or any(r["status"] != "UNCERTAIN" for r in records if r["task_id"] in skipped_ids)
+            or any(r["task_id"] in skipped_ids for r in encoded + overflow)):
+        raise RuntimeError("isolated student-error skips entered V2 training data")
     metrics_dir = RUN / f"cycle{cycle}/metrics"
     dataset_dir = RUN / f"cycle{cycle}/dataset"
     metrics_dir.mkdir(parents=True)
@@ -269,6 +274,8 @@ def mine_build(cycle: int) -> dict:
              "max_train_context": LIMIT,
              "collection_context_overflow_count":
                  repaired["student_context_overflow_count"] if repaired else 0,
+             "collection_skipped_student_error_count": len(skipped_ids),
+             "collection_skipped_student_error_task_ids": sorted(skipped_ids),
              "collection_integrity_sha256": sha256(repaired_path) if repaired else
                  sha256(RUN / f"cycle{cycle}/rollout_integrity.json"),
              "source_model_sha256": manifest["model_sha256"],

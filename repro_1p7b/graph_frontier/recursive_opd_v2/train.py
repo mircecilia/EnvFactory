@@ -25,7 +25,7 @@ def validate_context_manifest(manifest: dict, rows: list[dict], *, cycle: int) -
     from repro_1p7b.graph_frontier.recursive_opd_v2.context_forensics import LIMIT, account_context
 
     overflow = manifest.get("context_overflow_records")
-    if (cycle not in (0, 1, 2)
+    if (cycle not in (0, 1, 2, 3)
             or manifest.get("schema_version") != "recursive_opd_v2_context_accounted_1"
             or manifest.get("max_train_context") != LIMIT
             or not isinstance(overflow, list)
@@ -52,7 +52,7 @@ def load_plan(*, cycle: int, dataset: Path, model: Path, output: Path,
               steps: int, learning_rate: float, seed: int, exposure_budget: int) -> tuple[list[dict], list[int], dict]:
     """Pure CPU preflight. Any missing, unapproved, or V1-lineage input fails."""
     protocol = check()
-    if (cycle not in (0, 1, 2) or steps < 1 or learning_rate <= 0 or seed < 0
+    if (cycle not in (0, 1, 2, 3) or steps < 1 or learning_rate <= 0 or seed < 0
             or exposure_budget != 2 * steps):
         raise RuntimeError("explicit valid cycle/steps/LR/seed/exposure_budget=2*steps required")
     if output.exists() or V1_RUN.resolve() in output.resolve().parents or RUN.resolve() not in output.resolve().parents:

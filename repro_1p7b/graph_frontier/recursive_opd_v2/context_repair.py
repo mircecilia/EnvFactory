@@ -31,6 +31,8 @@ from repro_1p7b.graph_frontier.recursive_opd_v1.rollout import parse_calls
 from repro_1p7b.graph_frontier.recursive_opd_v2.future import checked_manifest, gold_for
 from repro_1p7b.graph_frontier.recursive_opd_v2.prepare import RUN
 
+MAX_ISOLATED_STUDENT_ERROR_SKIPS = 21  # <1% of the fixed 2158-task reservoir.
+
 
 def context_rejection(error: requests.HTTPError) -> dict | None:
     """Accept only SGLang's explicit context-length HTTP 400, not arbitrary 400s."""
@@ -140,21 +142,26 @@ async def collect_with_context_boundary(entry: dict, row: dict, model_name: str,
 
 
 def original_errors(cycle: int) -> tuple[dict, Path]:
+    if cycle not in (1, 2, 3, 4):
+        raise ValueError("only V2 policy cycles 1 through 4 may be repaired")
     path = RUN / f"cycle{cycle}/rollout_integrity.json"
     value = json.loads(path.read_text())
     if (value.get("status") != "ROLLOUT_COMPLETE" or value.get("cycle") != cycle
-            or value.get("task_count") != 2158 or value.get("student_error_count") != 10
-            or len(set(value.get("student_error_task_ids", []))) != 10):
+            or value.get("task_count") != 2158
+            or not isinstance(value.get("student_error_count"), int)
+            or value["student_error_count"] < 1
+            or value["student_error_count"] != len(value.get("student_error_task_ids", []))
+            or len(set(value["student_error_task_ids"])) != value["student_error_count"]):
         raise RuntimeError("unexpected immutable original integrity report")
     return value, path
 
 
 def repair_one(cycle: int, task: str, endpoint: str) -> dict:
-    if cycle != 1:
-        raise ValueError("this repair applies only to the observed V2 pi1 batch")
+    if cycle not in (1, 2, 3, 4):
+        raise ValueError("only V2 policy cycles 1 through 4 may be repaired")
     original, original_path = original_errors(cycle)
     if task not in original["student_error_task_ids"]:
-        raise RuntimeError("task not listed among the ten immutable failures")
+        raise RuntimeError("task not listed among immutable rollout failures")
     manifest, manifest_sha = checked_manifest(cycle)
     base = RUN / f"cycle{cycle}"
     path = base / "rollouts" / f"{task}.json"
@@ -209,17 +216,26 @@ def repaired_integrity(cycle: int, *, write: bool) -> dict:
     original_ids = set(original["student_error_task_ids"])
     if len(task_ids) != 2158:
         raise RuntimeError("task plan drift")
-    overflow_ids, archive_hashes = [], {}
+    overflow_ids, archive_hashes, skipped_ids, repaired_ids = [], {}, [], []
     for task in task_ids:
         path = base / "rollouts" / f"{task}.json"
         episode = json.loads(path.read_text())
         student = episode.get("student") or {}
         if (episode.get("task_id") != task or episode.get("cycle") != cycle
                 or episode.get("model_sha256") != manifest["model_sha256"]
-                or episode.get("manifest_sha256") != manifest_sha
-                or episode.get("student_error") is not None
-                or student.get("status") not in {"ROLLOUT_COMPLETE", "ROLLOUT_CONTEXT_OVERFLOW"}):
+                or episode.get("manifest_sha256") != manifest_sha):
             raise RuntimeError(f"unrepaired or drifted episode:{task}")
+        if episode.get("student_error") is not None:
+            error = episode["student_error"]
+            if (task not in original_ids or episode.get("student") is not None
+                    or episode.get("repair") or not isinstance(error, dict)
+                    or not isinstance(error.get("type"), str)
+                    or not isinstance(error.get("message"), str)):
+                raise RuntimeError(f"invalid isolated student-error skip:{task}")
+            skipped_ids.append(task)
+            continue
+        if student.get("status") not in {"ROLLOUT_COMPLETE", "ROLLOUT_CONTEXT_OVERFLOW"}:
+            raise RuntimeError(f"invalid repaired student trajectory:{task}")
         if task in original_ids:
             archived = base / "failed_original" / f"{task}.json"
             repair = episode.get("repair") or {}
@@ -229,6 +245,7 @@ def repaired_integrity(cycle: int, *, write: bool) -> dict:
                     or (json.loads(archived.read_text()).get("student_error") or {}).get("type") != "HTTPError"):
                 raise RuntimeError(f"failed original archival proof:{task}")
             archive_hashes[task] = sha256(archived)
+            repaired_ids.append(task)
         elif episode.get("repair"):
             raise RuntimeError(f"unlisted task unexpectedly repaired:{task}")
         if student["status"] == "ROLLOUT_CONTEXT_OVERFLOW":
@@ -239,16 +256,21 @@ def repaired_integrity(cycle: int, *, write: bool) -> dict:
                     or "context length" not in proof.get("server_message", "").lower()):
                 raise RuntimeError(f"invalid typed context boundary:{task}")
             overflow_ids.append(task)
+    if len(skipped_ids) > MAX_ISOLATED_STUDENT_ERROR_SKIPS:
+        raise RuntimeError("systemic student-error count exceeds bounded skip gate")
     value = {"status": "ROLLOUT_COMPLETE", "schema_version": "v2_repaired_context_integrity_1",
-             "cycle": cycle, "task_count": len(task_ids), "student_error_count": 0,
+             "cycle": cycle, "task_count": len(task_ids), "student_error_count": len(skipped_ids),
              "student_context_overflow_count": len(overflow_ids),
              "student_context_overflow_task_ids": overflow_ids,
-             "repaired_task_ids": sorted(original_ids),
+             "repaired_task_ids": sorted(repaired_ids),
              "original_error_archive_sha256": archive_hashes,
              "original_rollout_integrity_sha256": sha256(original_path),
              "rollout_manifest_sha256": manifest_sha,
              "model_sha256": manifest["model_sha256"],
              "gpu_experiment_base_sha": manifest["gpu_experiment_base_sha"]}
+    if skipped_ids:
+        value["skipped_student_error_task_ids"] = skipped_ids
+        value["skip_policy"] = "ISOLATED_UNCERTAIN_ONLY_MAX_21_OF_2158"
     path = base / "rollout_integrity_repaired.json"
     if path.exists():
         if json.loads(path.read_text()) != value:

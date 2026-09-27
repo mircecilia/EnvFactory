@@ -5,12 +5,12 @@ ROOT=/home/u2024311031/workspace/envfactory_repro_1p7b
 ENV=/home/u2024311031/.conda/envs/envfactory_sglang_1p7b
 RUN=$ROOT/repro_1p7b/graph_frontier/recursive_opd_v2_run
 BASE=$ROOT/repro_1p7b/checkpoints/graph_frontier_dynamic_v1_8k_1p7b
-CYCLE=${1:?cycle 0 or 1 required}
-[[ $CYCLE = 0 || $CYCLE = 1 ]] || { echo 'only V2 cycles 0 and 1 may train' >&2; exit 2; }
+CYCLE=${1:?cycle 0..3 required}
+[[ $CYCLE =~ ^[0-3]$ ]] || { echo 'only V2 cycles 0 through 3 may train' >&2; exit 2; }
 NEXT=$((CYCLE + 1))
 MODEL=$BASE
 DATA=$RUN/d0_context16k_v2
-if [[ $CYCLE = 1 ]]; then MODEL=$RUN/cycle1/checkpoint; DATA=$RUN/cycle1/dataset; fi
+if [[ $CYCLE != 0 ]]; then MODEL=$RUN/cycle$CYCLE/checkpoint; DATA=$RUN/cycle$CYCLE/dataset; fi
 OUTPUT=$RUN/cycle$NEXT/checkpoint
 cd "$ROOT"
 mkdir -p "$RUN/cycle$CYCLE"
@@ -34,7 +34,7 @@ rows, order, plan = load_plan(cycle=cycle, dataset=data, model=model, output=out
                               exposure_budget=128)
 if len(order) != 128 or plan['unique_exposed_tasks'] != 128:
     raise SystemExit('natural 128-unique exposure gate failed')
-smoke_name = 'longest_ddp.json' if cycle == 0 else 'cycle1_longest_ddp.json'
+smoke_name = 'longest_ddp.json' if cycle == 0 else f'cycle{cycle}_longest_ddp.json'
 smoke = json.loads((output.parents[1] / 'gpu_smoke' / smoke_name).read_text())
 if (smoke['status'] != 'PASS' or smoke['dataset_sha256'] != plan['dataset_sha256']
         or smoke['model_sha256'] != plan['initialization_sha256']

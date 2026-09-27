@@ -118,8 +118,15 @@ def natural_stats(rows: list[dict], cycle: int) -> dict:
 def checked_prefix(record: dict, episode: dict) -> list[dict]:
     """Require the exact pre-decision student history, never a static gold path."""
     student, gold = episode["student"], episode["gold"]
-    if not student or student.get("status") != "ROLLOUT_COMPLETE" or not student.get("steps"):
+    if not student or student.get("status") not in {
+            "ROLLOUT_COMPLETE", "ROLLOUT_CONTEXT_OVERFLOW"} or not student.get("steps"):
         raise RuntimeError("student trajectory absent")
+    if student["status"] == "ROLLOUT_CONTEXT_OVERFLOW":
+        boundary = student.get("context_overflow") or {}
+        if (record["status"] != "FIRST_ERROR"
+                or student.get("termination_reason") != "CONTEXT_OVERFLOW"
+                or boundary.get("step_index") != len(student["steps"])):
+            raise RuntimeError("context-boundary rollout has no earlier verified first error")
     if record["status"] == "SUCCESS":
         step = student["steps"][-1]
         if (record["frontier_depth"] != len(gold["actions"])

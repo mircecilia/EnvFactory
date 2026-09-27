@@ -4,8 +4,8 @@ set -euo pipefail
 ROOT=/home/u2024311031/workspace/envfactory_repro_1p7b
 ENV=/home/u2024311031/.conda/envs/envfactory_sglang_1p7b
 RUN=$ROOT/repro_1p7b/graph_frontier/recursive_opd_v2_run
-CYCLE=${1:?fresh V2 policy cycle 1 or 2 required}
-[[ $CYCLE = 1 || $CYCLE = 2 ]] || { echo 'only D1 or D2 may be mined' >&2; exit 2; }
+CYCLE=${1:?fresh V2 policy cycle 1..4 required}
+[[ $CYCLE =~ ^[1-4]$ ]] || { echo 'only D1 through D4 may be mined' >&2; exit 2; }
 cd "$ROOT"
 LOG=$RUN/cycle$CYCLE
 exec 9>"$LOG/.mine.lock"
@@ -32,11 +32,17 @@ fi
 import json, sys
 from pathlib import Path
 value = json.loads(Path(sys.argv[1]).read_text())
+skipped = value.get('skipped_student_error_task_ids', [])
 if (value.get('status') != 'ROLLOUT_COMPLETE' or value.get('task_count') != 2158
         or value.get('cycle') != int(sys.argv[2])
-        or value.get('student_error_count') != 0):
+        or not isinstance(value.get('student_error_count'), int)
+        or value['student_error_count'] < 0
+        or value['student_error_count'] > 21
+        or value['student_error_count'] != len(skipped)
+        or len(set(skipped)) != len(skipped)):
     raise SystemExit('incomplete V2 rollout cannot become official Dk')
-print('full rollout integrity PASS', value['task_count'], flush=True)
+print('full rollout identity PASS', value['task_count'],
+      'isolated UNCERTAIN skips', len(skipped), flush=True)
 PY
 printf 'MINING\n' > "$LOG/status"
 if "$ENV/bin/python" -m repro_1p7b.graph_frontier.recursive_opd_v2.future \

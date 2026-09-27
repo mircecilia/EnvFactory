@@ -172,6 +172,24 @@ def test_context_boundary_after_gold_prefix_is_uncertain_not_terminal_success():
     assert verdict["status"] == "UNCERTAIN"
 
 
+def test_context_boundary_preserves_only_pre_boundary_first_error():
+    episode, record, _ = fixture()
+    episode["student"].update(
+        status="ROLLOUT_CONTEXT_OVERFLOW", termination_reason="CONTEXT_OVERFLOW",
+        context_overflow={"step_index": len(episode["student"]["steps"])})
+    record.update(status="FIRST_ERROR", error_regime="START", student_step=0,
+                  frontier_depth=0, gold_next_action=episode["gold"]["actions"][0],
+                  prompt_messages=episode["student"]["messages"][:1])
+    assert prepare.checked_prefix(record, episode) == episode["student"]["messages"][:1]
+    record["status"] = "SUCCESS"
+    with pytest.raises(RuntimeError, match="earlier verified first error"):
+        prepare.checked_prefix(record, episode)
+    record["status"] = "FIRST_ERROR"
+    episode["student"]["context_overflow"]["step_index"] = 0
+    with pytest.raises(RuntimeError, match="earlier verified first error"):
+        prepare.checked_prefix(record, episode)
+
+
 def test_v1_later_policy_fails_closed(monkeypatch):
     monkeypatch.setattr(prepare, "sha256", lambda _: "protocol_hash")
     protocol = {"pi0_model_sha256": "pi0", "pi0_model": "/tmp/pi0"}
@@ -274,6 +292,28 @@ def test_non_overflow_dataset_at_exact_limit_passes():
     manifest.update(semantic_eligible_count=1, context_overflow_count=0,
                     context_overflow_records=[])
     assert validate_context_manifest(manifest, rows, cycle=0) == 0
+
+
+def test_later_recursive_cycle_keeps_identical_context_gate():
+    manifest, rows = context_fixture()
+    assert validate_context_manifest(manifest, rows, cycle=3) == 1
+
+
+def test_context_repair_accepts_variable_failed_count_only_with_unique_ids(tmp_path, monkeypatch):
+    from repro_1p7b.graph_frontier.recursive_opd_v2 import context_repair
+
+    monkeypatch.setattr(context_repair, "RUN", tmp_path)
+    root = tmp_path / "cycle4"
+    root.mkdir()
+    original = {"status": "ROLLOUT_COMPLETE", "cycle": 4, "task_count": 2158,
+                "student_error_count": 2, "student_error_task_ids": ["a", "b"]}
+    path = root / "rollout_integrity.json"
+    path.write_text(json.dumps(original))
+    assert context_repair.original_errors(4)[0]["student_error_count"] == 2
+    original["student_error_task_ids"] = ["a", "a"]
+    path.write_text(json.dumps(original))
+    with pytest.raises(RuntimeError, match="immutable original integrity"):
+        context_repair.original_errors(4)
 
 
 def test_internal_comparison_counts_terminal_vs_premature_stop():

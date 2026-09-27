@@ -14,8 +14,8 @@ from repro_1p7b.graph_frontier.recursive_opd_v2.prepare import RUN
 
 
 def validate(cycle: int) -> dict:
-    if cycle not in (0, 1):
-        raise ValueError("only V2 training cycles 0 and 1 are in scope")
+    if cycle not in (0, 1, 2, 3):
+        raise ValueError("only V2 training cycles 0 through 3 are in scope")
     checkpoint = RUN / f"cycle{cycle + 1}/checkpoint"
     plan_path = RUN / f"cycle{cycle + 1}/checkpoint_train_manifest/plan.json"
     metrics_path = plan_path.parent / "training_metrics.jsonl"

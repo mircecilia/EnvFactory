@@ -18,10 +18,10 @@ def run(cycle: int = 0) -> None:
     from transformers import AutoModelForCausalLM
 
     rank, local, world = (int(os.environ[name]) for name in ("RANK", "LOCAL_RANK", "WORLD_SIZE"))
-    if cycle not in (0, 1) or world != 2 or local not in (0, 1) or torch.cuda.device_count() != 2:
+    if cycle not in (0, 1, 2, 3) or world != 2 or local not in (0, 1) or torch.cuda.device_count() != 2:
         raise RuntimeError("V2 smoke requires exactly two GPUs and two ranks")
-    model_path = MODEL if cycle == 0 else RUN / "cycle1/checkpoint"
-    dataset_path = RUN / "d0_context16k_v2" if cycle == 0 else RUN / "cycle1/dataset"
+    model_path = MODEL if cycle == 0 else RUN / f"cycle{cycle}/checkpoint"
+    dataset_path = RUN / "d0_context16k_v2" if cycle == 0 else RUN / f"cycle{cycle}/dataset"
     output_path = RUN / f"cycle{cycle + 1}/checkpoint"
     seed = 20260927 + cycle
     rows, _, plan = load_plan(
@@ -74,7 +74,7 @@ def run(cycle: int = 0) -> None:
                   "per_rank_grad_norm": [item[1].item() for item in gathered],
                   "per_rank_peak_allocated_mib": [item[2].item() for item in gathered]}
         output = RUN / "gpu_smoke" / (
-            "longest_ddp.json" if cycle == 0 else "cycle1_longest_ddp.json")
+            "longest_ddp.json" if cycle == 0 else f"cycle{cycle}_longest_ddp.json")
         if output.exists():
             raise RuntimeError("refusing to overwrite V2 GPU smoke result")
         output.parent.mkdir(parents=True, exist_ok=True)
@@ -87,6 +87,6 @@ def run(cycle: int = 0) -> None:
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("--cycle", type=int, choices=(0, 1), default=0)
+    parser.add_argument("--cycle", type=int, choices=(0, 1, 2, 3), default=0)
     args = parser.parse_args()
     run(args.cycle)

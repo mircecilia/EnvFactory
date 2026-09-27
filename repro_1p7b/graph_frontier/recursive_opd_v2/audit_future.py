@@ -24,8 +24,8 @@ from repro_1p7b.graph_frontier.train_fd_terminal_v2_ddp import validate_mask
 def audit(cycle: int) -> dict:
     from transformers import AutoTokenizer
 
-    if cycle not in (1, 2):
-        raise ValueError("only V2 fresh cycles 1 and 2 are in scope")
+    if cycle not in (1, 2, 3, 4):
+        raise ValueError("only V2 fresh cycles 1 through 4 are in scope")
     protocol = check()
     rollout_manifest, rollout_hash = checked_manifest(cycle)
     base_sha = checked_base_sha()
@@ -41,6 +41,7 @@ def audit(cycle: int) -> dict:
     summary = json.loads((base / "metrics/summary.json").read_text())
     dataset_path = base / "dataset/dataset.jsonl"
     manifest = json.loads((base / "dataset/manifest.json").read_text())
+    expected_skipped = sorted(repaired.get("skipped_student_error_task_ids", [])) if repaired else []
     if (summary.get("per_task_sha256") != sha256(metrics_path)
             or manifest.get("metrics_sha256") != sha256(metrics_path)
             or manifest.get("dataset_sha256") != sha256(dataset_path)
@@ -50,7 +51,10 @@ def audit(cycle: int) -> dict:
             or manifest.get("gpu_experiment_base_sha") != base_sha
             or manifest.get("collection_integrity_sha256") != sha256(integrity_path)
             or manifest.get("collection_context_overflow_count") !=
-               (repaired["student_context_overflow_count"] if repaired else 0)):
+               (repaired["student_context_overflow_count"] if repaired else 0)
+            or manifest.get("collection_skipped_student_error_count") !=
+               (repaired["student_error_count"] if repaired else 0)
+            or manifest.get("collection_skipped_student_error_task_ids") != expected_skipped):
         raise RuntimeError("fresh-cycle manifest/hash/data gate failed")
     records = [json.loads(line) for line in metrics_path.read_text().splitlines() if line]
     rows = [json.loads(line) for line in dataset_path.read_text().splitlines() if line]
@@ -62,6 +66,11 @@ def audit(cycle: int) -> dict:
         raise RuntimeError("fresh-cycle complete task/unique gate failed")
     by_record = {record["task_id"]: record for record in records}
     by_row = {row["task_id"]: row for row in rows}
+    skipped = set(manifest["collection_skipped_student_error_task_ids"])
+    if (len(skipped) != manifest["collection_skipped_student_error_count"]
+            or any(by_record[task]["status"] != "UNCERTAIN" for task in skipped)
+            or skipped & set(by_row)):
+        raise RuntimeError("isolated student-error skip audit failed")
     overflow = {row["task_id"]: row for row in manifest["context_overflow_records"]}
     account_context(semantic_eligible=manifest["semantic_eligible_count"],
                     encoded=len(rows), overflow=list(overflow.values()))
@@ -159,6 +168,7 @@ def audit(cycle: int) -> dict:
               "full_token_reencoded_rows": full_reencoded,
               "collection_context_overflow_count":
                   repaired["student_context_overflow_count"] if repaired else 0,
+              "collection_skipped_student_error_count": len(skipped),
               "status_by_pool": {pool: dict(count) for pool, count in status_by_pool.items()},
               "regime_by_pool": {pool: dict(count) for pool, count in regimes_by_pool.items()},
               "gates": {name: "PASS" for name in (
