@@ -19,8 +19,12 @@ from repro_1p7b.graph_frontier.official_rl_audit_static import SOURCE, OUT, quer
 from repro_1p7b.graph_frontier.recursive_opd_v1.mine import classify, result
 from repro_1p7b.graph_frontier.recursive_opd_v1.protocol import CONFIG, MODEL, PROTOCOL, RUN as V1_RUN, check
 from repro_1p7b.graph_frontier.recursive_opd_v1.rollout import GOLD_RUN, collect_one
+from repro_1p7b.graph_frontier.recursive_opd_v2.context_forensics import (
+    LIMIT, account_context, context_class, sample_lengths,
+)
+from repro_1p7b.graph_frontier.recursive_opd_v2.gpu_protocol import checked_base_sha
 from repro_1p7b.graph_frontier.recursive_opd_v2.prepare import (
-    RUN, VERSION, digest, encode_row, source_policy_gate,
+    RUN, checked_prefix, digest, encode_row, source_policy_gate,
 )
 
 
@@ -43,6 +47,7 @@ def lock(cycle: int, model: Path) -> dict:
     protocol = check()
     prior = previous_v2(cycle, model)
     value = {"schema_version": "recursive_opd_v2_rollout_1", "cycle": cycle,
+             "gpu_experiment_base_sha": checked_base_sha(),
              "model_path": str(model.resolve()), "model_sha256": prior["model_sha256"],
              "previous_v2_train_plan_sha256": prior["train_plan_sha256"],
              "protocol_sha256": sha256(PROTOCOL), "config": CONFIG,
@@ -106,7 +111,8 @@ def collect_worker(cycle: int, model: Path, endpoint: str, shard: int) -> dict:
             old = json.loads(path.read_text())
             if (old.get("task_id") != task or old.get("cycle") != cycle
                     or old.get("model_sha256") != manifest["model_sha256"]
-                    or old.get("manifest_sha256") != manifest_sha):
+                    or old.get("manifest_sha256") != manifest_sha
+                    or old.get("gpu_experiment_base_sha") != manifest["gpu_experiment_base_sha"]):
                 raise RuntimeError(f"persisted V2 rollout identity drift: {task}")
             counts["skipped"] += 1
             continue
@@ -118,6 +124,7 @@ def collect_worker(cycle: int, model: Path, endpoint: str, shard: int) -> dict:
                    "pool": "train" if task in set(protocol["train_task_ids"]) else "heldout",
                    "cycle": cycle, "model_sha256": manifest["model_sha256"],
                    "manifest_sha256": manifest_sha, "gold_source_episode_sha256": sha256(gold_path),
+                   "gpu_experiment_base_sha": manifest["gpu_experiment_base_sha"],
                    "gold_source_kind": gold_kind, "schema_sha256": schema_sha,
                    "gold": gold, "student": None, "student_error": None}
         try:
@@ -128,6 +135,10 @@ def collect_worker(cycle: int, model: Path, endpoint: str, shard: int) -> dict:
             counts["failed"] += 1
         atomic_json(path, payload)
         counts["completed"] += 1
+        if (counts["completed"] + counts["skipped"]) % 50 == 0:
+            print(stable({"cycle": cycle, "shard": shard,
+                          "completed": counts["completed"], "skipped": counts["skipped"],
+                          "failed": counts["failed"]}), flush=True)
     return dict(counts)
 
 
@@ -137,6 +148,9 @@ def mine_build(cycle: int) -> dict:
     This is a future CPU command; V1 later-cycle episodes are never read here.
     """
     from transformers import AutoTokenizer
+
+    if cycle not in (1, 2):
+        raise ValueError("this experiment mines only V2 D1 and D2")
 
     manifest, manifest_sha = checked_manifest(cycle)
     protocol = check()
@@ -148,7 +162,7 @@ def mine_build(cycle: int) -> dict:
     task_ids = protocol["train_task_ids"] + protocol["heldout_task_ids"]
     if (RUN / f"cycle{cycle}/dataset").exists() or (RUN / f"cycle{cycle}/metrics").exists():
         raise RuntimeError("refusing to overwrite future V2 mining outputs")
-    records, encoded, failures, gold_sources = [], [], [], {}
+    records, encoded, overflow, failures, gold_sources = [], [], [], [], {}
     for task in task_ids:
         episode = json.loads((RUN / f"cycle{cycle}/rollouts/{task}.json").read_text())
         entry = entries[task]
@@ -159,6 +173,7 @@ def mine_build(cycle: int) -> dict:
         if (episode.get("task_id") != task or episode.get("cycle") != cycle
                 or episode.get("model_sha256") != manifest["model_sha256"]
                 or episode.get("manifest_sha256") != manifest_sha
+                or episode.get("gpu_experiment_base_sha") != manifest["gpu_experiment_base_sha"]
                 or episode.get("gold_source_episode_sha256") != sha256(gold_path)
                 or not valid_gold(entry, row, episode)):
             raise RuntimeError(f"V2 rollout/gold identity invalid: {task}")
@@ -178,16 +193,37 @@ def mine_build(cycle: int) -> dict:
                        termination_reason=(episode.get("student") or {}).get("termination_reason"))
         records.append(verdict)
         if verdict["pool"] == "train" and verdict["status"] != "UNCERTAIN":
+            prefix = checked_prefix(verdict, episode)
+            prompt_len, full_len = sample_lengths(tokenizer, prefix, schema, verdict)
+            if context_class(full_len, LIMIT) == "CONTEXT_OVERFLOW":
+                overflow.append({"task_id": task, "query_hash": verdict["query_hash"],
+                                 "kind": verdict["error_regime"] if verdict["status"] == "FIRST_ERROR"
+                                 else "SUCCESS_TERMINAL_POSITIVE",
+                                 "semantic_eligible": True, "execution_verified": True,
+                                 "train_context_compatible": False, "reason": "CONTEXT_OVERFLOW",
+                                 "prompt_tokens_local": prompt_len, "full_tokens": full_len,
+                                 "gold_depth": verdict["gold_tool_count"]})
+                gold_sources[task] = episode["gold_source_episode_sha256"]
+                continue
             try:
-                encoded.append(encode_row(tokenizer, verdict, episode, schema,
-                                          episode["gold_source_episode_sha256"], cycle=cycle))
+                item = encode_row(tokenizer, verdict, episode, schema,
+                                  episode["gold_source_episode_sha256"], cycle=cycle)
+                if item["total_tokens"] != full_len or item["total_tokens"] > LIMIT:
+                    raise RuntimeError("fresh-cycle encoded length differs from exact-prefix audit")
+                item.update(semantic_eligible=True, execution_verified=True,
+                            train_context_compatible=True)
+                encoded.append(item)
             except ValueError as exc:
                 failures.append({"task_id": task, "reason": str(exc), "status": verdict["status"]})
             gold_sources[task] = episode["gold_source_episode_sha256"]
+        if len(records) % 100 == 0:
+            print(stable({"cycle": cycle, "mined": len(records), "total": len(task_ids)}), flush=True)
     train, heldout = set(protocol["train_task_ids"]), set(protocol["heldout_task_ids"])
     if (len(records) != 2158 or len({r["task_id"] for r in records}) != 2158
             or len({r["task_id"] for r in encoded}) != len(encoded)
+            or len({r["task_id"] for r in overflow}) != len(overflow)
             or {r["task_id"] for r in encoded} & heldout
+            or {r["task_id"] for r in overflow} & heldout
             or {r["query_hash"] for r in records if r["pool"] == "train"}
                & {r["query_hash"] for r in records if r["pool"] == "heldout"}):
         raise RuntimeError("future V2 task/split/unique/query gate failed")
@@ -201,9 +237,18 @@ def mine_build(cycle: int) -> dict:
     dataset_path.write_text("".join(stable(r) + "\n" for r in encoded))
     kinds = collections.Counter(r["correction_kind"] for r in encoded)
     eligible = sum(r["pool"] == "train" and r["status"] != "UNCERTAIN" for r in records)
-    ready = not failures and len(encoded) == eligible
-    value = {"schema_version": VERSION, "status": "READY_FOR_GPU_TRAINING" if ready else "NOT_READY",
+    accounting = len(encoded) + len(overflow) + len(failures) == eligible
+    if not accounting:
+        raise RuntimeError("fresh-cycle semantic eligibility accounting drift")
+    ready = not failures
+    if ready:
+        account_context(semantic_eligible=eligible, encoded=len(encoded), overflow=overflow)
+    value = {"schema_version": "recursive_opd_v2_context_accounted_1",
+             "status": "READY_FOR_GPU_TRAINING" if ready else "NOT_READY",
              "usage": f"TRAINABLE_V2_D{cycle}", "cycle": cycle,
+             "gpu_experiment_base_sha": manifest["gpu_experiment_base_sha"],
+             "context_protocol": "only exact-prefix, context-compatible samples are trainable",
+             "max_train_context": LIMIT,
              "source_model_sha256": manifest["model_sha256"],
              "source_rollout_manifest_sha256": manifest_sha,
              "source_v1_metrics_sha256": None, "gold_source_sha256": digest(gold_sources),
@@ -212,11 +257,27 @@ def mine_build(cycle: int) -> dict:
              "tokenizer_sha256": sha256(MODEL / "tokenizer.json"),
              "protocol_sha256": sha256(PROTOCOL), "metrics_sha256": sha256(metrics_path),
              "dataset_sha256": sha256(dataset_path), "sample_count": len(encoded),
-             "eligible_task_count": eligible, "class_counts": dict(kinds),
-             "encoding_failures": failures, "heldout_training_rows": 0,
+             "eligible_task_count": eligible, "semantic_eligible_count": eligible,
+             "context_compatible_count": len(encoded), "trainable_count": len(encoded),
+             "encoded_rows": len(encoded), "context_overflow_count": len(overflow),
+             "context_overflow_records": overflow,
+             "skipped_uncertain_count": sum(r["pool"] == "train" and r["status"] == "UNCERTAIN" for r in records),
+             "heldout_training_rows": 0, "uncertain_training_rows": 0,
+             "class_counts": dict(kinds),
+             "tool_targets": kinds["START"] + kinds["ADVANCE"],
+             "eos_targets": kinds["TERMINATE"] + kinds["SUCCESS_TERMINAL_POSITIVE"],
+             "natural_eos_fraction": (kinds["TERMINATE"] + kinds["SUCCESS_TERMINAL_POSITIVE"])
+                                     / len(encoded) if encoded else 0,
+             "encoding_failures": failures,
              "gates": {"v2_checkpoint_lineage": "PASS", "rollout_gold_identity": "PASS",
                        "one_task_one_target": "PASS", "zero_query_hash_overlap": "PASS",
-                       "heldout_zero_rows": "PASS", "all_eligible_rows_encoded": "PASS" if ready else "FAIL"}}
+                       "heldout_zero_rows": "PASS", "no_uncertain_rows": "PASS",
+                       "student_exact_predecision_prefix": "PASS", "gold_next_tool_pointer": "PASS",
+                       "success_verified_terminal_and_stop": "PASS",
+                       "terminate_verified_overcontinuation": "PASS",
+                       "assistant_only_loss_mask": "PASS", "eos_only_single_label": "PASS",
+                       "context_accounting": "PASS" if ready else "FAIL",
+                       "all_context_compatible_rows_encoded": "PASS" if ready else "FAIL"}}
     (dataset_dir / "manifest.json").write_text(stable(value) + "\n")
     (metrics_dir / "summary.json").write_text(stable({"cycle": cycle, "per_task_sha256": sha256(metrics_path),
                                                        "usage": f"V2_PI{cycle}_FRESH"}) + "\n")

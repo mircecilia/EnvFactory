@@ -6,6 +6,7 @@ No V1 artifact path can be an output target.
 from __future__ import annotations
 
 import argparse
+import collections
 import json
 import os
 import random
@@ -15,17 +16,17 @@ from pathlib import Path
 from repro_1p7b.graph_frontier.cycle3_official_rl.plan import sha256, stable
 from repro_1p7b.graph_frontier.recursive_opd_v1.protocol import MODEL, PROTOCOL, RUN as V1_RUN, check
 from repro_1p7b.graph_frontier.recursive_opd_v2.prepare import RUN, source_policy_gate
+from repro_1p7b.graph_frontier.recursive_opd_v2.gpu_protocol import checked_base_sha
 from repro_1p7b.graph_frontier.train_fd_terminal_v2_ddp import validate_mask
 
 
 def validate_context_manifest(manifest: dict, rows: list[dict], *, cycle: int) -> int:
-    """Fail closed on D0 length exclusions, including a forged READY verdict."""
-    if cycle != 0:
-        return 0  # Later cycles require their own fresh on-policy mining/audit.
+    """Fail closed on all V2 cycle length exclusions, including forged READY."""
     from repro_1p7b.graph_frontier.recursive_opd_v2.context_forensics import LIMIT, account_context
 
     overflow = manifest.get("context_overflow_records")
-    if (manifest.get("schema_version") != "recursive_opd_v2_context_accounted_1"
+    if (cycle not in (0, 1, 2)
+            or manifest.get("schema_version") != "recursive_opd_v2_context_accounted_1"
             or manifest.get("max_train_context") != LIMIT
             or not isinstance(overflow, list)
             or manifest.get("context_overflow_count") != len(overflow)
@@ -101,6 +102,21 @@ def load_plan(*, cycle: int, dataset: Path, model: Path, output: Path,
                 or prior.get("model_sha256") != sha256(model / "model.safetensors")
                 or model.resolve() != prior_path.parent.resolve()):
             raise RuntimeError("previous V2 checkpoint identity failed")
+        if (dataset.resolve() != (RUN / f"cycle{cycle}/dataset").resolve()
+                or prior.get("gpu_experiment_base_sha") != checked_base_sha()
+                or manifest.get("gpu_experiment_base_sha") != checked_base_sha()):
+            raise RuntimeError("V2 fresh-cycle dataset/base identity failed")
+        audit_path = RUN / f"cycle{cycle}/metrics/audit.json"
+        if not audit_path.exists():
+            raise RuntimeError("fresh-cycle independent audit missing")
+        audit = json.loads(audit_path.read_text())
+        if (audit.get("status") != "AUDITED"
+                or audit.get("dataset_sha256") != manifest["dataset_sha256"]
+                or audit.get("model_sha256") != manifest["source_model_sha256"]
+                or audit.get("task_count") != 2158
+                or not audit.get("gates")
+                or any(value != "PASS" for value in audit["gates"].values())):
+            raise RuntimeError("fresh-cycle independent audit invalid")
         source_policy_gate(cycle, {"cycle": cycle, "protocol_sha256": sha256(PROTOCOL),
                                    "model_sha256": manifest["source_model_sha256"]}, protocol, prior)
     rows = [json.loads(line) for line in rows_path.read_text().splitlines() if line]
@@ -119,7 +135,10 @@ def load_plan(*, cycle: int, dataset: Path, model: Path, output: Path,
     order = list(range(len(rows)))
     random.Random(seed).shuffle(order)
     order = order[:exposure_budget]
+    selected = collections.Counter(rows[index]["correction_kind"] for index in order)
+    eos_exposures = selected["TERMINATE"] + selected["SUCCESS_TERMINAL_POSITIVE"]
     plan = {"lineage": "recursive_opd_v2", "schema_version": "recursive_opd_v2_ddp_plan_1",
+            "gpu_experiment_base_sha": checked_base_sha(),
             "cycle": cycle, "steps": steps, "learning_rate": learning_rate,
             "seed": seed, "exposure_budget": exposure_budget, "world_size": 2,
             "full_parameter": True, "precision": "bfloat16", "attention": "sdpa",
@@ -129,6 +148,11 @@ def load_plan(*, cycle: int, dataset: Path, model: Path, output: Path,
             "initialization_sha256": sha256(model / "model.safetensors"),
             "source_rollout_manifest_sha256": manifest["source_rollout_manifest_sha256"],
             "schedule_task_ids": [rows[index]["task_id"] for index in order],
+            "sampled_class_counts": dict(selected),
+            "sampled_tool_exposures": selected["START"] + selected["ADVANCE"],
+            "sampled_eos_exposures": eos_exposures,
+            "sampled_eos_fraction": eos_exposures / len(order),
+            "unique_exposed_tasks": len({rows[index]["task_id"] for index in order}),
             "selected_target_tokens": sum(rows[index]["target_tokens"] for index in order)}
     return rows, order, plan
 
@@ -187,12 +211,24 @@ def train(args: argparse.Namespace) -> None:
         if finite.item() != 1:
             raise RuntimeError(f"nonfinite grad norm at step {step + 1}")
         optimizer.step()
+        local_metrics = torch.tensor(
+            [float(loss.detach()), float(norm.detach()),
+             torch.cuda.max_memory_allocated(local) / (1024 ** 2)],
+            dtype=torch.float64, device=local,
+        )
+        gathered_metrics = [torch.zeros_like(local_metrics) for _ in range(world)]
+        dist.all_gather(gathered_metrics, local_metrics)
         if rank == 0:
             with (log_dir / "training_metrics.jsonl").open("a") as stream:
                 stream.write(stable({"step": step + 1, "rank0_task": rows[order[step * 2]]["task_id"],
                                      "rank1_task": rows[order[step * 2 + 1]]["task_id"],
-                                     "rank0_loss": float(loss.detach().cpu()),
-                                     "rank0_grad_norm": float(norm.detach().cpu()),
+                                     "rank0_loss": gathered_metrics[0][0].item(),
+                                     "rank1_loss": gathered_metrics[1][0].item(),
+                                     "rank0_grad_norm": gathered_metrics[0][1].item(),
+                                     "rank1_grad_norm": gathered_metrics[1][1].item(),
+                                     "rank0_peak_allocated_mib": gathered_metrics[0][2].item(),
+                                     "rank1_peak_allocated_mib": gathered_metrics[1][2].item(),
+                                     "learning_rate": optimizer.param_groups[0]["lr"],
                                      "elapsed_seconds": round(time.monotonic() - started, 2)}) + "\n")
     dist.barrier()
     if rank == 0:
@@ -203,6 +239,7 @@ def train(args: argparse.Namespace) -> None:
         tokenizer.save_pretrained(args.output)
         torch.save(optimizer.state_dict(), args.output / "optimizer_state.pt")
         result = {"lineage": "recursive_opd_v2", "status": "TRAINED", "cycle": args.cycle,
+                  "gpu_experiment_base_sha": plan["gpu_experiment_base_sha"],
                   "steps": args.steps, "model_sha256": sha256(args.output / "model.safetensors"),
                   "dataset_sha256": plan["dataset_sha256"],
                   "train_plan_sha256": sha256(log_dir / "plan.json")}

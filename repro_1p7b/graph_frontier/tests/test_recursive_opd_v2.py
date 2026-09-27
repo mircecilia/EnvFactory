@@ -11,6 +11,9 @@ from repro_1p7b.graph_frontier.recursive_opd_v2.context_forensics import (
     account_context, context_class, distribution,
 )
 from repro_1p7b.graph_frontier.recursive_opd_v2.train import validate_context_manifest
+from repro_1p7b.graph_frontier.recursive_opd_v2.compare import (
+    outcome, paired, pool_stats,
+)
 
 
 class FakeTokenizer:
@@ -229,3 +232,27 @@ def test_non_overflow_dataset_at_exact_limit_passes():
     manifest.update(semantic_eligible_count=1, context_overflow_count=0,
                     context_overflow_records=[])
     assert validate_context_manifest(manifest, rows, cycle=0) == 0
+
+
+def test_internal_comparison_counts_terminal_vs_premature_stop():
+    base = {"pool": "heldout", "gold_tool_count": 2}
+    rows = {
+        "a": {**base, "status": "SUCCESS", "frontier_depth": 2,
+              "error_regime": None, "reason": "gold progress and termination verified"},
+        "b": {**base, "status": "FIRST_ERROR", "frontier_depth": 2,
+              "error_regime": "TERMINATE", "reason": "tool call after verified terminal state"},
+        "c": {**base, "status": "FIRST_ERROR", "frontier_depth": 1,
+              "error_regime": "ADVANCE", "reason": "premature model stop"},
+    }
+    metrics = pool_stats(rows, ["a", "b", "c"])
+    assert metrics["success"] == 1
+    assert metrics["reached_verified_terminal"] == 2
+    assert metrics["over_continuation"] == 1
+    assert metrics["premature_stop"] == 1
+    assert metrics["first_action_correct"] == 3
+    assert outcome(rows["b"]) == "TERMINATE"
+    next_rows = {key: {**row, "frontier_depth": 2, "status": "SUCCESS",
+                       "error_regime": None} for key, row in rows.items()}
+    movement = paired(rows, next_rows, ["a", "b", "c"])
+    assert movement["movement"] == {"FORWARD": 1, "SAME": 2, "BACKWARD": 0}
+    assert movement["migration"]["TERMINATE"]["SUCCESS"] == 1
