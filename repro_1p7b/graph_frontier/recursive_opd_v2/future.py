@@ -10,6 +10,7 @@ import argparse
 import asyncio
 import collections
 import json
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from repro_1p7b.graph_frontier.cycle3_official_rl.audit import schema_for, valid_gold
@@ -168,7 +169,12 @@ def mine_build(cycle: int) -> dict:
     if (RUN / f"cycle{cycle}/dataset").exists() or (RUN / f"cycle{cycle}/metrics").exists():
         raise RuntimeError("refusing to overwrite future V2 mining outputs")
     records, encoded, overflow, failures, gold_sources = [], [], [], [], {}
-    for task in task_ids:
+    train_ids = set(protocol["train_task_ids"])
+
+    def classify_task(task: str) -> tuple[dict, list[dict], dict]:
+        # Each verifier opens its own isolated MCP subprocesses. Only this
+        # independent, I/O-bound phase runs concurrently; tokenization and
+        # dataset writes remain in fixed manifest order on the main thread.
         episode = json.loads((RUN / f"cycle{cycle}/rollouts/{task}.json").read_text())
         entry = entries[task]
         row = source[entry["source_row_index"]]
@@ -193,9 +199,16 @@ def mine_build(cycle: int) -> dict:
                 verdict = result("UNCERTAIN", 0, len(episode["gold"]["actions"]),
                                  reason=f"verifier exception:{type(exc).__name__}:{str(exc)[:200]}")
         verdict.update(task_id=task, cycle=cycle,
-                       pool="train" if task in set(protocol["train_task_ids"]) else "heldout",
+                       pool="train" if task in train_ids else "heldout",
                        query_hash=entry["query_hash"], environment=entry["environment"],
                        termination_reason=(episode.get("student") or {}).get("termination_reason"))
+        return episode, schema, verdict
+
+    def ordered_classifications():
+        with ThreadPoolExecutor(max_workers=4, thread_name_prefix="v2-verifier") as pool:
+            yield from pool.map(classify_task, task_ids)
+
+    for task, (episode, schema, verdict) in zip(task_ids, ordered_classifications()):
         records.append(verdict)
         if verdict["pool"] == "train" and verdict["status"] != "UNCERTAIN":
             prefix = checked_prefix(verdict, episode)

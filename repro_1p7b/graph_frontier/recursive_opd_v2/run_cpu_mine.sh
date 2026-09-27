@@ -14,7 +14,10 @@ export PATH=$ENV/bin:$PATH
 export PYTHONPATH=$ROOT:/home/u2024311031/verl-agent:${PYTHONPATH:-}
 export ENVFACTORY_ROOT=$ROOT ENVFACTORY_REWARD_MODE=official
 export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TOKENIZERS_PARALLELISM=false PYTHONUNBUFFERED=1
-[[ $(<"$LOG/status") == ROLLOUT_COMPLETE ]] || { echo 'full rollout gate failed' >&2; exit 2; }
+case $(<"$LOG/status") in
+  ROLLOUT_COMPLETE|MINING|FAILED_MINE) ;;
+  *) echo 'full rollout or safe pre-output mining resume gate failed' >&2; exit 2 ;;
+esac
 [[ -f $LOG/rollout_integrity.json ]] || { echo 'rollout integrity report missing' >&2; exit 2; }
 [[ ! -e $LOG/dataset && ! -e $LOG/metrics ]] || {
   echo 'refusing to overwrite existing V2 Dk/metrics' >&2; exit 2;
