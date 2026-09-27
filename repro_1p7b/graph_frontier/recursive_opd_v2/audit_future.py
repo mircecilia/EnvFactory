@@ -52,9 +52,9 @@ def audit(cycle: int) -> dict:
             or manifest.get("collection_integrity_sha256") != sha256(integrity_path)
             or manifest.get("collection_context_overflow_count") !=
                (repaired["student_context_overflow_count"] if repaired else 0)
-            or manifest.get("collection_skipped_student_error_count") !=
+            or manifest.get("collection_skipped_student_error_count", 0) !=
                (repaired["student_error_count"] if repaired else 0)
-            or manifest.get("collection_skipped_student_error_task_ids") != expected_skipped):
+            or manifest.get("collection_skipped_student_error_task_ids", []) != expected_skipped):
         raise RuntimeError("fresh-cycle manifest/hash/data gate failed")
     records = [json.loads(line) for line in metrics_path.read_text().splitlines() if line]
     rows = [json.loads(line) for line in dataset_path.read_text().splitlines() if line]
@@ -66,8 +66,8 @@ def audit(cycle: int) -> dict:
         raise RuntimeError("fresh-cycle complete task/unique gate failed")
     by_record = {record["task_id"]: record for record in records}
     by_row = {row["task_id"]: row for row in rows}
-    skipped = set(manifest["collection_skipped_student_error_task_ids"])
-    if (len(skipped) != manifest["collection_skipped_student_error_count"]
+    skipped = set(manifest.get("collection_skipped_student_error_task_ids", []))
+    if (len(skipped) != manifest.get("collection_skipped_student_error_count", 0)
             or any(by_record[task]["status"] != "UNCERTAIN" for task in skipped)
             or skipped & set(by_row)):
         raise RuntimeError("isolated student-error skip audit failed")
