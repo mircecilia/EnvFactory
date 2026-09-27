@@ -2,8 +2,11 @@
 from __future__ import annotations
 
 import copy
+import asyncio
+import json
 
 import pytest
+import requests
 
 from repro_1p7b.graph_frontier.recursive_opd_v2 import prepare
 from repro_1p7b.graph_frontier.recursive_opd_v2 import future
@@ -14,6 +17,8 @@ from repro_1p7b.graph_frontier.recursive_opd_v2.train import validate_context_ma
 from repro_1p7b.graph_frontier.recursive_opd_v2.compare import (
     outcome, paired, pool_stats,
 )
+from repro_1p7b.graph_frontier.recursive_opd_v2.context_repair import context_rejection
+from repro_1p7b.graph_frontier.recursive_opd_v1.mine import classify
 
 
 class FakeTokenizer:
@@ -128,6 +133,43 @@ def test_uncertain_never_encodes():
     record["status"] = "UNCERTAIN"
     with pytest.raises(RuntimeError, match="UNCERTAIN"):
         prepare.checked_prefix(record, episode)
+
+
+@pytest.mark.parametrize("message,expected_input", [
+    ("Requested token count exceeds the model's maximum context length of 32768 tokens. "
+     "You requested a total of 32826 tokens: 31802 tokens from the input messages "
+     "and 1024 tokens for the completion.", 31802),
+    ("The input (181198 tokens) is longer than the model's context length "
+     "(32768 tokens).", 181198),
+])
+def test_only_explicit_fixed_context_400_is_typed(message, expected_input):
+    response = requests.Response()
+    response.status_code = 400
+    response._content = json.dumps({"message": message}).encode()
+    error = requests.HTTPError("bad request", response=response)
+    proof = context_rejection(error)
+    assert proof["context_limit_tokens"] == 32768
+    assert proof["requested_input_tokens"] == expected_input
+    response._content = b'{"message":"invalid tool schema"}'
+    assert context_rejection(error) is None
+    response.status_code = 500
+    assert context_rejection(error) is None
+
+
+def test_context_boundary_after_gold_prefix_is_uncertain_not_terminal_success():
+    episode, _, schema = fixture()
+    episode["gold"]["observations"] = ["result"]
+    episode["student"]["steps"] = episode["student"]["steps"][:1]
+    episode["student"]["steps"][0].update(
+        typed_events=[{"execution_success": True, "tool_response": "result"}],
+        state_after_action=episode["gold"]["final_state"], parse_errors=[])
+    episode["student"]["messages"] = episode["student"]["messages"][:3]
+    episode["student"].update(status="ROLLOUT_CONTEXT_OVERFLOW",
+                              termination_reason="CONTEXT_OVERFLOW")
+    row = {"extra_info": {"mcp_factory_kwargs": {
+        "final_config": episode["gold"]["final_state"], "mcp_servers": ["S"]}}}
+    verdict = asyncio.run(classify(episode, {"audit_id": "task"}, row, schema))
+    assert verdict["status"] == "UNCERTAIN"
 
 
 def test_v1_later_policy_fails_closed(monkeypatch):

@@ -153,6 +153,11 @@ def mine_build(cycle: int) -> dict:
         raise ValueError("this experiment mines only V2 D1 and D2")
 
     manifest, manifest_sha = checked_manifest(cycle)
+    repaired_path = RUN / f"cycle{cycle}/rollout_integrity_repaired.json"
+    repaired = None
+    if repaired_path.exists():
+        from repro_1p7b.graph_frontier.recursive_opd_v2.context_repair import repaired_integrity
+        repaired = repaired_integrity(cycle, write=False)
     protocol = check()
     source = json.loads(SOURCE.read_text())
     entries = {row["audit_id"]: row for row in json.loads((OUT / "opd_source_manifest.json").read_text())["rows"]}
@@ -249,6 +254,10 @@ def mine_build(cycle: int) -> dict:
              "gpu_experiment_base_sha": manifest["gpu_experiment_base_sha"],
              "context_protocol": "only exact-prefix, context-compatible samples are trainable",
              "max_train_context": LIMIT,
+             "collection_context_overflow_count":
+                 repaired["student_context_overflow_count"] if repaired else 0,
+             "collection_integrity_sha256": sha256(repaired_path) if repaired else
+                 sha256(RUN / f"cycle{cycle}/rollout_integrity.json"),
              "source_model_sha256": manifest["model_sha256"],
              "source_rollout_manifest_sha256": manifest_sha,
              "source_v1_metrics_sha256": None, "gold_source_sha256": digest(gold_sources),

@@ -13,6 +13,7 @@ from repro_1p7b.graph_frontier.recursive_opd_v2.context_forensics import (
     LIMIT, account_context, context_class, sample_lengths,
 )
 from repro_1p7b.graph_frontier.recursive_opd_v2.future import checked_manifest
+from repro_1p7b.graph_frontier.recursive_opd_v2.context_repair import repaired_integrity
 from repro_1p7b.graph_frontier.recursive_opd_v2.gpu_protocol import checked_base_sha
 from repro_1p7b.graph_frontier.recursive_opd_v2.prepare import (
     RUN, checked_prefix, digest, encode_row,
@@ -31,6 +32,11 @@ def audit(cycle: int) -> dict:
     if rollout_manifest["gpu_experiment_base_sha"] != base_sha:
         raise RuntimeError("GPU experiment base SHA drift")
     base = RUN / f"cycle{cycle}"
+    repaired = None
+    if (base / "rollout_integrity_repaired.json").exists():
+        repaired = repaired_integrity(cycle, write=False)
+    integrity_path = (base / "rollout_integrity_repaired.json" if repaired else
+                      base / "rollout_integrity.json")
     metrics_path = base / "metrics/per_task.jsonl"
     summary = json.loads((base / "metrics/summary.json").read_text())
     dataset_path = base / "dataset/dataset.jsonl"
@@ -41,7 +47,10 @@ def audit(cycle: int) -> dict:
             or manifest.get("status") != "READY_FOR_GPU_TRAINING"
             or manifest.get("source_model_sha256") != rollout_manifest["model_sha256"]
             or manifest.get("source_rollout_manifest_sha256") != rollout_hash
-            or manifest.get("gpu_experiment_base_sha") != base_sha):
+            or manifest.get("gpu_experiment_base_sha") != base_sha
+            or manifest.get("collection_integrity_sha256") != sha256(integrity_path)
+            or manifest.get("collection_context_overflow_count") !=
+               (repaired["student_context_overflow_count"] if repaired else 0)):
         raise RuntimeError("fresh-cycle manifest/hash/data gate failed")
     records = [json.loads(line) for line in metrics_path.read_text().splitlines() if line]
     rows = [json.loads(line) for line in dataset_path.read_text().splitlines() if line]
@@ -148,6 +157,8 @@ def audit(cycle: int) -> dict:
               "trainable_count": len(rows), "context_overflow_count": len(overflow),
               "verified_prefixes": verified_prefixes,
               "full_token_reencoded_rows": full_reencoded,
+              "collection_context_overflow_count":
+                  repaired["student_context_overflow_count"] if repaired else 0,
               "status_by_pool": {pool: dict(count) for pool, count in status_by_pool.items()},
               "regime_by_pool": {pool: dict(count) for pool, count in regimes_by_pool.items()},
               "gates": {name: "PASS" for name in (

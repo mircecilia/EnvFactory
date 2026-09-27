@@ -19,7 +19,13 @@ export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TOKENIZERS_PARALLELISM=false PYTH
 [[ ! -e $LOG/dataset && ! -e $LOG/metrics ]] || {
   echo 'refusing to overwrite existing V2 Dk/metrics' >&2; exit 2;
 }
-"$ENV/bin/python" - "$LOG/rollout_integrity.json" "$CYCLE" <<'PY'
+INTEGRITY=$LOG/rollout_integrity.json
+if [[ -f $LOG/rollout_integrity_repaired.json ]]; then
+  "$ENV/bin/python" -m repro_1p7b.graph_frontier.recursive_opd_v2.context_repair \
+    verify --cycle "$CYCLE"
+  INTEGRITY=$LOG/rollout_integrity_repaired.json
+fi
+"$ENV/bin/python" - "$INTEGRITY" "$CYCLE" <<'PY'
 import json, sys
 from pathlib import Path
 value = json.loads(Path(sys.argv[1]).read_text())
