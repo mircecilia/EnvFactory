@@ -76,3 +76,4 @@ __pycache__/
 /repro_1p7b/graph_frontier/terminal_stop_audit/token_probe.json
 /repro_1p7b/graph_frontier/recursive_opd_v2_run/
 /repro_1p7b/graph_frontier/recursive_opd_v3_run/
+/repro_1p7b/graph_frontier/recursive_opd_v3_complete_c_run/
