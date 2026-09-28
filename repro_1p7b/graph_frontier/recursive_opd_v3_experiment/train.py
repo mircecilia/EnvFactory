@@ -101,7 +101,7 @@ def train(cycle: int) -> None:
         result = {"lineage": "recursive_opd_v3_complete_c_anchor", "status": "TRAINED",
                   "cycle": cycle, "model_sha256": sha256(temporary / "model.safetensors"),
                   "input_model_sha256": planned["input_model_sha256"],
-                  "tokenizer_sha256": sha256(checkpoint / "tokenizer.json"),
+                  "tokenizer_sha256": sha256(temporary / "tokenizer.json"),
                   "natural_dataset_sha256": planned["natural_dataset_sha256"],
                   "anchor_dataset_sha256": planned["anchor_dataset_sha256"],
                   "train_plan_sha256": sha256(RUN / f"cycle{cycle}/train_plan.json"),
