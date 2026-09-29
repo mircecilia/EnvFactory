@@ -1,0 +1,435 @@
+{
+  "label": "PRELIMINARY PAIRED PILOT — NOT FULL MCPMARK SCORE",
+  "generated_at_utc": "2026-09-29T14:26:07.281094+00:00",
+  "benchmark": {
+    "commit": "cd45b7f57923b9b3985467f5139927575f83141c",
+    "suite": "Verified standard",
+    "mcp": "filesystem",
+    "k": 1,
+    "agent": "MCPMarkAgent",
+    "manifest_sha256": "fc4f2061622451d12ece56ad80299f526a85d3a715d8b67686e26f942e5359ba"
+  },
+  "protocol": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20,
+    "max_output_tokens_transport_cap": 8192,
+    "context_length": 40960,
+    "task_timeout_seconds": 3600,
+    "tool_parser": "qwen25"
+  },
+  "models": {
+    "grpo": {
+      "checkpoint": "repro_1p7b/checkpoints_eval/standard_rl_v2_control_pilot128_step64_hf",
+      "model_sha256": "d871a96525ae69a40b57484022b8cde9ec7dd4576e6d7f7ac29cddab42727a40",
+      "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+    },
+    "cpi3": {
+      "checkpoint": "repro_1p7b/graph_frontier/recursive_opd_v3_experiment_run/cycle3/checkpoint",
+      "model_sha256": "1e1022b12a21a730ce6038f1c257c7d75e3ec7e119314ce80e663088c78e3790",
+      "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+    }
+  },
+  "paired_completed": 7,
+  "grpo_pass": 0,
+  "cpi3_pass": 0,
+  "grpo_accuracy": 0.0,
+  "cpi3_accuracy": 0.0,
+  "grpo_wins": 0,
+  "cpi3_wins": 0,
+  "tie_pass": 0,
+  "tie_fail": 7,
+  "diagnostics": {
+    "grpo": {
+      "turns": 8.143,
+      "tool_calls": 9.571,
+      "runtime_seconds": 148.608
+    },
+    "cpi3": {
+      "turns": 13,
+      "tool_calls": 13.714,
+      "runtime_seconds": 192.916
+    }
+  },
+  "tasks": [
+    {
+      "index": 0,
+      "category": "desktop",
+      "task_id": "project_management",
+      "grpo": {
+        "status": "INFRA_FAILURE",
+        "reason": "official verifier raised an exception",
+        "verification_error": "Traceback (most recent call last):\n  File \"/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/tasks/filesystem/standard/desktop/project_management/verify.py\", line 286, in <module>\n    main()\n  File \"/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/tasks/filesystem/standard/desktop/project_management/verify.py\", line 272, in main\n    if not verify_func(test_dir):\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/tasks/filesystem/standard/desktop/project_management/verify.py\", line 197, in verify_progress_tracking_empty\n    files_in_progress = list(progress_dir.iterdir())\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/u2024311031/.conda/envs/envfactory_repro_1p7b/lib/python3.12/pathlib.py\", line 1056, in iterdir\n    for name in os.listdir(self):\n                ^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_desktop_project_management_19305/organized_projects/learning/progress_tracking'\n",
+        "log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_00_desktop_project_management/pipeline.log"
+      },
+      "cpi3": {
+        "status": "INFRA_FAILURE",
+        "reason": "official verifier raised an exception",
+        "verification_error": "Traceback (most recent call last):\n  File \"/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/tasks/filesystem/standard/desktop/project_management/verify.py\", line 286, in <module>\n    main()\n  File \"/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/tasks/filesystem/standard/desktop/project_management/verify.py\", line 272, in main\n    if not verify_func(test_dir):\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/tasks/filesystem/standard/desktop/project_management/verify.py\", line 197, in verify_progress_tracking_empty\n    files_in_progress = list(progress_dir.iterdir())\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/u2024311031/.conda/envs/envfactory_repro_1p7b/lib/python3.12/pathlib.py\", line 1056, in iterdir\n    for name in os.listdir(self):\n                ^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_desktop_project_management_19304/organized_projects/learning/progress_tracking'\n",
+        "log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_00_desktop_project_management/pipeline.log"
+      }
+    },
+    {
+      "index": 1,
+      "category": "desktop_template",
+      "task_id": "file_arrangement",
+      "grpo": {
+        "status": "MODEL_FAIL",
+        "pass": false,
+        "turns": 3,
+        "tool_calls": 10,
+        "runtime_seconds": 74.24070382118225,
+        "termination_reason": "stop",
+        "verifier_error": "Verification failed with no error message",
+        "verifier_failures": [
+          "❌ Missing required files in work/ folder: ['client_list.csv', 'timesheet.csv', 'experiment_results.txt', 'budget_tracker.csv', 'expenses.csv']",
+          "❌ Missing required files in life/ folder: ['contacts.csv', 'budget.csv', 'fitness_log.csv', 'price_comparisons.csv', 'book_list.txt', 'bookmark_export.txt', 'emergency_contacts.txt']",
+          "❌ Missing required files in archives/ folder: ['backup_contacts.csv', 'tax_documents_2022.csv', 'correspondence_2023.txt', 'tax_info_2023.csv']",
+          "❌ Missing required files in temp/ folder: ['test_data.csv', 'draft_letter.txt']",
+          "❌ Missing required files: ['work/client_list.csv', 'work/timesheet.csv', 'work/experiment_results.txt', 'work/budget_tracker.csv', 'work/expenses.csv', 'life/contacts.csv', 'life/budget.csv', 'life/fitness_log.csv', 'life/price_comparisons.csv', 'life/book_list.txt', 'life/bookmark_export.txt', 'life/emergency_contacts.txt', 'archives/backup_contacts.csv', 'archives/tax_documents_2022.csv', 'archives/correspondence_2023.txt', 'archives/tax_info_2023.csv', 'temp/test_data.csv', 'temp/draft_letter.txt']",
+          "❌ Desktop file organization task verification: FAIL"
+        ],
+        "raw_meta": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_01_desktop_template_file_arrangement/pilot/openai/mcpmark-grpo__filesystem/run-1/desktop_template__file_arrangement/meta.json",
+        "raw_messages": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_01_desktop_template_file_arrangement/pilot/openai/mcpmark-grpo__filesystem/run-1/desktop_template__file_arrangement/messages.json",
+        "raw_log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_01_desktop_template_file_arrangement/pipeline.log"
+      },
+      "cpi3": {
+        "status": "MODEL_FAIL",
+        "pass": false,
+        "turns": 9,
+        "tool_calls": 16,
+        "runtime_seconds": 126.48640084266663,
+        "termination_reason": "stop",
+        "verifier_error": "Verification failed with no error message",
+        "verifier_failures": [
+          "❌ Missing required files in work/ folder: ['client_list.csv', 'timesheet.csv', 'experiment_results.txt', 'budget_tracker.csv', 'expenses.csv']",
+          "❌ Missing required files in life/ folder: ['contacts.csv', 'budget.csv', 'fitness_log.csv', 'price_comparisons.csv', 'book_list.txt', 'bookmark_export.txt', 'emergency_contacts.txt']",
+          "❌ Missing required files in archives/ folder: ['backup_contacts.csv', 'tax_documents_2022.csv', 'correspondence_2023.txt', 'tax_info_2023.csv']",
+          "❌ Missing required files in temp/ folder: ['test_data.csv', 'draft_letter.txt']",
+          "❌ Missing required files: ['work/client_list.csv', 'work/timesheet.csv', 'work/experiment_results.txt', 'work/budget_tracker.csv', 'work/expenses.csv', 'life/contacts.csv', 'life/budget.csv', 'life/fitness_log.csv', 'life/price_comparisons.csv', 'life/book_list.txt', 'life/bookmark_export.txt', 'life/emergency_contacts.txt', 'archives/backup_contacts.csv', 'archives/tax_documents_2022.csv', 'archives/correspondence_2023.txt', 'archives/tax_info_2023.csv', 'temp/test_data.csv', 'temp/draft_letter.txt']",
+          "❌ Desktop file organization task verification: FAIL"
+        ],
+        "raw_meta": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_01_desktop_template_file_arrangement/pilot/openai/mcpmark-cpi3__filesystem/run-1/desktop_template__file_arrangement/meta.json",
+        "raw_messages": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_01_desktop_template_file_arrangement/pilot/openai/mcpmark-cpi3__filesystem/run-1/desktop_template__file_arrangement/messages.json",
+        "raw_log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_01_desktop_template_file_arrangement/pipeline.log"
+      }
+    },
+    {
+      "index": 2,
+      "category": "file_context",
+      "task_id": "file_splitting",
+      "grpo": {
+        "status": "MODEL_FAIL",
+        "pass": false,
+        "turns": 13,
+        "tool_calls": 12,
+        "runtime_seconds": 239.8906328678131,
+        "termination_reason": "stop",
+        "verifier_error": "Verification failed with no error message",
+        "verifier_failures": [
+          "❌ Missing files: ['split_02.txt', 'split_03.txt', 'split_04.txt', 'split_05.txt', 'split_06.txt', 'split_07.txt', 'split_08.txt', 'split_09.txt', 'split_10.txt']",
+          "❌ Error reading split_02.txt: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_file_context_file_splitting_21058/split/split_02.txt'",
+          "❌ Error reading split_02.txt: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_file_context_file_splitting_21058/split/split_02.txt'",
+          "❌ Task verification: FAIL"
+        ],
+        "raw_meta": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_02_file_context_file_splitting/pilot/openai/mcpmark-grpo__filesystem/run-1/file_context__file_splitting/meta.json",
+        "raw_messages": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_02_file_context_file_splitting/pilot/openai/mcpmark-grpo__filesystem/run-1/file_context__file_splitting/messages.json",
+        "raw_log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_02_file_context_file_splitting/pipeline.log"
+      },
+      "cpi3": {
+        "status": "MODEL_FAIL",
+        "pass": false,
+        "turns": 13,
+        "tool_calls": 12,
+        "runtime_seconds": 211.20285201072693,
+        "termination_reason": "stop",
+        "verifier_error": "Verification failed with no error message",
+        "verifier_failures": [
+          "❌ Missing files: ['split_04.txt', 'split_05.txt', 'split_06.txt', 'split_07.txt', 'split_08.txt', 'split_09.txt']",
+          "❌ Error reading split_04.txt: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_file_context_file_splitting_21667/split/split_04.txt'",
+          "❌ Error reading split_04.txt: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_file_context_file_splitting_21667/split/split_04.txt'",
+          "❌ Task verification: FAIL"
+        ],
+        "raw_meta": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_02_file_context_file_splitting/pilot/openai/mcpmark-cpi3__filesystem/run-1/file_context__file_splitting/meta.json",
+        "raw_messages": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_02_file_context_file_splitting/pilot/openai/mcpmark-cpi3__filesystem/run-1/file_context__file_splitting/messages.json",
+        "raw_log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_02_file_context_file_splitting/pipeline.log"
+      }
+    },
+    {
+      "index": 3,
+      "category": "file_property",
+      "task_id": "time_classification",
+      "grpo": {
+        "status": "MODEL_FAIL",
+        "pass": false,
+        "turns": 7,
+        "tool_calls": 6,
+        "runtime_seconds": 99.0965530872345,
+        "termination_reason": "stop",
+        "verifier_error": "Verification failed with no error message",
+        "verifier_failures": [
+          "❌ Month directory not found. Expected one of: ['07', '7', 'jul', 'Jul', 'JUL']",
+          "❌ Files still present in root directory: ['road.MOV', 'bear.jpg', 'bridge.jpg', 'sg.jpg', 'bus.MOV', 'random_file_2.txt', 'random_file_1.txt', 'random_file_3.txt']",
+          "❌ Expected 8 files total, found 0",
+          "❌ Some verification checks failed!"
+        ],
+        "raw_meta": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_03_file_property_time_classification/pilot/openai/mcpmark-grpo__filesystem/run-1/file_property__time_classification/meta.json",
+        "raw_messages": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_03_file_property_time_classification/pilot/openai/mcpmark-grpo__filesystem/run-1/file_property__time_classification/messages.json",
+        "raw_log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_03_file_property_time_classification/pipeline.log"
+      },
+      "cpi3": {
+        "status": "MODEL_FAIL",
+        "pass": false,
+        "turns": 10,
+        "tool_calls": 9,
+        "runtime_seconds": 209.28507685661316,
+        "termination_reason": "stop",
+        "verifier_error": "Verification failed with no error message",
+        "verifier_failures": [
+          "❌ Month directory not found. Expected one of: ['07', '7', 'jul', 'Jul', 'JUL']",
+          "❌ Files still present in root directory: ['road.MOV', 'bear.jpg', 'bridge.jpg', 'sg.jpg', 'bus.MOV', 'random_file_2.txt', 'random_file_1.txt', 'random_file_3.txt']",
+          "❌ Expected 8 files total, found 0",
+          "❌ Some verification checks failed!"
+        ],
+        "raw_meta": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_03_file_property_time_classification/pilot/openai/mcpmark-cpi3__filesystem/run-1/file_property__time_classification/meta.json",
+        "raw_messages": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_03_file_property_time_classification/pilot/openai/mcpmark-cpi3__filesystem/run-1/file_property__time_classification/messages.json",
+        "raw_log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_03_file_property_time_classification/pipeline.log"
+      }
+    },
+    {
+      "index": 4,
+      "category": "folder_structure",
+      "task_id": "structure_analysis",
+      "grpo": {
+        "status": "MODEL_FAIL",
+        "pass": false,
+        "turns": 9,
+        "tool_calls": 8,
+        "runtime_seconds": 196.619140625,
+        "termination_reason": "stop",
+        "verifier_error": "Verification failed with no error message",
+        "verifier_failures": [
+          "❌ File 'structure_analysis.txt' not found",
+          "❌ Error reading structure_analysis.txt file: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_folder_structure_structure_analysis_23117/structure_analysis.txt'",
+          "❌ Error verifying file statistics: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_folder_structure_structure_analysis_23117/structure_analysis.txt'",
+          "❌ Error verifying depth analysis: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_folder_structure_structure_analysis_23117/structure_analysis.txt'",
+          "❌ Error verifying file type classification: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_folder_structure_structure_analysis_23117/structure_analysis.txt'",
+          "❌ Error checking file format: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_folder_structure_structure_analysis_23117/structure_analysis.txt'",
+          "❌ Structure Analysis verification: FAIL"
+        ],
+        "raw_meta": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_04_folder_structure_structure_analysis/pilot/openai/mcpmark-grpo__filesystem/run-1/folder_structure__structure_analysis/meta.json",
+        "raw_messages": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_04_folder_structure_structure_analysis/pilot/openai/mcpmark-grpo__filesystem/run-1/folder_structure__structure_analysis/messages.json",
+        "raw_log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_04_folder_structure_structure_analysis/pipeline.log"
+      },
+      "cpi3": {
+        "status": "MODEL_FAIL",
+        "pass": false,
+        "turns": 4,
+        "tool_calls": 7,
+        "runtime_seconds": 177.98897886276245,
+        "termination_reason": "unknown",
+        "verifier_error": "Verification failed with no error message",
+        "verifier_failures": [
+          "❌ File 'structure_analysis.txt' not found",
+          "❌ Error reading structure_analysis.txt file: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_folder_structure_structure_analysis_24213/structure_analysis.txt'",
+          "❌ Error verifying file statistics: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_folder_structure_structure_analysis_24213/structure_analysis.txt'",
+          "❌ Error verifying depth analysis: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_folder_structure_structure_analysis_24213/structure_analysis.txt'",
+          "❌ Error verifying file type classification: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_folder_structure_structure_analysis_24213/structure_analysis.txt'",
+          "❌ Error checking file format: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_folder_structure_structure_analysis_24213/structure_analysis.txt'",
+          "❌ Structure Analysis verification: FAIL"
+        ],
+        "raw_meta": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_04_folder_structure_structure_analysis/pilot/openai/mcpmark-cpi3__filesystem/run-1/folder_structure__structure_analysis/meta.json",
+        "raw_messages": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_04_folder_structure_structure_analysis/pilot/openai/mcpmark-cpi3__filesystem/run-1/folder_structure__structure_analysis/messages.json",
+        "raw_log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_04_folder_structure_structure_analysis/pipeline.log"
+      }
+    },
+    {
+      "index": 5,
+      "category": "legal_document",
+      "task_id": "individual_comments",
+      "grpo": {
+        "status": "MODEL_FAIL",
+        "pass": false,
+        "turns": 8,
+        "tool_calls": 16,
+        "runtime_seconds": 144.55557084083557,
+        "termination_reason": "stop",
+        "verifier_error": "Verification failed with no error message",
+        "verifier_failures": [
+          "❌ File 'individual_comment.csv' not found",
+          "❌ Error reading CSV file: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_legal_document_individual_comments_24305/individual_comment.csv'",
+          "❌ Error verifying CSV content: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_legal_document_individual_comments_24305/individual_comment.csv'",
+          "❌ Error verifying data accuracy: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_legal_document_individual_comments_24305/individual_comment.csv'",
+          "❌ File is not in the main directory",
+          "❌ Task verification: FAIL"
+        ],
+        "raw_meta": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_05_legal_document_individual_comments/pilot/openai/mcpmark-grpo__filesystem/run-1/legal_document__individual_comments/meta.json",
+        "raw_messages": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_05_legal_document_individual_comments/pilot/openai/mcpmark-grpo__filesystem/run-1/legal_document__individual_comments/messages.json",
+        "raw_log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_05_legal_document_individual_comments/pipeline.log"
+      },
+      "cpi3": {
+        "status": "MODEL_FAIL",
+        "pass": false,
+        "turns": 1,
+        "tool_calls": 0,
+        "runtime_seconds": 73.29008984565735,
+        "termination_reason": "unknown",
+        "verifier_error": "Verification failed with no error message",
+        "verifier_failures": [
+          "❌ File 'individual_comment.csv' not found",
+          "❌ Error reading CSV file: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_legal_document_individual_comments_25394/individual_comment.csv'",
+          "❌ Error verifying CSV content: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_legal_document_individual_comments_25394/individual_comment.csv'",
+          "❌ Error verifying data accuracy: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_legal_document_individual_comments_25394/individual_comment.csv'",
+          "❌ File is not in the main directory",
+          "❌ Task verification: FAIL"
+        ],
+        "raw_meta": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_05_legal_document_individual_comments/pilot/openai/mcpmark-cpi3__filesystem/run-1/legal_document__individual_comments/meta.json",
+        "raw_messages": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_05_legal_document_individual_comments/pilot/openai/mcpmark-cpi3__filesystem/run-1/legal_document__individual_comments/messages.json",
+        "raw_log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_05_legal_document_individual_comments/pipeline.log"
+      }
+    },
+    {
+      "index": 6,
+      "category": "papers",
+      "task_id": "author_folders",
+      "grpo": {
+        "status": "MODEL_FAIL",
+        "pass": false,
+        "turns": 9,
+        "tool_calls": 8,
+        "runtime_seconds": 195.4959900379181,
+        "termination_reason": "stop",
+        "verifier_error": "Verification failed with no error message",
+        "verifier_failures": [
+          "❌ 'frequent_authors' directory not found",
+          "❌ Missing directory for frequent author: zhe_chen",
+          "❌ Missing directory for frequent author: wenhai_wang",
+          "❌ Missing directory for frequent author: jinguo_zhu",
+          "❌ Missing directory for frequent author: yu_qiao",
+          "❌ Missing directory for frequent author: hongsheng_li",
+          "❌ Missing directory for frequent author: haowei_zhang",
+          "❌ Missing directory for frequent author: xiaokang_chen"
+        ],
+        "raw_meta": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_06_papers_author_folders/pilot/openai/mcpmark-grpo__filesystem/run-1/papers__author_folders/meta.json",
+        "raw_messages": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_06_papers_author_folders/pilot/openai/mcpmark-grpo__filesystem/run-1/papers__author_folders/messages.json",
+        "raw_log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_06_papers_author_folders/pipeline.log"
+      },
+      "cpi3": {
+        "status": "INFRA_FAILURE",
+        "log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_06_papers_author_folders/pipeline.log"
+      }
+    },
+    {
+      "index": 7,
+      "category": "student_database",
+      "task_id": "gradebased_score",
+      "grpo": {
+        "status": "MODEL_FAIL",
+        "pass": false,
+        "turns": 12,
+        "tool_calls": 11,
+        "runtime_seconds": 192.39545607566833,
+        "termination_reason": "stop",
+        "verifier_error": "Verification failed with no error message",
+        "verifier_failures": [
+          "❌ Missing expected numbers: [150, 42, 37, 43, 28, 122, 28, 31, 38, 47, 34, 116, 34, 32, 38, 38, 41, 108, 42]",
+          "❌ Grade-Based Score Analysis verification: FAIL"
+        ],
+        "raw_meta": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_07_student_database_gradebased_score/pilot/openai/mcpmark-grpo__filesystem/run-1/student_database__gradebased_score/meta.json",
+        "raw_messages": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_07_student_database_gradebased_score/pilot/openai/mcpmark-grpo__filesystem/run-1/student_database__gradebased_score/messages.json",
+        "raw_log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_07_student_database_gradebased_score/pipeline.log"
+      },
+      "cpi3": {
+        "status": "MODEL_FAIL",
+        "pass": false,
+        "turns": 24,
+        "tool_calls": 23,
+        "runtime_seconds": 195.77910685539246,
+        "termination_reason": "stop",
+        "verifier_error": "Verification failed with no error message",
+        "verifier_failures": [
+          "❌ File 'grade_summary.txt' not found",
+          "❌ Error reading grade_summary.txt file: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_student_database_gradebased_score_28779/grade_summary.txt'",
+          "❌ Error checking subjects: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_student_database_gradebased_score_28779/grade_summary.txt'",
+          "❌ Error verifying grade summary content: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_student_database_gradebased_score_28779/grade_summary.txt'",
+          "❌ Grade-Based Score Analysis verification: FAIL"
+        ],
+        "raw_meta": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_07_student_database_gradebased_score/pilot/openai/mcpmark-cpi3__filesystem/run-1/student_database__gradebased_score/meta.json",
+        "raw_messages": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_07_student_database_gradebased_score/pilot/openai/mcpmark-cpi3__filesystem/run-1/student_database__gradebased_score/messages.json",
+        "raw_log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_07_student_database_gradebased_score/pipeline.log"
+      }
+    },
+    {
+      "index": 8,
+      "category": "threestudio",
+      "task_id": "output_analysis",
+      "grpo": {
+        "status": "MODEL_FAIL",
+        "pass": false,
+        "turns": 5,
+        "tool_calls": 4,
+        "runtime_seconds": 93.45773577690125,
+        "termination_reason": "stop",
+        "verifier_error": "Verification failed with no error message",
+        "verifier_failures": [
+          "❌ File 'answer.txt' not found",
+          "❌ Error reading answer file: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_threestudio_output_analysis_27633/answer.txt'",
+          "❌ Error verifying line numbers: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_threestudio_output_analysis_27633/answer.txt'",
+          "❌ Error verifying file path: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_threestudio_output_analysis_27633/answer.txt'",
+          "❌ Task 2 verification: FAIL"
+        ],
+        "raw_meta": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_08_threestudio_output_analysis/pilot/openai/mcpmark-grpo__filesystem/run-1/threestudio__output_analysis/meta.json",
+        "raw_messages": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_08_threestudio_output_analysis/pilot/openai/mcpmark-grpo__filesystem/run-1/threestudio__output_analysis/messages.json",
+        "raw_log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_08_threestudio_output_analysis/pipeline.log"
+      },
+      "cpi3": {
+        "status": "MODEL_FAIL",
+        "pass": false,
+        "turns": 30,
+        "tool_calls": 29,
+        "runtime_seconds": 356.381050825119,
+        "termination_reason": "stop",
+        "verifier_error": "Verification failed with no error message",
+        "verifier_failures": [
+          "❌ File 'answer.txt' not found",
+          "❌ Error reading answer file: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_threestudio_output_analysis_29964/answer.txt'",
+          "❌ Error verifying line numbers: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_threestudio_output_analysis_29964/answer.txt'",
+          "❌ Error verifying file path: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_threestudio_output_analysis_29964/answer.txt'",
+          "❌ Task 2 verification: FAIL"
+        ],
+        "raw_meta": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_08_threestudio_output_analysis/pilot/openai/mcpmark-cpi3__filesystem/run-1/threestudio__output_analysis/meta.json",
+        "raw_messages": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_08_threestudio_output_analysis/pilot/openai/mcpmark-cpi3__filesystem/run-1/threestudio__output_analysis/messages.json",
+        "raw_log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_08_threestudio_output_analysis/pipeline.log"
+      }
+    },
+    {
+      "index": 9,
+      "category": "votenet",
+      "task_id": "debugging",
+      "grpo": {
+        "status": "MODEL_FAIL",
+        "pass": false,
+        "turns": 7,
+        "tool_calls": 6,
+        "runtime_seconds": 61.10051894187927,
+        "termination_reason": "stop",
+        "verifier_error": "Verification failed with no error message",
+        "verifier_failures": [
+          "❌ File 'answer.txt' not found",
+          "❌ Error reading answer file: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_votenet_debugging_28294/answer.txt'",
+          "❌ Error verifying answer structure: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_votenet_debugging_28294/answer.txt'",
+          "❌ Error verifying file existence: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_votenet_debugging_28294/answer.txt'",
+          "❌ Error verifying bug fix: [Errno 2] No such file or directory: '/home/u2024311031/workspace/benchmarks/mcpmark_verified_cd45b7f/.mcpmark_backups/backup_filesystem_votenet_debugging_28294/answer.txt'",
+          "❌ Task verification: FAIL"
+        ],
+        "raw_meta": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_09_votenet_debugging/pilot/openai/mcpmark-grpo__filesystem/run-1/votenet__debugging/meta.json",
+        "raw_messages": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_09_votenet_debugging/pilot/openai/mcpmark-grpo__filesystem/run-1/votenet__debugging/messages.json",
+        "raw_log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/grpo_results/pilot10/task_09_votenet_debugging/pipeline.log"
+      },
+      "cpi3": {
+        "status": "INFRA_FAILURE",
+        "log": "/home/u2024311031/workspace/benchmarks/mcpmark_pilot_runtime/cpi3_results/pilot10/task_09_votenet_debugging/pipeline.log"
+      }
+    }
+  ]
+}

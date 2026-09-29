@@ -1,0 +1,121 @@
+{
+  "schema_version": "mcpmark_verified_filesystem_paired_pilot_v1",
+  "mcpmark_commit": "cd45b7f57923b9b3985467f5139927575f83141c",
+  "source": "official GitHub codeload archive pinned to commit; git clone blocked by remote network",
+  "suite": "standard",
+  "mcp": "filesystem",
+  "seed": 20260929,
+  "selection_rule": "exactly one uniformly sampled task per sorted category using Python random.Random(20260929), sorted task_id/meta path; predeclared size_classification smoke excluded from formal pool",
+  "tasks": [
+    {
+      "index": 0,
+      "category": "desktop",
+      "task_id": "project_management",
+      "difficulty": "L3",
+      "tags": [
+        "file organization"
+      ],
+      "meta_path": "tasks/filesystem/standard/desktop/project_management/meta.json"
+    },
+    {
+      "index": 1,
+      "category": "desktop_template",
+      "task_id": "file_arrangement",
+      "difficulty": "L3",
+      "tags": [
+        "file organization"
+      ],
+      "meta_path": "tasks/filesystem/standard/desktop_template/file_arrangement/meta.json"
+    },
+    {
+      "index": 2,
+      "category": "file_context",
+      "task_id": "file_splitting",
+      "difficulty": "L3",
+      "tags": [
+        "content transformation"
+      ],
+      "meta_path": "tasks/filesystem/standard/file_context/file_splitting/meta.json"
+    },
+    {
+      "index": 3,
+      "category": "file_property",
+      "task_id": "time_classification",
+      "difficulty": "L3",
+      "tags": [
+        "file organization",
+        "data extraction",
+        "pattern analysis"
+      ],
+      "meta_path": "tasks/filesystem/standard/file_property/time_classification/meta.json"
+    },
+    {
+      "index": 4,
+      "category": "folder_structure",
+      "task_id": "structure_analysis",
+      "difficulty": "L3",
+      "tags": [
+        "pattern analysis",
+        "data extraction"
+      ],
+      "meta_path": "tasks/filesystem/standard/folder_structure/structure_analysis/meta.json"
+    },
+    {
+      "index": 5,
+      "category": "legal_document",
+      "task_id": "individual_comments",
+      "difficulty": "L3",
+      "tags": [
+        "data extraction",
+        "cross-referencing",
+        "pattern analysis"
+      ],
+      "meta_path": "tasks/filesystem/standard/legal_document/individual_comments/meta.json"
+    },
+    {
+      "index": 6,
+      "category": "papers",
+      "task_id": "author_folders",
+      "difficulty": "L3",
+      "tags": [
+        "data extraction",
+        "file organization",
+        "pattern analysis"
+      ],
+      "meta_path": "tasks/filesystem/standard/papers/author_folders/meta.json"
+    },
+    {
+      "index": 7,
+      "category": "student_database",
+      "task_id": "gradebased_score",
+      "difficulty": "L3",
+      "tags": [
+        "data extraction",
+        "content transformation",
+        "pattern analysis"
+      ],
+      "meta_path": "tasks/filesystem/standard/student_database/gradebased_score/meta.json"
+    },
+    {
+      "index": 8,
+      "category": "threestudio",
+      "task_id": "output_analysis",
+      "difficulty": "L3",
+      "tags": [
+        "code exploration",
+        "pattern analysis"
+      ],
+      "meta_path": "tasks/filesystem/standard/threestudio/output_analysis/meta.json"
+    },
+    {
+      "index": 9,
+      "category": "votenet",
+      "task_id": "debugging",
+      "difficulty": "L3",
+      "tags": [
+        "code exploration"
+      ],
+      "meta_path": "tasks/filesystem/standard/votenet/debugging/meta.json"
+    }
+  ]
+}
