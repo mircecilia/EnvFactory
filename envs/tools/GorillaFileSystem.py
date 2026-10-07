@@ -83,7 +83,8 @@ class Directory:
         return self.contents.get(item_name)
 
     def _list_contents(self) -> List[str]:
-        return list(self.contents.keys())
+        # Directory entries are an unordered collection, not insertion history.
+        return sorted(self.contents.keys())
 
     def __repr__(self):
         return f"<Directory: {self.name}, Parent: {self.parent.name if self.parent else None}, Contents: {self.contents}>"

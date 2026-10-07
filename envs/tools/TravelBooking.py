@@ -206,7 +206,7 @@ class TravelBookingAPI:
 
     def list_airports(self) -> dict:
         """List all available airport codes."""
-        return {"airport_codes": list(set(self.airport_city_map.values()))}
+        return {"airport_codes": sorted(set(self.airport_city_map.values()))}
 
     def get_airport_by_city(self, city_name: str) -> dict:
         """Get airport code for given city name."""

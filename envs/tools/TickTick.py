@@ -109,6 +109,10 @@ class TickTickAPI:
         project = self.projects[project_id]
         project_tasks = [task.model_dump() for task in self.tasks.values() if task.project_id == project_id]
         project_cols = [col.model_dump() for col in self.columns.values() if col.project_id == project_id]
+        project_tasks.sort(key=lambda task: task["taskId"])
+        # Respect explicit column ordering, rather than sorting a ranked list.
+        column_order = {column_id: index for index, column_id in enumerate(self.project_columns.get(project_id, []))}
+        project_cols.sort(key=lambda column: (column_order.get(column["column_id"], len(column_order)), column["column_id"]))
         
         return {
             "project_id": project_id,

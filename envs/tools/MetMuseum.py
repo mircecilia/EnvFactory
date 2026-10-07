@@ -138,7 +138,7 @@ class MetMuseumAPI:
 
         return {
             "total": len(matching_ids),
-            "objectIds": matching_ids
+            "objectIds": sorted(matching_ids)
         }
 
     def get_museum_object(self, objectId: str) -> dict:

@@ -370,6 +370,8 @@ class WhatsAppAPI:
             chat for chat in self.chats.values()
             if chat.archived == archived
         ]
+        # No relevance/chronological rank is specified for this collection.
+        filtered_chats.sort(key=lambda chat: chat.phone)
         
         if limit:
             filtered_chats = filtered_chats[:limit]

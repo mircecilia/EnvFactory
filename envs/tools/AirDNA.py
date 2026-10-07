@@ -219,6 +219,7 @@ class AirDNAAPI:
                     "state": market.state
                 })
         
+        matching_markets.sort(key=lambda market: market["market_id"])
         return {"markets": matching_markets}
 
 # Section 3: MCP Tools

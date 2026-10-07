@@ -114,7 +114,8 @@ class EtsyServer:
     def search_listings(self, keywords: str, category: Optional[str], min_price: Optional[float], max_price: Optional[float], limit: int) -> dict:
         """Search for active listings using keywords and filters."""
         results = []
-        for listing in self.listings.values():
+        # Stable selection BEFORE applying the limit; no ranking is specified.
+        for listing in sorted(self.listings.values(), key=lambda item: item.listing_id):
             if keywords.lower() not in listing.title.lower() and keywords.lower() not in listing.description.lower() and not any(keywords.lower() in tag.lower() for tag in listing.tags):
                 continue
             if category and category.lower() not in listing.tags:
