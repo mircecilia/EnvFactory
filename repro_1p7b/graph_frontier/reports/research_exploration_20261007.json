@@ -1,0 +1,3395 @@
+{
+  "seed": 20261007,
+  "bootstrap_replicates": 5000,
+  "permutation_replicates": 5000,
+  "scope": "MAIN correction exposure; primary controls=train only; heldout separate",
+  "exposure_proof": "successful checkpoint trainer_state + matching attempt result, contiguous optimizer steps, per-rank exposure_tags + immutable plan/source row identity; log does not include per-example task IDs",
+  "selection": "128 natural rows sampled uniformly without replacement; possible one parity filler; every previous crossed anchor exposed once, not randomized",
+  "main_exposed_task_transitions": 341,
+  "unexposed_train_task_transitions": 3766,
+  "exposed_main_count_distribution": {
+    "1": 341
+  },
+  "unexposed_with_other_exposure": 101,
+  "comparison": {
+    "exact_crossed": {
+      "exposed": {
+        "positive": 23,
+        "valid": 309,
+        "unknown": 32,
+        "rate": 0.0744336569579288
+      },
+      "unexposed": {
+        "positive": 282,
+        "valid": 3495,
+        "unknown": 271,
+        "rate": 0.08068669527896996
+      },
+      "difference": -0.006253038321041154,
+      "relative_difference": -0.07749776217035043,
+      "risk_ratio": 0.9225022378296496,
+      "task_cluster_bootstrap_95ci": [
+        -0.035308056887211156,
+        0.0249746253710506
+      ],
+      "fisher_two_sided_p_descriptive": 0.8267631451717976
+    },
+    "progressed": {
+      "exposed": {
+        "positive": 21,
+        "valid": 325,
+        "unknown": 16,
+        "rate": 0.06461538461538462
+      },
+      "unexposed": {
+        "positive": 200,
+        "valid": 3659,
+        "unknown": 107,
+        "rate": 0.05465974309920743
+      },
+      "difference": 0.009955641516177186,
+      "relative_difference": 0.18213846153846158,
+      "risk_ratio": 1.1821384615384616,
+      "task_cluster_bootstrap_95ci": [
+        -0.017819585895119092,
+        0.038889689838843874
+      ],
+      "fisher_two_sided_p_descriptive": 0.44745855384032557
+    },
+    "same_frontier": {
+      "exposed": {
+        "positive": 292,
+        "valid": 325,
+        "unknown": 16,
+        "rate": 0.8984615384615384
+      },
+      "unexposed": {
+        "positive": 3333,
+        "valid": 3659,
+        "unknown": 107,
+        "rate": 0.9109046187482919
+      },
+      "difference": -0.01244308028675345,
+      "relative_difference": -0.013660135244293659,
+      "risk_ratio": 0.9863398647557063,
+      "task_cluster_bootstrap_95ci": [
+        -0.047175023413311104,
+        0.019787565430362263
+      ],
+      "fisher_two_sided_p_descriptive": 0.4785822693840196
+    },
+    "regressed": {
+      "exposed": {
+        "positive": 12,
+        "valid": 325,
+        "unknown": 16,
+        "rate": 0.036923076923076927
+      },
+      "unexposed": {
+        "positive": 126,
+        "valid": 3659,
+        "unknown": 107,
+        "rate": 0.03443563815250068
+      },
+      "difference": 0.0024874387705762432,
+      "relative_difference": 0.07223443223443238,
+      "risk_ratio": 1.0722344322344324,
+      "task_cluster_bootstrap_95ci": [
+        -0.017356325948612788,
+        0.024895852205273152
+      ],
+      "fisher_two_sided_p_descriptive": 0.7522425833554441
+    },
+    "final_success": {
+      "exposed": {
+        "positive": 20,
+        "valid": 325,
+        "unknown": 16,
+        "rate": 0.06153846153846154
+      },
+      "unexposed": {
+        "positive": 278,
+        "valid": 3659,
+        "unknown": 107,
+        "rate": 0.07597704290789833
+      },
+      "difference": -0.014438581369436793,
+      "relative_difference": -0.19003873824017703,
+      "risk_ratio": 0.809961261759823,
+      "task_cluster_bootstrap_95ci": [
+        -0.0410851512327692,
+        0.014260027065153202
+      ],
+      "fisher_two_sided_p_descriptive": 0.38015790760689394
+    }
+  },
+  "per_cycle": {
+    "0": {
+      "exposed_raw": 62,
+      "unexposed_raw": 690,
+      "comparison": {
+        "exact_crossed": {
+          "exposed": {
+            "positive": 6,
+            "valid": 47,
+            "unknown": 15,
+            "rate": 0.1276595744680851
+          },
+          "unexposed": {
+            "positive": 73,
+            "valid": 581,
+            "unknown": 109,
+            "rate": 0.12564543889845095
+          },
+          "difference": 0.0020141355696341456,
+          "relative_difference": 0.016030311862430757,
+          "risk_ratio": 1.0160303118624308,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 1.0
+        },
+        "progressed": {
+          "exposed": {
+            "positive": 14,
+            "valid": 55,
+            "unknown": 7,
+            "rate": 0.2545454545454545
+          },
+          "unexposed": {
+            "positive": 124,
+            "valid": 632,
+            "unknown": 58,
+            "rate": 0.1962025316455696
+          },
+          "difference": 0.05834292289988491,
+          "relative_difference": 0.2973607038123167,
+          "risk_ratio": 1.2973607038123167,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 0.29537654172138905
+        },
+        "same_frontier": {
+          "exposed": {
+            "positive": 41,
+            "valid": 55,
+            "unknown": 7,
+            "rate": 0.7454545454545455
+          },
+          "unexposed": {
+            "positive": 500,
+            "valid": 632,
+            "unknown": 58,
+            "rate": 0.7911392405063291
+          },
+          "difference": -0.04568469505178363,
+          "relative_difference": -0.057745454545454544,
+          "risk_ratio": 0.9422545454545455,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 0.49120479589160426
+        },
+        "regressed": {
+          "exposed": {
+            "positive": 0,
+            "valid": 55,
+            "unknown": 7,
+            "rate": 0.0
+          },
+          "unexposed": {
+            "positive": 8,
+            "valid": 632,
+            "unknown": 58,
+            "rate": 0.012658227848101266
+          },
+          "difference": -0.012658227848101266,
+          "relative_difference": -1.0,
+          "risk_ratio": 0.0,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 1.0
+        },
+        "final_success": {
+          "exposed": {
+            "positive": 2,
+            "valid": 55,
+            "unknown": 7,
+            "rate": 0.03636363636363636
+          },
+          "unexposed": {
+            "positive": 18,
+            "valid": 632,
+            "unknown": 58,
+            "rate": 0.028481012658227847
+          },
+          "difference": 0.007882623705408515,
+          "relative_difference": 0.2767676767676768,
+          "risk_ratio": 1.2767676767676768,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 0.6700293751513337
+        }
+      },
+      "heldout": {
+        "exact_crossed": {
+          "positive": 21,
+          "valid": 178,
+          "unknown": 28,
+          "rate": 0.11797752808988764
+        },
+        "progressed": {
+          "positive": 39,
+          "valid": 196,
+          "unknown": 10,
+          "rate": 0.1989795918367347
+        },
+        "same_frontier": {
+          "positive": 155,
+          "valid": 196,
+          "unknown": 10,
+          "rate": 0.7908163265306123
+        },
+        "regressed": {
+          "positive": 2,
+          "valid": 196,
+          "unknown": 10,
+          "rate": 0.01020408163265306
+        },
+        "final_success": {
+          "positive": 4,
+          "valid": 196,
+          "unknown": 10,
+          "rate": 0.02040816326530612
+        }
+      }
+    },
+    "1": {
+      "exposed_raw": 88,
+      "unexposed_raw": 933,
+      "comparison": {
+        "exact_crossed": {
+          "exposed": {
+            "positive": 1,
+            "valid": 82,
+            "unknown": 6,
+            "rate": 0.012195121951219513
+          },
+          "unexposed": {
+            "positive": 18,
+            "valid": 895,
+            "unknown": 38,
+            "rate": 0.02011173184357542
+          },
+          "difference": -0.007916609892355906,
+          "relative_difference": -0.39363143631436315,
+          "risk_ratio": 0.6063685636856369,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 1.0
+        },
+        "progressed": {
+          "exposed": {
+            "positive": 4,
+            "valid": 85,
+            "unknown": 3,
+            "rate": 0.047058823529411764
+          },
+          "unexposed": {
+            "positive": 32,
+            "valid": 910,
+            "unknown": 23,
+            "rate": 0.035164835164835165
+          },
+          "difference": 0.0118939883645766,
+          "relative_difference": 0.33823529411764697,
+          "risk_ratio": 1.338235294117647,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 0.5402120911300751
+        },
+        "same_frontier": {
+          "exposed": {
+            "positive": 81,
+            "valid": 85,
+            "unknown": 3,
+            "rate": 0.9529411764705882
+          },
+          "unexposed": {
+            "positive": 870,
+            "valid": 910,
+            "unknown": 23,
+            "rate": 0.9560439560439561
+          },
+          "difference": -0.0031027795733679087,
+          "relative_difference": -0.0032454361054767844,
+          "risk_ratio": 0.9967545638945232,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 0.7846941657704765
+        },
+        "regressed": {
+          "exposed": {
+            "positive": 0,
+            "valid": 85,
+            "unknown": 3,
+            "rate": 0.0
+          },
+          "unexposed": {
+            "positive": 8,
+            "valid": 910,
+            "unknown": 23,
+            "rate": 0.008791208791208791
+          },
+          "difference": -0.008791208791208791,
+          "relative_difference": -1.0,
+          "risk_ratio": 0.0,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 1.0
+        },
+        "final_success": {
+          "exposed": {
+            "positive": 0,
+            "valid": 85,
+            "unknown": 3,
+            "rate": 0.0
+          },
+          "unexposed": {
+            "positive": 4,
+            "valid": 910,
+            "unknown": 23,
+            "rate": 0.004395604395604396
+          },
+          "difference": -0.004395604395604396,
+          "relative_difference": -1.0,
+          "risk_ratio": 0.0,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 1.0
+        }
+      },
+      "heldout": {
+        "exact_crossed": {
+          "positive": 3,
+          "valid": 261,
+          "unknown": 11,
+          "rate": 0.011494252873563218
+        },
+        "progressed": {
+          "positive": 7,
+          "valid": 265,
+          "unknown": 7,
+          "rate": 0.026415094339622643
+        },
+        "same_frontier": {
+          "positive": 255,
+          "valid": 265,
+          "unknown": 7,
+          "rate": 0.9622641509433962
+        },
+        "regressed": {
+          "positive": 3,
+          "valid": 265,
+          "unknown": 7,
+          "rate": 0.011320754716981131
+        },
+        "final_success": {
+          "positive": 0,
+          "valid": 265,
+          "unknown": 7,
+          "rate": 0.0
+        }
+      }
+    },
+    "2": {
+      "exposed_raw": 96,
+      "unexposed_raw": 1049,
+      "comparison": {
+        "exact_crossed": {
+          "exposed": {
+            "positive": 6,
+            "valid": 94,
+            "unknown": 2,
+            "rate": 0.06382978723404255
+          },
+          "unexposed": {
+            "positive": 66,
+            "valid": 1003,
+            "unknown": 46,
+            "rate": 0.06580259222333001
+          },
+          "difference": -0.001972804989287466,
+          "relative_difference": -0.029980657640232278,
+          "risk_ratio": 0.9700193423597677,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 1.0
+        },
+        "progressed": {
+          "exposed": {
+            "positive": 3,
+            "valid": 95,
+            "unknown": 1,
+            "rate": 0.031578947368421054
+          },
+          "unexposed": {
+            "positive": 23,
+            "valid": 1031,
+            "unknown": 18,
+            "rate": 0.02230843840931135
+          },
+          "difference": 0.009270508959109705,
+          "relative_difference": 0.4155606407322654,
+          "risk_ratio": 1.4155606407322654,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 0.4765016168281511
+        },
+        "same_frontier": {
+          "exposed": {
+            "positive": 89,
+            "valid": 95,
+            "unknown": 1,
+            "rate": 0.9368421052631579
+          },
+          "unexposed": {
+            "positive": 986,
+            "valid": 1031,
+            "unknown": 18,
+            "rate": 0.95635305528613
+          },
+          "difference": -0.019510950022972096,
+          "relative_difference": -0.020401409202519538,
+          "risk_ratio": 0.9795985907974805,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 0.4332673939363685
+        },
+        "regressed": {
+          "exposed": {
+            "positive": 3,
+            "valid": 95,
+            "unknown": 1,
+            "rate": 0.031578947368421054
+          },
+          "unexposed": {
+            "positive": 22,
+            "valid": 1031,
+            "unknown": 18,
+            "rate": 0.02133850630455868
+          },
+          "difference": 0.010240441063862373,
+          "relative_difference": 0.47990430622009583,
+          "risk_ratio": 1.4799043062200958,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 0.4617856233335776
+        },
+        "final_success": {
+          "exposed": {
+            "positive": 4,
+            "valid": 95,
+            "unknown": 1,
+            "rate": 0.042105263157894736
+          },
+          "unexposed": {
+            "positive": 75,
+            "valid": 1031,
+            "unknown": 18,
+            "rate": 0.07274490785645005
+          },
+          "difference": -0.03063964469855531,
+          "relative_difference": -0.42119298245614034,
+          "risk_ratio": 0.5788070175438597,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 0.3979784964043984
+        }
+      },
+      "heldout": {
+        "exact_crossed": {
+          "positive": 16,
+          "valid": 285,
+          "unknown": 16,
+          "rate": 0.056140350877192984
+        },
+        "progressed": {
+          "positive": 4,
+          "valid": 291,
+          "unknown": 10,
+          "rate": 0.013745704467353952
+        },
+        "same_frontier": {
+          "positive": 281,
+          "valid": 291,
+          "unknown": 10,
+          "rate": 0.9656357388316151
+        },
+        "regressed": {
+          "positive": 6,
+          "valid": 291,
+          "unknown": 10,
+          "rate": 0.020618556701030927
+        },
+        "final_success": {
+          "positive": 19,
+          "valid": 291,
+          "unknown": 10,
+          "rate": 0.06529209621993128
+        }
+      }
+    },
+    "3": {
+      "exposed_raw": 95,
+      "unexposed_raw": 1094,
+      "comparison": {
+        "exact_crossed": {
+          "exposed": {
+            "positive": 10,
+            "valid": 86,
+            "unknown": 9,
+            "rate": 0.11627906976744186
+          },
+          "unexposed": {
+            "positive": 125,
+            "valid": 1016,
+            "unknown": 78,
+            "rate": 0.12303149606299213
+          },
+          "difference": -0.006752426295550271,
+          "relative_difference": -0.05488372093023264,
+          "risk_ratio": 0.9451162790697674,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 1.0
+        },
+        "progressed": {
+          "exposed": {
+            "positive": 0,
+            "valid": 90,
+            "unknown": 5,
+            "rate": 0.0
+          },
+          "unexposed": {
+            "positive": 21,
+            "valid": 1086,
+            "unknown": 8,
+            "rate": 0.019337016574585635
+          },
+          "difference": -0.019337016574585635,
+          "relative_difference": -1.0,
+          "risk_ratio": 0.0,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 0.39813691106195237
+        },
+        "same_frontier": {
+          "exposed": {
+            "positive": 81,
+            "valid": 90,
+            "unknown": 5,
+            "rate": 0.9
+          },
+          "unexposed": {
+            "positive": 977,
+            "valid": 1086,
+            "unknown": 8,
+            "rate": 0.8996316758747698
+          },
+          "difference": 0.00036832412523024605,
+          "relative_difference": 0.0004094165813715023,
+          "risk_ratio": 1.0004094165813715,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 1.0
+        },
+        "regressed": {
+          "exposed": {
+            "positive": 9,
+            "valid": 90,
+            "unknown": 5,
+            "rate": 0.1
+          },
+          "unexposed": {
+            "positive": 88,
+            "valid": 1086,
+            "unknown": 8,
+            "rate": 0.08103130755064457
+          },
+          "difference": 0.018968692449355437,
+          "relative_difference": 0.23409090909090913,
+          "risk_ratio": 1.2340909090909091,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 0.5477100664069967
+        },
+        "final_success": {
+          "exposed": {
+            "positive": 14,
+            "valid": 90,
+            "unknown": 5,
+            "rate": 0.15555555555555556
+          },
+          "unexposed": {
+            "positive": 181,
+            "valid": 1086,
+            "unknown": 8,
+            "rate": 0.16666666666666666
+          },
+          "difference": -0.0111111111111111,
+          "relative_difference": -0.06666666666666665,
+          "risk_ratio": 0.9333333333333333,
+          "task_cluster_bootstrap_95ci": null,
+          "fisher_two_sided_p_descriptive": 0.8832656970143162
+        }
+      },
+      "heldout": {
+        "exact_crossed": {
+          "positive": 36,
+          "valid": 279,
+          "unknown": 15,
+          "rate": 0.12903225806451613
+        },
+        "progressed": {
+          "positive": 7,
+          "valid": 293,
+          "unknown": 1,
+          "rate": 0.023890784982935155
+        },
+        "same_frontier": {
+          "positive": 258,
+          "valid": 293,
+          "unknown": 1,
+          "rate": 0.8805460750853242
+        },
+        "regressed": {
+          "positive": 28,
+          "valid": 293,
+          "unknown": 1,
+          "rate": 0.09556313993174062
+        },
+        "final_success": {
+          "positive": 44,
+          "valid": 293,
+          "unknown": 1,
+          "rate": 0.15017064846416384
+        }
+      }
+    }
+  },
+  "by_regime": {
+    "START": {
+      "exact_crossed": {
+        "exposed": {
+          "positive": 3,
+          "valid": 127,
+          "unknown": 6,
+          "rate": 0.023622047244094488
+        },
+        "unexposed": {
+          "positive": 34,
+          "valid": 1521,
+          "unknown": 66,
+          "rate": 0.022353714661406968
+        },
+        "difference": 0.0012683325826875202,
+        "relative_difference": 0.05673923112552104,
+        "risk_ratio": 1.056739231125521,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.7599048286766099
+      },
+      "progressed": {
+        "exposed": {
+          "positive": 3,
+          "valid": 127,
+          "unknown": 6,
+          "rate": 0.023622047244094488
+        },
+        "unexposed": {
+          "positive": 61,
+          "valid": 1548,
+          "unknown": 39,
+          "rate": 0.03940568475452196
+        },
+        "difference": -0.015783637510427474,
+        "relative_difference": -0.4005421453465857,
+        "risk_ratio": 0.5994578546534143,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.47672156080696865
+      },
+      "same_frontier": {
+        "exposed": {
+          "positive": 124,
+          "valid": 127,
+          "unknown": 6,
+          "rate": 0.9763779527559056
+        },
+        "unexposed": {
+          "positive": 1487,
+          "valid": 1548,
+          "unknown": 39,
+          "rate": 0.960594315245478
+        },
+        "difference": 0.01578363751042755,
+        "relative_difference": 0.016431116924103373,
+        "risk_ratio": 1.0164311169241034,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.47672156080696865
+      },
+      "regressed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 127,
+          "unknown": 6,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 0,
+          "valid": 1548,
+          "unknown": 39,
+          "rate": 0.0
+        },
+        "difference": 0.0,
+        "relative_difference": null,
+        "risk_ratio": null,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "final_success": {
+        "exposed": {
+          "positive": 0,
+          "valid": 127,
+          "unknown": 6,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 6,
+          "valid": 1548,
+          "unknown": 39,
+          "rate": 0.003875968992248062
+        },
+        "difference": -0.003875968992248062,
+        "relative_difference": -1.0,
+        "risk_ratio": 0.0,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      }
+    },
+    "ADVANCE": {
+      "exact_crossed": {
+        "exposed": {
+          "positive": 7,
+          "valid": 96,
+          "unknown": 19,
+          "rate": 0.07291666666666667
+        },
+        "unexposed": {
+          "positive": 77,
+          "valid": 997,
+          "unknown": 120,
+          "rate": 0.07723169508525576
+        },
+        "difference": -0.0043150284185890925,
+        "relative_difference": -0.055871212121212044,
+        "risk_ratio": 0.944128787878788,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "progressed": {
+        "exposed": {
+          "positive": 18,
+          "valid": 107,
+          "unknown": 8,
+          "rate": 0.16822429906542055
+        },
+        "unexposed": {
+          "positive": 139,
+          "valid": 1059,
+          "unknown": 58,
+          "rate": 0.13125590179414542
+        },
+        "difference": 0.03696839727127513,
+        "relative_difference": 0.2816513144624486,
+        "risk_ratio": 1.2816513144624486,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.2977274925437873
+      },
+      "same_frontier": {
+        "exposed": {
+          "positive": 83,
+          "valid": 107,
+          "unknown": 8,
+          "rate": 0.7757009345794392
+        },
+        "unexposed": {
+          "positive": 873,
+          "valid": 1059,
+          "unknown": 58,
+          "rate": 0.8243626062322946
+        },
+        "difference": -0.0486616716528554,
+        "relative_difference": -0.059029450492982694,
+        "risk_ratio": 0.9409705495070173,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.23406787696432962
+      },
+      "regressed": {
+        "exposed": {
+          "positive": 6,
+          "valid": 107,
+          "unknown": 8,
+          "rate": 0.056074766355140186
+        },
+        "unexposed": {
+          "positive": 47,
+          "valid": 1059,
+          "unknown": 58,
+          "rate": 0.044381491973559964
+        },
+        "difference": 0.011693274381580222,
+        "relative_difference": 0.2634718631934778,
+        "risk_ratio": 1.2634718631934778,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.6229383792270522
+      },
+      "final_success": {
+        "exposed": {
+          "positive": 2,
+          "valid": 107,
+          "unknown": 8,
+          "rate": 0.018691588785046728
+        },
+        "unexposed": {
+          "positive": 26,
+          "valid": 1059,
+          "unknown": 58,
+          "rate": 0.024551463644948063
+        },
+        "difference": -0.005859874859901335,
+        "relative_difference": -0.2386772106398275,
+        "risk_ratio": 0.7613227893601725,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      }
+    },
+    "TERMINATE": {
+      "exact_crossed": {
+        "exposed": {
+          "positive": 13,
+          "valid": 86,
+          "unknown": 7,
+          "rate": 0.1511627906976744
+        },
+        "unexposed": {
+          "positive": 171,
+          "valid": 977,
+          "unknown": 85,
+          "rate": 0.1750255885363357
+        },
+        "difference": -0.023862797838661298,
+        "relative_difference": -0.13633890928872572,
+        "risk_ratio": 0.8636610907112743,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.6571402905672801
+      },
+      "progressed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 91,
+          "unknown": 2,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 0,
+          "valid": 1052,
+          "unknown": 10,
+          "rate": 0.0
+        },
+        "difference": 0.0,
+        "relative_difference": null,
+        "risk_ratio": null,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "same_frontier": {
+        "exposed": {
+          "positive": 85,
+          "valid": 91,
+          "unknown": 2,
+          "rate": 0.9340659340659341
+        },
+        "unexposed": {
+          "positive": 973,
+          "valid": 1052,
+          "unknown": 10,
+          "rate": 0.9249049429657795
+        },
+        "difference": 0.009160991100154559,
+        "relative_difference": 0.009904792021955489,
+        "risk_ratio": 1.0099047920219555,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "regressed": {
+        "exposed": {
+          "positive": 6,
+          "valid": 91,
+          "unknown": 2,
+          "rate": 0.06593406593406594
+        },
+        "unexposed": {
+          "positive": 79,
+          "valid": 1052,
+          "unknown": 10,
+          "rate": 0.07509505703422054
+        },
+        "difference": -0.0091609911001546,
+        "relative_difference": -0.12199193211851445,
+        "risk_ratio": 0.8780080678814856,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "final_success": {
+        "exposed": {
+          "positive": 18,
+          "valid": 91,
+          "unknown": 2,
+          "rate": 0.1978021978021978
+        },
+        "unexposed": {
+          "positive": 246,
+          "valid": 1052,
+          "unknown": 10,
+          "rate": 0.2338403041825095
+        },
+        "difference": -0.03603810638031171,
+        "relative_difference": -0.15411417850442244,
+        "risk_ratio": 0.8458858214955776,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.5170391182421422
+      }
+    }
+  },
+  "by_frontier_depth": {
+    "0": {
+      "exact_crossed": {
+        "exposed": {
+          "positive": 3,
+          "valid": 127,
+          "unknown": 6,
+          "rate": 0.023622047244094488
+        },
+        "unexposed": {
+          "positive": 34,
+          "valid": 1521,
+          "unknown": 66,
+          "rate": 0.022353714661406968
+        },
+        "difference": 0.0012683325826875202,
+        "relative_difference": 0.05673923112552104,
+        "risk_ratio": 1.056739231125521,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.7599048286766099
+      },
+      "progressed": {
+        "exposed": {
+          "positive": 3,
+          "valid": 127,
+          "unknown": 6,
+          "rate": 0.023622047244094488
+        },
+        "unexposed": {
+          "positive": 61,
+          "valid": 1548,
+          "unknown": 39,
+          "rate": 0.03940568475452196
+        },
+        "difference": -0.015783637510427474,
+        "relative_difference": -0.4005421453465857,
+        "risk_ratio": 0.5994578546534143,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.47672156080696865
+      },
+      "same_frontier": {
+        "exposed": {
+          "positive": 124,
+          "valid": 127,
+          "unknown": 6,
+          "rate": 0.9763779527559056
+        },
+        "unexposed": {
+          "positive": 1487,
+          "valid": 1548,
+          "unknown": 39,
+          "rate": 0.960594315245478
+        },
+        "difference": 0.01578363751042755,
+        "relative_difference": 0.016431116924103373,
+        "risk_ratio": 1.0164311169241034,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.47672156080696865
+      },
+      "regressed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 127,
+          "unknown": 6,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 0,
+          "valid": 1548,
+          "unknown": 39,
+          "rate": 0.0
+        },
+        "difference": 0.0,
+        "relative_difference": null,
+        "risk_ratio": null,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "final_success": {
+        "exposed": {
+          "positive": 0,
+          "valid": 127,
+          "unknown": 6,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 6,
+          "valid": 1548,
+          "unknown": 39,
+          "rate": 0.003875968992248062
+        },
+        "difference": -0.003875968992248062,
+        "relative_difference": -1.0,
+        "risk_ratio": 0.0,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      }
+    },
+    "1": {
+      "exact_crossed": {
+        "exposed": {
+          "positive": 11,
+          "valid": 104,
+          "unknown": 23,
+          "rate": 0.10576923076923077
+        },
+        "unexposed": {
+          "positive": 154,
+          "valid": 1162,
+          "unknown": 121,
+          "rate": 0.13253012048192772
+        },
+        "difference": -0.026760889712696953,
+        "relative_difference": -0.20192307692307698,
+        "risk_ratio": 0.798076923076923,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.5430778171146411
+      },
+      "progressed": {
+        "exposed": {
+          "positive": 15,
+          "valid": 117,
+          "unknown": 10,
+          "rate": 0.1282051282051282
+        },
+        "unexposed": {
+          "positive": 114,
+          "valid": 1246,
+          "unknown": 37,
+          "rate": 0.09149277688603531
+        },
+        "difference": 0.03671235131909288,
+        "relative_difference": 0.4012595591542958,
+        "risk_ratio": 1.4012595591542958,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.18817178841189558
+      },
+      "same_frontier": {
+        "exposed": {
+          "positive": 99,
+          "valid": 117,
+          "unknown": 10,
+          "rate": 0.8461538461538461
+        },
+        "unexposed": {
+          "positive": 1106,
+          "valid": 1246,
+          "unknown": 37,
+          "rate": 0.8876404494382022
+        },
+        "difference": -0.04148660328435605,
+        "relative_difference": -0.046738072054527735,
+        "risk_ratio": 0.9532619279454723,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.17578152741211495
+      },
+      "regressed": {
+        "exposed": {
+          "positive": 3,
+          "valid": 117,
+          "unknown": 10,
+          "rate": 0.02564102564102564
+        },
+        "unexposed": {
+          "positive": 26,
+          "valid": 1246,
+          "unknown": 37,
+          "rate": 0.02086677367576244
+        },
+        "difference": 0.004774251965263199,
+        "relative_difference": 0.2287968441814594,
+        "risk_ratio": 1.2287968441814594,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.7328010906724076
+      },
+      "final_success": {
+        "exposed": {
+          "positive": 10,
+          "valid": 117,
+          "unknown": 10,
+          "rate": 0.08547008547008547
+        },
+        "unexposed": {
+          "positive": 148,
+          "valid": 1246,
+          "unknown": 37,
+          "rate": 0.1187800963081862
+        },
+        "difference": -0.03331001083810073,
+        "relative_difference": -0.2804342804342804,
+        "risk_ratio": 0.7195657195657196,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.36392214418553986
+      }
+    },
+    "2": {
+      "exact_crossed": {
+        "exposed": {
+          "positive": 8,
+          "valid": 51,
+          "unknown": 3,
+          "rate": 0.1568627450980392
+        },
+        "unexposed": {
+          "positive": 71,
+          "valid": 516,
+          "unknown": 61,
+          "rate": 0.1375968992248062
+        },
+        "difference": 0.019265845873233017,
+        "relative_difference": 0.14001657000828494,
+        "risk_ratio": 1.140016570008285,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.6733937556415984
+      },
+      "progressed": {
+        "exposed": {
+          "positive": 3,
+          "valid": 54,
+          "unknown": 0,
+          "rate": 0.05555555555555555
+        },
+        "unexposed": {
+          "positive": 22,
+          "valid": 559,
+          "unknown": 18,
+          "rate": 0.03935599284436494
+        },
+        "difference": 0.016199562711190614,
+        "relative_difference": 0.41161616161616155,
+        "risk_ratio": 1.4116161616161615,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.47591443612777296
+      },
+      "same_frontier": {
+        "exposed": {
+          "positive": 47,
+          "valid": 54,
+          "unknown": 0,
+          "rate": 0.8703703703703703
+        },
+        "unexposed": {
+          "positive": 495,
+          "valid": 559,
+          "unknown": 18,
+          "rate": 0.8855098389982111
+        },
+        "difference": -0.015139468627840769,
+        "relative_difference": -0.017096894874672697,
+        "risk_ratio": 0.9829031051253273,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.6609766350092985
+      },
+      "regressed": {
+        "exposed": {
+          "positive": 4,
+          "valid": 54,
+          "unknown": 0,
+          "rate": 0.07407407407407407
+        },
+        "unexposed": {
+          "positive": 42,
+          "valid": 559,
+          "unknown": 18,
+          "rate": 0.07513416815742398
+        },
+        "difference": -0.0010600940833499078,
+        "relative_difference": -0.014109347442680886,
+        "risk_ratio": 0.9858906525573191,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "final_success": {
+        "exposed": {
+          "positive": 9,
+          "valid": 54,
+          "unknown": 0,
+          "rate": 0.16666666666666666
+        },
+        "unexposed": {
+          "positive": 93,
+          "valid": 559,
+          "unknown": 18,
+          "rate": 0.16636851520572452
+        },
+        "difference": 0.00029815146094214207,
+        "relative_difference": 0.0017921146953403522,
+        "risk_ratio": 1.0017921146953404,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      }
+    },
+    "3": {
+      "exact_crossed": {
+        "exposed": {
+          "positive": 1,
+          "valid": 19,
+          "unknown": 0,
+          "rate": 0.05263157894736842
+        },
+        "unexposed": {
+          "positive": 16,
+          "valid": 195,
+          "unknown": 18,
+          "rate": 0.08205128205128205
+        },
+        "difference": -0.029419703103913633,
+        "relative_difference": -0.35855263157894746,
+        "risk_ratio": 0.6414473684210525,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "progressed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 19,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 1,
+          "valid": 203,
+          "unknown": 10,
+          "rate": 0.0049261083743842365
+        },
+        "difference": -0.0049261083743842365,
+        "relative_difference": -1.0,
+        "risk_ratio": 0.0,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "same_frontier": {
+        "exposed": {
+          "positive": 16,
+          "valid": 19,
+          "unknown": 0,
+          "rate": 0.8421052631578947
+        },
+        "unexposed": {
+          "positive": 163,
+          "valid": 203,
+          "unknown": 10,
+          "rate": 0.8029556650246306
+        },
+        "difference": 0.03914959813326413,
+        "relative_difference": 0.0487568614788505,
+        "risk_ratio": 1.0487568614788505,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "regressed": {
+        "exposed": {
+          "positive": 3,
+          "valid": 19,
+          "unknown": 0,
+          "rate": 0.15789473684210525
+        },
+        "unexposed": {
+          "positive": 39,
+          "valid": 203,
+          "unknown": 10,
+          "rate": 0.1921182266009852
+        },
+        "difference": -0.034223489758879955,
+        "relative_difference": -0.17813765182186236,
+        "risk_ratio": 0.8218623481781376,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "final_success": {
+        "exposed": {
+          "positive": 1,
+          "valid": 19,
+          "unknown": 0,
+          "rate": 0.05263157894736842
+        },
+        "unexposed": {
+          "positive": 23,
+          "valid": 203,
+          "unknown": 10,
+          "rate": 0.11330049261083744
+        },
+        "difference": -0.06066891366346902,
+        "relative_difference": -0.5354691075514875,
+        "risk_ratio": 0.46453089244851253,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.7015936428412752
+      }
+    },
+    "4": {
+      "exact_crossed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 4,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 4,
+          "valid": 71,
+          "unknown": 4,
+          "rate": 0.056338028169014086
+        },
+        "difference": -0.056338028169014086,
+        "relative_difference": -1.0,
+        "risk_ratio": 0.0,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "progressed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 4,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 1,
+          "valid": 73,
+          "unknown": 2,
+          "rate": 0.0136986301369863
+        },
+        "difference": -0.0136986301369863,
+        "relative_difference": -1.0,
+        "risk_ratio": 0.0,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "same_frontier": {
+        "exposed": {
+          "positive": 4,
+          "valid": 4,
+          "unknown": 0,
+          "rate": 1.0
+        },
+        "unexposed": {
+          "positive": 56,
+          "valid": 73,
+          "unknown": 2,
+          "rate": 0.7671232876712328
+        },
+        "difference": 0.23287671232876717,
+        "relative_difference": 0.3035714285714286,
+        "risk_ratio": 1.3035714285714286,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.5701243280190648
+      },
+      "regressed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 4,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 16,
+          "valid": 73,
+          "unknown": 2,
+          "rate": 0.2191780821917808
+        },
+        "difference": -0.2191780821917808,
+        "relative_difference": -1.0,
+        "risk_ratio": 0.0,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.5744841218525429
+      },
+      "final_success": {
+        "exposed": {
+          "positive": 0,
+          "valid": 4,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 5,
+          "valid": 73,
+          "unknown": 2,
+          "rate": 0.0684931506849315
+        },
+        "difference": -0.0684931506849315,
+        "relative_difference": -1.0,
+        "risk_ratio": 0.0,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      }
+    },
+    "5": {
+      "exact_crossed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 3,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 1,
+          "valid": 22,
+          "unknown": 0,
+          "rate": 0.045454545454545456
+        },
+        "difference": -0.045454545454545456,
+        "relative_difference": -1.0,
+        "risk_ratio": 0.0,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "progressed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 3,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 0,
+          "valid": 22,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "difference": 0.0,
+        "relative_difference": null,
+        "risk_ratio": null,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "same_frontier": {
+        "exposed": {
+          "positive": 1,
+          "valid": 3,
+          "unknown": 0,
+          "rate": 0.3333333333333333
+        },
+        "unexposed": {
+          "positive": 19,
+          "valid": 22,
+          "unknown": 0,
+          "rate": 0.8636363636363636
+        },
+        "difference": -0.5303030303030303,
+        "relative_difference": -0.6140350877192983,
+        "risk_ratio": 0.38596491228070173,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.09130434782608696
+      },
+      "regressed": {
+        "exposed": {
+          "positive": 2,
+          "valid": 3,
+          "unknown": 0,
+          "rate": 0.6666666666666666
+        },
+        "unexposed": {
+          "positive": 3,
+          "valid": 22,
+          "unknown": 0,
+          "rate": 0.13636363636363635
+        },
+        "difference": 0.5303030303030303,
+        "relative_difference": 3.8888888888888893,
+        "risk_ratio": 4.888888888888889,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 0.09130434782608696
+      },
+      "final_success": {
+        "exposed": {
+          "positive": 0,
+          "valid": 3,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 1,
+          "valid": 22,
+          "unknown": 0,
+          "rate": 0.045454545454545456
+        },
+        "difference": -0.045454545454545456,
+        "relative_difference": -1.0,
+        "risk_ratio": 0.0,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      }
+    },
+    "6": {
+      "exact_crossed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 0,
+          "unknown": 0,
+          "rate": null
+        },
+        "unexposed": {
+          "positive": 0,
+          "valid": 3,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "difference": null
+      },
+      "progressed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 0,
+          "unknown": 0,
+          "rate": null
+        },
+        "unexposed": {
+          "positive": 0,
+          "valid": 3,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "difference": null
+      },
+      "same_frontier": {
+        "exposed": {
+          "positive": 0,
+          "valid": 0,
+          "unknown": 0,
+          "rate": null
+        },
+        "unexposed": {
+          "positive": 3,
+          "valid": 3,
+          "unknown": 0,
+          "rate": 1.0
+        },
+        "difference": null
+      },
+      "regressed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 0,
+          "unknown": 0,
+          "rate": null
+        },
+        "unexposed": {
+          "positive": 0,
+          "valid": 3,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "difference": null
+      },
+      "final_success": {
+        "exposed": {
+          "positive": 0,
+          "valid": 0,
+          "unknown": 0,
+          "rate": null
+        },
+        "unexposed": {
+          "positive": 0,
+          "valid": 3,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "difference": null
+      }
+    },
+    "7": {
+      "exact_crossed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 1,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 0,
+          "valid": 3,
+          "unknown": 1,
+          "rate": 0.0
+        },
+        "difference": 0.0,
+        "relative_difference": null,
+        "risk_ratio": null,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "progressed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 1,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 0,
+          "valid": 3,
+          "unknown": 1,
+          "rate": 0.0
+        },
+        "difference": 0.0,
+        "relative_difference": null,
+        "risk_ratio": null,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "same_frontier": {
+        "exposed": {
+          "positive": 1,
+          "valid": 1,
+          "unknown": 0,
+          "rate": 1.0
+        },
+        "unexposed": {
+          "positive": 3,
+          "valid": 3,
+          "unknown": 1,
+          "rate": 1.0
+        },
+        "difference": 0.0,
+        "relative_difference": 0.0,
+        "risk_ratio": 1.0,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "regressed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 1,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 0,
+          "valid": 3,
+          "unknown": 1,
+          "rate": 0.0
+        },
+        "difference": 0.0,
+        "relative_difference": null,
+        "risk_ratio": null,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      },
+      "final_success": {
+        "exposed": {
+          "positive": 0,
+          "valid": 1,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "unexposed": {
+          "positive": 0,
+          "valid": 3,
+          "unknown": 1,
+          "rate": 0.0
+        },
+        "difference": 0.0,
+        "relative_difference": null,
+        "risk_ratio": null,
+        "task_cluster_bootstrap_95ci": null,
+        "fisher_two_sided_p_descriptive": 1.0
+      }
+    },
+    "9": {
+      "exact_crossed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 0,
+          "unknown": 0,
+          "rate": null
+        },
+        "unexposed": {
+          "positive": 1,
+          "valid": 1,
+          "unknown": 0,
+          "rate": 1.0
+        },
+        "difference": null
+      },
+      "progressed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 0,
+          "unknown": 0,
+          "rate": null
+        },
+        "unexposed": {
+          "positive": 1,
+          "valid": 1,
+          "unknown": 0,
+          "rate": 1.0
+        },
+        "difference": null
+      },
+      "same_frontier": {
+        "exposed": {
+          "positive": 0,
+          "valid": 0,
+          "unknown": 0,
+          "rate": null
+        },
+        "unexposed": {
+          "positive": 0,
+          "valid": 1,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "difference": null
+      },
+      "regressed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 0,
+          "unknown": 0,
+          "rate": null
+        },
+        "unexposed": {
+          "positive": 0,
+          "valid": 1,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "difference": null
+      },
+      "final_success": {
+        "exposed": {
+          "positive": 0,
+          "valid": 0,
+          "unknown": 0,
+          "rate": null
+        },
+        "unexposed": {
+          "positive": 1,
+          "valid": 1,
+          "unknown": 0,
+          "rate": 1.0
+        },
+        "difference": null
+      }
+    },
+    "10": {
+      "exact_crossed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 0,
+          "unknown": 0,
+          "rate": null
+        },
+        "unexposed": {
+          "positive": 1,
+          "valid": 1,
+          "unknown": 0,
+          "rate": 1.0
+        },
+        "difference": null
+      },
+      "progressed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 0,
+          "unknown": 0,
+          "rate": null
+        },
+        "unexposed": {
+          "positive": 0,
+          "valid": 1,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "difference": null
+      },
+      "same_frontier": {
+        "exposed": {
+          "positive": 0,
+          "valid": 0,
+          "unknown": 0,
+          "rate": null
+        },
+        "unexposed": {
+          "positive": 1,
+          "valid": 1,
+          "unknown": 0,
+          "rate": 1.0
+        },
+        "difference": null
+      },
+      "regressed": {
+        "exposed": {
+          "positive": 0,
+          "valid": 0,
+          "unknown": 0,
+          "rate": null
+        },
+        "unexposed": {
+          "positive": 0,
+          "valid": 1,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "difference": null
+      },
+      "final_success": {
+        "exposed": {
+          "positive": 0,
+          "valid": 0,
+          "unknown": 0,
+          "rate": null
+        },
+        "unexposed": {
+          "positive": 1,
+          "valid": 1,
+          "unknown": 0,
+          "rate": 1.0
+        },
+        "difference": null
+      }
+    }
+  },
+  "matched_eligible": {
+    "exact_crossed": {
+      "matched_exposed": 305,
+      "all_exposed_valid": 309,
+      "discarded_exposed_no_common_support": 4,
+      "matched_control_count": 3200,
+      "strata": 69,
+      "difference": -0.0053784070822677525,
+      "conditional_permutation_p_descriptive": 0.7166566686662668
+    },
+    "progressed": {
+      "matched_exposed": 321,
+      "all_exposed_valid": 325,
+      "discarded_exposed_no_common_support": 4,
+      "matched_control_count": 3355,
+      "strata": 69,
+      "difference": 0.0010455860321516442,
+      "conditional_permutation_p_descriptive": 0.9616076784643072
+    },
+    "same_frontier": {
+      "matched_exposed": 321,
+      "all_exposed_valid": 325,
+      "discarded_exposed_no_common_support": 4,
+      "matched_control_count": 3355,
+      "strata": 69,
+      "difference": -0.008179701173184839,
+      "conditional_permutation_p_descriptive": 0.6126774645070986
+    },
+    "regressed": {
+      "matched_exposed": 321,
+      "all_exposed_valid": 325,
+      "discarded_exposed_no_common_support": 4,
+      "matched_control_count": 3355,
+      "strata": 69,
+      "difference": 0.007134115141033199,
+      "conditional_permutation_p_descriptive": 0.48110377924415115
+    },
+    "final_success": {
+      "matched_exposed": 321,
+      "all_exposed_valid": 325,
+      "discarded_exposed_no_common_support": 4,
+      "matched_control_count": 3355,
+      "strata": 69,
+      "difference": -0.009266380159183437,
+      "conditional_permutation_p_descriptive": 0.41311737652469505
+    }
+  },
+  "clean_unexposed_sensitivity": {
+    "exact_crossed": {
+      "exposed": {
+        "positive": 23,
+        "valid": 309,
+        "unknown": 32,
+        "rate": 0.0744336569579288
+      },
+      "unexposed": {
+        "positive": 268,
+        "valid": 3394,
+        "unknown": 269,
+        "rate": 0.07896287566293458
+      },
+      "difference": -0.0045292187050057775,
+      "relative_difference": -0.057358836883543374,
+      "risk_ratio": 0.9426411631164566,
+      "task_cluster_bootstrap_95ci": [
+        -0.03433284619738746,
+        0.02819702892213328
+      ],
+      "fisher_two_sided_p_descriptive": 0.9119572698802122
+    },
+    "progressed": {
+      "exposed": {
+        "positive": 21,
+        "valid": 325,
+        "unknown": 16,
+        "rate": 0.06461538461538462
+      },
+      "unexposed": {
+        "positive": 196,
+        "valid": 3558,
+        "unknown": 105,
+        "rate": 0.05508712759977515
+      },
+      "difference": 0.009528257015609463,
+      "relative_difference": 0.17296703296703297,
+      "risk_ratio": 1.172967032967033,
+      "task_cluster_bootstrap_95ci": [
+        -0.018821694687844167,
+        0.040231918183255784
+      ],
+      "fisher_two_sided_p_descriptive": 0.44969227627911335
+    },
+    "same_frontier": {
+      "exposed": {
+        "positive": 292,
+        "valid": 325,
+        "unknown": 16,
+        "rate": 0.8984615384615384
+      },
+      "unexposed": {
+        "positive": 3241,
+        "valid": 3558,
+        "unknown": 105,
+        "rate": 0.9109050028105677
+      },
+      "difference": -0.01244346434902932,
+      "relative_difference": -0.013660551111955077,
+      "risk_ratio": 0.9863394488880449,
+      "task_cluster_bootstrap_95ci": [
+        -0.048146923807609605,
+        0.021274083451663255
+      ],
+      "fisher_two_sided_p_descriptive": 0.4781380836247293
+    },
+    "regressed": {
+      "exposed": {
+        "positive": 12,
+        "valid": 325,
+        "unknown": 16,
+        "rate": 0.036923076923076927
+      },
+      "unexposed": {
+        "positive": 121,
+        "valid": 3558,
+        "unknown": 105,
+        "rate": 0.03400786958965711
+      },
+      "difference": 0.0029152073334198156,
+      "relative_difference": 0.0857215511760967,
+      "risk_ratio": 1.0857215511760967,
+      "task_cluster_bootstrap_95ci": [
+        -0.016755077769809383,
+        0.024996794588779563
+      ],
+      "fisher_two_sided_p_descriptive": 0.749722953113557
+    },
+    "final_success": {
+      "exposed": {
+        "positive": 20,
+        "valid": 325,
+        "unknown": 16,
+        "rate": 0.06153846153846154
+      },
+      "unexposed": {
+        "positive": 267,
+        "valid": 3558,
+        "unknown": 105,
+        "rate": 0.07504215851602024
+      },
+      "difference": -0.013503696977558696,
+      "relative_difference": -0.17994814174589457,
+      "risk_ratio": 0.8200518582541054,
+      "task_cluster_bootstrap_95ci": [
+        -0.040229498190683846,
+        0.014316646482060092
+      ],
+      "fisher_two_sided_p_descriptive": 0.438043353056422
+    }
+  },
+  "cycle_summaries": [
+    {
+      "cycle": 0,
+      "state_distribution": {
+        "ADVANCE": 441,
+        "START": 496,
+        "SUCCESS": 452,
+        "UNCERTAIN": 748,
+        "TERMINATE": 21
+      },
+      "frontier_depth_all_saved_distribution": {
+        "1": 656,
+        "0": 1218,
+        "2": 211,
+        "5": 2,
+        "3": 53,
+        "4": 15,
+        "9": 1,
+        "7": 2
+      },
+      "verified_frontier_depth_distribution": {
+        "1": 637,
+        "0": 496,
+        "2": 206,
+        "5": 2,
+        "3": 52,
+        "4": 14,
+        "9": 1,
+        "7": 2
+      },
+      "verified_frontier_mean": 0.9177304964539007,
+      "verified_first_error_depth_distribution": {
+        "1": 362,
+        "0": 496,
+        "3": 17,
+        "2": 74,
+        "4": 5,
+        "9": 1,
+        "7": 2,
+        "5": 1
+      },
+      "gold_progress_fraction_mean": 0.462773607401267,
+      "dependency_completion": "unknown: no authoritative dependency graph on these Official-RL tasks",
+      "tool_events_observed_tasks": 2155,
+      "tool_events_mean": 3.243155452436195,
+      "tool_events_distribution": {
+        "3": 297,
+        "1": 889,
+        "2": 529,
+        "9": 9,
+        "6": 24,
+        "11": 9,
+        "4": 150,
+        "14": 4,
+        "0": 20,
+        "5": 72,
+        "12": 33,
+        "7": 23,
+        "15": 2,
+        "8": 19,
+        "35": 2,
+        "23": 2,
+        "18": 4,
+        "25": 6,
+        "30": 5,
+        "16": 2,
+        "26": 2,
+        "10": 14,
+        "31": 2,
+        "22": 2,
+        "39": 1,
+        "19": 1,
+        "21": 1,
+        "13": 8,
+        "48": 1,
+        "24": 3,
+        "36": 4,
+        "38": 2,
+        "29": 2,
+        "324": 1,
+        "34": 2,
+        "20": 3,
+        "97": 1,
+        "41": 1,
+        "28": 2,
+        "27": 1
+      },
+      "premature_stop": 656,
+      "over_continuation": 21
+    },
+    {
+      "cycle": 1,
+      "state_distribution": {
+        "ADVANCE": 345,
+        "START": 528,
+        "TERMINATE": 420,
+        "UNCERTAIN": 671,
+        "SUCCESS": 194
+      },
+      "frontier_depth_all_saved_distribution": {
+        "1": 592,
+        "0": 1124,
+        "2": 310,
+        "5": 9,
+        "3": 93,
+        "4": 27,
+        "6": 1,
+        "10": 1,
+        "7": 1
+      },
+      "verified_frontier_depth_distribution": {
+        "1": 542,
+        "0": 528,
+        "2": 290,
+        "5": 9,
+        "3": 89,
+        "4": 26,
+        "6": 1,
+        "10": 1,
+        "7": 1
+      },
+      "verified_frontier_mean": 1.0497646267652994,
+      "verified_first_error_depth_distribution": {
+        "1": 431,
+        "0": 528,
+        "2": 225,
+        "5": 9,
+        "3": 75,
+        "4": 23,
+        "6": 1,
+        "7": 1
+      },
+      "gold_progress_fraction_mean": 0.5117953480428262,
+      "dependency_completion": "unknown: no authoritative dependency graph on these Official-RL tasks",
+      "tool_events_observed_tasks": 2158,
+      "tool_events_mean": 14.617238183503243,
+      "tool_events_distribution": {
+        "3": 70,
+        "12": 827,
+        "13": 120,
+        "1": 246,
+        "9": 23,
+        "6": 31,
+        "2": 163,
+        "18": 13,
+        "24": 74,
+        "36": 71,
+        "0": 19,
+        "48": 24,
+        "14": 84,
+        "46": 2,
+        "10": 20,
+        "5": 37,
+        "4": 66,
+        "8": 24,
+        "15": 59,
+        "16": 34,
+        "7": 19,
+        "20": 10,
+        "300": 3,
+        "52": 1,
+        "29": 3,
+        "35": 3,
+        "21": 7,
+        "37": 3,
+        "11": 10,
+        "42": 1,
+        "26": 5,
+        "60": 12,
+        "120": 1,
+        "33": 2,
+        "34": 5,
+        "30": 2,
+        "72": 3,
+        "31": 4,
+        "23": 4,
+        "336": 1,
+        "25": 2,
+        "17": 5,
+        "288": 1,
+        "44": 1,
+        "19": 8,
+        "22": 3,
+        "456": 1,
+        "360": 1,
+        "383": 1,
+        "41": 1,
+        "32": 4,
+        "27": 4,
+        "108": 2,
+        "49": 2,
+        "40": 1,
+        "85": 1,
+        "218": 1,
+        "216": 1,
+        "47": 1,
+        "372": 1,
+        "490": 1,
+        "84": 1,
+        "492": 1,
+        "28": 1,
+        "38": 3,
+        "370": 1,
+        "264": 1,
+        "413": 1
+      },
+      "premature_stop": 167,
+      "over_continuation": 420
+    },
+    {
+      "cycle": 2,
+      "state_distribution": {
+        "UNCERTAIN": 609,
+        "START": 554,
+        "TERMINATE": 531,
+        "ADVANCE": 361,
+        "SUCCESS": 103
+      },
+      "frontier_depth_all_saved_distribution": {
+        "1": 599,
+        "0": 1081,
+        "2": 332,
+        "5": 9,
+        "3": 104,
+        "4": 30,
+        "6": 1,
+        "10": 1,
+        "7": 1
+      },
+      "verified_frontier_depth_distribution": {
+        "0": 554,
+        "2": 306,
+        "1": 549,
+        "5": 9,
+        "3": 100,
+        "4": 28,
+        "6": 1,
+        "10": 1,
+        "7": 1
+      },
+      "verified_frontier_mean": 1.0593931568754036,
+      "verified_first_error_depth_distribution": {
+        "0": 554,
+        "2": 274,
+        "1": 487,
+        "5": 9,
+        "3": 93,
+        "4": 26,
+        "6": 1,
+        "10": 1,
+        "7": 1
+      },
+      "gold_progress_fraction_mean": 0.5077546189553936,
+      "dependency_completion": "unknown: no authoritative dependency graph on these Official-RL tasks",
+      "tool_events_observed_tasks": 2158,
+      "tool_events_mean": 13.80259499536608,
+      "tool_events_distribution": {
+        "36": 64,
+        "12": 1151,
+        "13": 170,
+        "1": 104,
+        "9": 5,
+        "2": 87,
+        "24": 88,
+        "18": 11,
+        "4": 45,
+        "3": 36,
+        "14": 100,
+        "0": 24,
+        "46": 1,
+        "5": 17,
+        "20": 13,
+        "7": 10,
+        "15": 61,
+        "48": 18,
+        "16": 27,
+        "10": 11,
+        "8": 18,
+        "6": 15,
+        "17": 9,
+        "300": 1,
+        "22": 5,
+        "11": 5,
+        "52": 1,
+        "42": 1,
+        "35": 3,
+        "21": 5,
+        "37": 1,
+        "60": 10,
+        "34": 3,
+        "25": 4,
+        "50": 2,
+        "276": 1,
+        "26": 3,
+        "72": 1,
+        "30": 3,
+        "27": 2,
+        "23": 1,
+        "40": 1,
+        "47": 3,
+        "31": 2,
+        "33": 1,
+        "216": 1,
+        "372": 1,
+        "29": 2,
+        "19": 5,
+        "492": 1,
+        "28": 1,
+        "38": 1,
+        "62": 1,
+        "32": 1
+      },
+      "premature_stop": 75,
+      "over_continuation": 531
+    },
+    {
+      "cycle": 3,
+      "state_distribution": {
+        "ADVANCE": 395,
+        "START": 635,
+        "TERMINATE": 453,
+        "UNCERTAIN": 477,
+        "SUCCESS": 198
+      },
+      "frontier_depth_all_saved_distribution": {
+        "1": 621,
+        "0": 1031,
+        "2": 346,
+        "5": 8,
+        "3": 114,
+        "4": 34,
+        "6": 2,
+        "10": 1,
+        "7": 1
+      },
+      "verified_frontier_depth_distribution": {
+        "1": 576,
+        "0": 635,
+        "2": 319,
+        "5": 8,
+        "3": 107,
+        "4": 32,
+        "6": 2,
+        "10": 1,
+        "7": 1
+      },
+      "verified_frontier_mean": 1.0303390838786437,
+      "verified_first_error_depth_distribution": {
+        "1": 490,
+        "0": 635,
+        "2": 234,
+        "3": 88,
+        "4": 27,
+        "6": 1,
+        "5": 7,
+        "7": 1
+      },
+      "gold_progress_fraction_mean": 0.487457390253345,
+      "dependency_completion": "unknown: no authoritative dependency graph on these Official-RL tasks",
+      "tool_events_observed_tasks": 2158,
+      "tool_events_mean": 10.394810009267841,
+      "tool_events_distribution": {
+        "3": 95,
+        "12": 1038,
+        "13": 86,
+        "1": 155,
+        "18": 10,
+        "9": 27,
+        "2": 193,
+        "24": 51,
+        "36": 33,
+        "6": 52,
+        "8": 29,
+        "0": 25,
+        "4": 88,
+        "14": 68,
+        "5": 49,
+        "16": 18,
+        "10": 19,
+        "7": 37,
+        "20": 9,
+        "15": 28,
+        "48": 10,
+        "11": 9,
+        "60": 3,
+        "25": 3,
+        "72": 2,
+        "17": 3,
+        "30": 2,
+        "40": 1,
+        "19": 2,
+        "35": 1,
+        "47": 1,
+        "34": 1,
+        "216": 1,
+        "21": 2,
+        "26": 1,
+        "41": 1,
+        "22": 3,
+        "39": 1,
+        "54": 1
+      },
+      "premature_stop": 155,
+      "over_continuation": 453
+    },
+    {
+      "cycle": 4,
+      "state_distribution": {
+        "ADVANCE": 549,
+        "START": 734,
+        "SUCCESS": 423,
+        "TERMINATE": 158,
+        "UNCERTAIN": 294
+      },
+      "frontier_depth_all_saved_distribution": {
+        "1": 712,
+        "0": 1006,
+        "2": 329,
+        "3": 82,
+        "5": 6,
+        "4": 20,
+        "6": 1,
+        "10": 1,
+        "7": 1
+      },
+      "verified_frontier_depth_distribution": {
+        "1": 696,
+        "0": 734,
+        "2": 324,
+        "3": 81,
+        "5": 6,
+        "4": 20,
+        "6": 1,
+        "10": 1,
+        "7": 1
+      },
+      "verified_frontier_mean": 0.9227467811158798,
+      "verified_first_error_depth_distribution": {
+        "1": 467,
+        "0": 734,
+        "3": 50,
+        "2": 170,
+        "4": 12,
+        "6": 1,
+        "5": 5,
+        "10": 1,
+        "7": 1
+      },
+      "gold_progress_fraction_mean": 0.43394475100483687,
+      "dependency_completion": "unknown: no authoritative dependency graph on these Official-RL tasks",
+      "tool_events_observed_tasks": 2158,
+      "tool_events_mean": 5.788693234476367,
+      "tool_events_distribution": {
+        "3": 226,
+        "12": 660,
+        "2": 447,
+        "1": 492,
+        "6": 34,
+        "0": 32,
+        "4": 120,
+        "8": 11,
+        "13": 18,
+        "7": 20,
+        "5": 41,
+        "15": 7,
+        "10": 6,
+        "14": 14,
+        "36": 4,
+        "24": 7,
+        "11": 1,
+        "9": 4,
+        "60": 2,
+        "20": 2,
+        "16": 3,
+        "18": 1,
+        "25": 1,
+        "72": 1,
+        "21": 1,
+        "48": 1,
+        "23": 1,
+        "22": 1
+      },
+      "premature_stop": 518,
+      "over_continuation": 158
+    }
+  ],
+  "transition_matrices": {
+    "0": {
+      "UNCERTAIN->UNCERTAIN": 594,
+      "ADVANCE->ADVANCE": 279,
+      "START->START": 435,
+      "SUCCESS->SUCCESS": 166,
+      "SUCCESS->TERMINATE": 276,
+      "ADVANCE->SUCCESS": 22,
+      "UNCERTAIN->START": 82,
+      "UNCERTAIN->TERMINATE": 25,
+      "START->UNCERTAIN": 18,
+      "ADVANCE->TERMINATE": 78,
+      "UNCERTAIN->ADVANCE": 43,
+      "TERMINATE->TERMINATE": 18,
+      "ADVANCE->START": 6,
+      "ADVANCE->UNCERTAIN": 56,
+      "START->TERMINATE": 23,
+      "START->SUCCESS": 2,
+      "START->ADVANCE": 18,
+      "SUCCESS->ADVANCE": 4,
+      "UNCERTAIN->SUCCESS": 4,
+      "TERMINATE->UNCERTAIN": 1,
+      "SUCCESS->START": 4,
+      "SUCCESS->UNCERTAIN": 2,
+      "TERMINATE->START": 1,
+      "TERMINATE->ADVANCE": 1
+    },
+    "1": {
+      "UNCERTAIN->UNCERTAIN": 572,
+      "ADVANCE->ADVANCE": 311,
+      "START->START": 501,
+      "UNCERTAIN->START": 47,
+      "UNCERTAIN->ADVANCE": 38,
+      "SUCCESS->SUCCESS": 99,
+      "TERMINATE->TERMINATE": 407,
+      "SUCCESS->TERMINATE": 89,
+      "ADVANCE->UNCERTAIN": 15,
+      "SUCCESS->START": 1,
+      "TERMINATE->UNCERTAIN": 5,
+      "TERMINATE->START": 3,
+      "UNCERTAIN->TERMINATE": 14,
+      "ADVANCE->START": 2,
+      "START->UNCERTAIN": 13,
+      "ADVANCE->TERMINATE": 14,
+      "START->TERMINATE": 7,
+      "SUCCESS->ADVANCE": 1,
+      "TERMINATE->ADVANCE": 4,
+      "ADVANCE->SUCCESS": 3,
+      "START->ADVANCE": 7,
+      "SUCCESS->UNCERTAIN": 4,
+      "TERMINATE->SUCCESS": 1
+    },
+    "2": {
+      "UNCERTAIN->UNCERTAIN": 447,
+      "ADVANCE->ADVANCE": 333,
+      "START->START": 533,
+      "UNCERTAIN->ADVANCE": 43,
+      "SUCCESS->SUCCESS": 92,
+      "TERMINATE->TERMINATE": 412,
+      "TERMINATE->SUCCESS": 93,
+      "ADVANCE->TERMINATE": 10,
+      "ADVANCE->SUCCESS": 3,
+      "ADVANCE->UNCERTAIN": 9,
+      "UNCERTAIN->START": 90,
+      "START->TERMINATE": 4,
+      "UNCERTAIN->TERMINATE": 21,
+      "TERMINATE->UNCERTAIN": 8,
+      "TERMINATE->START": 6,
+      "ADVANCE->START": 6,
+      "TERMINATE->ADVANCE": 12,
+      "START->UNCERTAIN": 12,
+      "UNCERTAIN->SUCCESS": 8,
+      "SUCCESS->ADVANCE": 4,
+      "SUCCESS->TERMINATE": 6,
+      "START->SUCCESS": 2,
+      "START->ADVANCE": 3,
+      "SUCCESS->UNCERTAIN": 1
+    },
+    "3": {
+      "UNCERTAIN->UNCERTAIN": 279,
+      "ADVANCE->ADVANCE": 368,
+      "START->START": 612,
+      "SUCCESS->SUCCESS": 162,
+      "TERMINATE->SUCCESS": 231,
+      "SUCCESS->ADVANCE": 28,
+      "TERMINATE->TERMINATE": 141,
+      "UNCERTAIN->START": 86,
+      "TERMINATE->ADVANCE": 62,
+      "UNCERTAIN->ADVANCE": 83,
+      "START->SUCCESS": 3,
+      "START->ADVANCE": 8,
+      "UNCERTAIN->SUCCESS": 22,
+      "TERMINATE->START": 16,
+      "ADVANCE->START": 15,
+      "SUCCESS->UNCERTAIN": 1,
+      "START->UNCERTAIN": 9,
+      "SUCCESS->START": 5,
+      "ADVANCE->SUCCESS": 5,
+      "UNCERTAIN->TERMINATE": 7,
+      "ADVANCE->UNCERTAIN": 2,
+      "TERMINATE->UNCERTAIN": 3,
+      "ADVANCE->TERMINATE": 5,
+      "SUCCESS->TERMINATE": 2,
+      "START->TERMINATE": 3
+    }
+  },
+  "motif_transfer_proxy": {
+    "0": {
+      "same_task_exposed": {
+        "raw": 62,
+        "exact_crossed": {
+          "positive": 6,
+          "valid": 47,
+          "unknown": 15,
+          "rate": 0.1276595744680851
+        },
+        "progressed": {
+          "positive": 14,
+          "valid": 55,
+          "unknown": 7,
+          "rate": 0.2545454545454545
+        },
+        "same_frontier": {
+          "positive": 41,
+          "valid": 55,
+          "unknown": 7,
+          "rate": 0.7454545454545455
+        },
+        "regressed": {
+          "positive": 0,
+          "valid": 55,
+          "unknown": 7,
+          "rate": 0.0
+        },
+        "final_success": {
+          "positive": 2,
+          "valid": 55,
+          "unknown": 7,
+          "rate": 0.03636363636363636
+        }
+      },
+      "same_motif_unexposed_train": {
+        "raw": 53,
+        "exact_crossed": {
+          "positive": 7,
+          "valid": 49,
+          "unknown": 4,
+          "rate": 0.14285714285714285
+        },
+        "progressed": {
+          "positive": 10,
+          "valid": 52,
+          "unknown": 1,
+          "rate": 0.19230769230769232
+        },
+        "same_frontier": {
+          "positive": 42,
+          "valid": 52,
+          "unknown": 1,
+          "rate": 0.8076923076923077
+        },
+        "regressed": {
+          "positive": 0,
+          "valid": 52,
+          "unknown": 1,
+          "rate": 0.0
+        },
+        "final_success": {
+          "positive": 1,
+          "valid": 52,
+          "unknown": 1,
+          "rate": 0.019230769230769232
+        }
+      },
+      "unrelated_unexposed_train": {
+        "raw": 637,
+        "exact_crossed": {
+          "positive": 66,
+          "valid": 532,
+          "unknown": 105,
+          "rate": 0.12406015037593984
+        },
+        "progressed": {
+          "positive": 114,
+          "valid": 580,
+          "unknown": 57,
+          "rate": 0.19655172413793104
+        },
+        "same_frontier": {
+          "positive": 458,
+          "valid": 580,
+          "unknown": 57,
+          "rate": 0.7896551724137931
+        },
+        "regressed": {
+          "positive": 8,
+          "valid": 580,
+          "unknown": 57,
+          "rate": 0.013793103448275862
+        },
+        "final_success": {
+          "positive": 17,
+          "valid": 580,
+          "unknown": 57,
+          "rate": 0.029310344827586206
+        }
+      },
+      "same_motif_heldout": {
+        "raw": 12,
+        "exact_crossed": {
+          "positive": 5,
+          "valid": 9,
+          "unknown": 3,
+          "rate": 0.5555555555555556
+        },
+        "progressed": {
+          "positive": 7,
+          "valid": 11,
+          "unknown": 1,
+          "rate": 0.6363636363636364
+        },
+        "same_frontier": {
+          "positive": 4,
+          "valid": 11,
+          "unknown": 1,
+          "rate": 0.36363636363636365
+        },
+        "regressed": {
+          "positive": 0,
+          "valid": 11,
+          "unknown": 1,
+          "rate": 0.0
+        },
+        "final_success": {
+          "positive": 0,
+          "valid": 11,
+          "unknown": 1,
+          "rate": 0.0
+        }
+      },
+      "unrelated_heldout": {
+        "raw": 194,
+        "exact_crossed": {
+          "positive": 16,
+          "valid": 169,
+          "unknown": 25,
+          "rate": 0.09467455621301775
+        },
+        "progressed": {
+          "positive": 32,
+          "valid": 185,
+          "unknown": 9,
+          "rate": 0.17297297297297298
+        },
+        "same_frontier": {
+          "positive": 151,
+          "valid": 185,
+          "unknown": 9,
+          "rate": 0.8162162162162162
+        },
+        "regressed": {
+          "positive": 2,
+          "valid": 185,
+          "unknown": 9,
+          "rate": 0.010810810810810811
+        },
+        "final_success": {
+          "positive": 4,
+          "valid": 185,
+          "unknown": 9,
+          "rate": 0.021621621621621623
+        }
+      },
+      "heldout_matched_progression": {
+        "matched_exposed": 11,
+        "all_exposed_valid": 11,
+        "discarded_exposed_no_common_support": 0,
+        "matched_control_count": 139,
+        "strata": 6,
+        "difference": 0.40238625819549473,
+        "conditional_permutation_p_descriptive": 0.0005998800239952009
+      },
+      "heldout_environment_matched_progression": {
+        "matched_exposed": 5,
+        "all_exposed_valid": 11,
+        "discarded_exposed_no_common_support": 6,
+        "matched_control_count": 7,
+        "strata": 4,
+        "difference": 0.0,
+        "conditional_permutation_p_descriptive": 1.0
+      },
+      "train_environment_matched_progression": {
+        "matched_exposed": 28,
+        "all_exposed_valid": 52,
+        "discarded_exposed_no_common_support": 24,
+        "matched_control_count": 52,
+        "strata": 18,
+        "difference": -0.062244897959183663,
+        "conditional_permutation_p_descriptive": 0.6044791041791642
+      }
+    },
+    "1": {
+      "same_task_exposed": {
+        "raw": 88,
+        "exact_crossed": {
+          "positive": 1,
+          "valid": 82,
+          "unknown": 6,
+          "rate": 0.012195121951219513
+        },
+        "progressed": {
+          "positive": 4,
+          "valid": 85,
+          "unknown": 3,
+          "rate": 0.047058823529411764
+        },
+        "same_frontier": {
+          "positive": 81,
+          "valid": 85,
+          "unknown": 3,
+          "rate": 0.9529411764705882
+        },
+        "regressed": {
+          "positive": 0,
+          "valid": 85,
+          "unknown": 3,
+          "rate": 0.0
+        },
+        "final_success": {
+          "positive": 0,
+          "valid": 85,
+          "unknown": 3,
+          "rate": 0.0
+        }
+      },
+      "same_motif_unexposed_train": {
+        "raw": 74,
+        "exact_crossed": {
+          "positive": 2,
+          "valid": 72,
+          "unknown": 2,
+          "rate": 0.027777777777777776
+        },
+        "progressed": {
+          "positive": 3,
+          "valid": 74,
+          "unknown": 0,
+          "rate": 0.04054054054054054
+        },
+        "same_frontier": {
+          "positive": 71,
+          "valid": 74,
+          "unknown": 0,
+          "rate": 0.9594594594594594
+        },
+        "regressed": {
+          "positive": 0,
+          "valid": 74,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "final_success": {
+          "positive": 1,
+          "valid": 74,
+          "unknown": 0,
+          "rate": 0.013513513513513514
+        }
+      },
+      "unrelated_unexposed_train": {
+        "raw": 859,
+        "exact_crossed": {
+          "positive": 16,
+          "valid": 823,
+          "unknown": 36,
+          "rate": 0.019441069258809233
+        },
+        "progressed": {
+          "positive": 29,
+          "valid": 836,
+          "unknown": 23,
+          "rate": 0.034688995215311005
+        },
+        "same_frontier": {
+          "positive": 799,
+          "valid": 836,
+          "unknown": 23,
+          "rate": 0.9557416267942583
+        },
+        "regressed": {
+          "positive": 8,
+          "valid": 836,
+          "unknown": 23,
+          "rate": 0.009569377990430622
+        },
+        "final_success": {
+          "positive": 3,
+          "valid": 836,
+          "unknown": 23,
+          "rate": 0.0035885167464114833
+        }
+      },
+      "same_motif_heldout": {
+        "raw": 26,
+        "exact_crossed": {
+          "positive": 1,
+          "valid": 25,
+          "unknown": 1,
+          "rate": 0.04
+        },
+        "progressed": {
+          "positive": 1,
+          "valid": 25,
+          "unknown": 1,
+          "rate": 0.04
+        },
+        "same_frontier": {
+          "positive": 24,
+          "valid": 25,
+          "unknown": 1,
+          "rate": 0.96
+        },
+        "regressed": {
+          "positive": 0,
+          "valid": 25,
+          "unknown": 1,
+          "rate": 0.0
+        },
+        "final_success": {
+          "positive": 0,
+          "valid": 25,
+          "unknown": 1,
+          "rate": 0.0
+        }
+      },
+      "unrelated_heldout": {
+        "raw": 246,
+        "exact_crossed": {
+          "positive": 2,
+          "valid": 236,
+          "unknown": 10,
+          "rate": 0.00847457627118644
+        },
+        "progressed": {
+          "positive": 6,
+          "valid": 240,
+          "unknown": 6,
+          "rate": 0.025
+        },
+        "same_frontier": {
+          "positive": 231,
+          "valid": 240,
+          "unknown": 6,
+          "rate": 0.9625
+        },
+        "regressed": {
+          "positive": 3,
+          "valid": 240,
+          "unknown": 6,
+          "rate": 0.0125
+        },
+        "final_success": {
+          "positive": 0,
+          "valid": 240,
+          "unknown": 6,
+          "rate": 0.0
+        }
+      },
+      "heldout_matched_progression": {
+        "matched_exposed": 24,
+        "all_exposed_valid": 25,
+        "discarded_exposed_no_common_support": 1,
+        "matched_control_count": 151,
+        "strata": 7,
+        "difference": -0.001536749069643804,
+        "conditional_permutation_p_descriptive": 0.8698260347930414
+      },
+      "heldout_environment_matched_progression": {
+        "matched_exposed": 10,
+        "all_exposed_valid": 25,
+        "discarded_exposed_no_common_support": 15,
+        "matched_control_count": 10,
+        "strata": 8,
+        "difference": -0.2,
+        "conditional_permutation_p_descriptive": 1.0
+      },
+      "train_environment_matched_progression": {
+        "matched_exposed": 51,
+        "all_exposed_valid": 74,
+        "discarded_exposed_no_common_support": 23,
+        "matched_control_count": 76,
+        "strata": 33,
+        "difference": -0.034640522875816995,
+        "conditional_permutation_p_descriptive": 0.6454709058188363
+      }
+    },
+    "2": {
+      "same_task_exposed": {
+        "raw": 96,
+        "exact_crossed": {
+          "positive": 6,
+          "valid": 94,
+          "unknown": 2,
+          "rate": 0.06382978723404255
+        },
+        "progressed": {
+          "positive": 3,
+          "valid": 95,
+          "unknown": 1,
+          "rate": 0.031578947368421054
+        },
+        "same_frontier": {
+          "positive": 89,
+          "valid": 95,
+          "unknown": 1,
+          "rate": 0.9368421052631579
+        },
+        "regressed": {
+          "positive": 3,
+          "valid": 95,
+          "unknown": 1,
+          "rate": 0.031578947368421054
+        },
+        "final_success": {
+          "positive": 4,
+          "valid": 95,
+          "unknown": 1,
+          "rate": 0.042105263157894736
+        }
+      },
+      "same_motif_unexposed_train": {
+        "raw": 84,
+        "exact_crossed": {
+          "positive": 5,
+          "valid": 82,
+          "unknown": 2,
+          "rate": 0.06097560975609756
+        },
+        "progressed": {
+          "positive": 1,
+          "valid": 83,
+          "unknown": 1,
+          "rate": 0.012048192771084338
+        },
+        "same_frontier": {
+          "positive": 81,
+          "valid": 83,
+          "unknown": 1,
+          "rate": 0.9759036144578314
+        },
+        "regressed": {
+          "positive": 1,
+          "valid": 83,
+          "unknown": 1,
+          "rate": 0.012048192771084338
+        },
+        "final_success": {
+          "positive": 5,
+          "valid": 83,
+          "unknown": 1,
+          "rate": 0.060240963855421686
+        }
+      },
+      "unrelated_unexposed_train": {
+        "raw": 965,
+        "exact_crossed": {
+          "positive": 61,
+          "valid": 921,
+          "unknown": 44,
+          "rate": 0.06623235613463627
+        },
+        "progressed": {
+          "positive": 22,
+          "valid": 948,
+          "unknown": 17,
+          "rate": 0.023206751054852322
+        },
+        "same_frontier": {
+          "positive": 905,
+          "valid": 948,
+          "unknown": 17,
+          "rate": 0.9546413502109705
+        },
+        "regressed": {
+          "positive": 21,
+          "valid": 948,
+          "unknown": 17,
+          "rate": 0.022151898734177215
+        },
+        "final_success": {
+          "positive": 70,
+          "valid": 948,
+          "unknown": 17,
+          "rate": 0.07383966244725738
+        }
+      },
+      "same_motif_heldout": {
+        "raw": 25,
+        "exact_crossed": {
+          "positive": 2,
+          "valid": 23,
+          "unknown": 2,
+          "rate": 0.08695652173913043
+        },
+        "progressed": {
+          "positive": 0,
+          "valid": 23,
+          "unknown": 2,
+          "rate": 0.0
+        },
+        "same_frontier": {
+          "positive": 23,
+          "valid": 23,
+          "unknown": 2,
+          "rate": 1.0
+        },
+        "regressed": {
+          "positive": 0,
+          "valid": 23,
+          "unknown": 2,
+          "rate": 0.0
+        },
+        "final_success": {
+          "positive": 2,
+          "valid": 23,
+          "unknown": 2,
+          "rate": 0.08695652173913043
+        }
+      },
+      "unrelated_heldout": {
+        "raw": 276,
+        "exact_crossed": {
+          "positive": 14,
+          "valid": 262,
+          "unknown": 14,
+          "rate": 0.05343511450381679
+        },
+        "progressed": {
+          "positive": 4,
+          "valid": 268,
+          "unknown": 8,
+          "rate": 0.014925373134328358
+        },
+        "same_frontier": {
+          "positive": 258,
+          "valid": 268,
+          "unknown": 8,
+          "rate": 0.9626865671641791
+        },
+        "regressed": {
+          "positive": 6,
+          "valid": 268,
+          "unknown": 8,
+          "rate": 0.022388059701492536
+        },
+        "final_success": {
+          "positive": 17,
+          "valid": 268,
+          "unknown": 8,
+          "rate": 0.06343283582089553
+        }
+      },
+      "heldout_matched_progression": {
+        "matched_exposed": 23,
+        "all_exposed_valid": 23,
+        "discarded_exposed_no_common_support": 0,
+        "matched_control_count": 190,
+        "strata": 8,
+        "difference": -0.002229654403567447,
+        "conditional_permutation_p_descriptive": 1.0
+      },
+      "heldout_environment_matched_progression": {
+        "matched_exposed": 10,
+        "all_exposed_valid": 23,
+        "discarded_exposed_no_common_support": 13,
+        "matched_control_count": 16,
+        "strata": 10,
+        "difference": 0.0,
+        "conditional_permutation_p_descriptive": 1.0
+      },
+      "train_environment_matched_progression": {
+        "matched_exposed": 53,
+        "all_exposed_valid": 83,
+        "discarded_exposed_no_common_support": 30,
+        "matched_control_count": 99,
+        "strata": 27,
+        "difference": 0.0,
+        "conditional_permutation_p_descriptive": 1.0
+      }
+    },
+    "3": {
+      "same_task_exposed": {
+        "raw": 95,
+        "exact_crossed": {
+          "positive": 10,
+          "valid": 86,
+          "unknown": 9,
+          "rate": 0.11627906976744186
+        },
+        "progressed": {
+          "positive": 0,
+          "valid": 90,
+          "unknown": 5,
+          "rate": 0.0
+        },
+        "same_frontier": {
+          "positive": 81,
+          "valid": 90,
+          "unknown": 5,
+          "rate": 0.9
+        },
+        "regressed": {
+          "positive": 9,
+          "valid": 90,
+          "unknown": 5,
+          "rate": 0.1
+        },
+        "final_success": {
+          "positive": 14,
+          "valid": 90,
+          "unknown": 5,
+          "rate": 0.15555555555555556
+        }
+      },
+      "same_motif_unexposed_train": {
+        "raw": 95,
+        "exact_crossed": {
+          "positive": 7,
+          "valid": 88,
+          "unknown": 7,
+          "rate": 0.07954545454545454
+        },
+        "progressed": {
+          "positive": 1,
+          "valid": 93,
+          "unknown": 2,
+          "rate": 0.010752688172043012
+        },
+        "same_frontier": {
+          "positive": 91,
+          "valid": 93,
+          "unknown": 2,
+          "rate": 0.978494623655914
+        },
+        "regressed": {
+          "positive": 1,
+          "valid": 93,
+          "unknown": 2,
+          "rate": 0.010752688172043012
+        },
+        "final_success": {
+          "positive": 11,
+          "valid": 93,
+          "unknown": 2,
+          "rate": 0.11827956989247312
+        }
+      },
+      "unrelated_unexposed_train": {
+        "raw": 999,
+        "exact_crossed": {
+          "positive": 118,
+          "valid": 928,
+          "unknown": 71,
+          "rate": 0.1271551724137931
+        },
+        "progressed": {
+          "positive": 20,
+          "valid": 993,
+          "unknown": 6,
+          "rate": 0.02014098690835851
+        },
+        "same_frontier": {
+          "positive": 886,
+          "valid": 993,
+          "unknown": 6,
+          "rate": 0.892245720040282
+        },
+        "regressed": {
+          "positive": 87,
+          "valid": 993,
+          "unknown": 6,
+          "rate": 0.08761329305135952
+        },
+        "final_success": {
+          "positive": 170,
+          "valid": 993,
+          "unknown": 6,
+          "rate": 0.17119838872104734
+        }
+      },
+      "same_motif_heldout": {
+        "raw": 19,
+        "exact_crossed": {
+          "positive": 0,
+          "valid": 18,
+          "unknown": 1,
+          "rate": 0.0
+        },
+        "progressed": {
+          "positive": 0,
+          "valid": 19,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "same_frontier": {
+          "positive": 19,
+          "valid": 19,
+          "unknown": 0,
+          "rate": 1.0
+        },
+        "regressed": {
+          "positive": 0,
+          "valid": 19,
+          "unknown": 0,
+          "rate": 0.0
+        },
+        "final_success": {
+          "positive": 1,
+          "valid": 19,
+          "unknown": 0,
+          "rate": 0.05263157894736842
+        }
+      },
+      "unrelated_heldout": {
+        "raw": 275,
+        "exact_crossed": {
+          "positive": 36,
+          "valid": 261,
+          "unknown": 14,
+          "rate": 0.13793103448275862
+        },
+        "progressed": {
+          "positive": 7,
+          "valid": 274,
+          "unknown": 1,
+          "rate": 0.025547445255474453
+        },
+        "same_frontier": {
+          "positive": 239,
+          "valid": 274,
+          "unknown": 1,
+          "rate": 0.8722627737226277
+        },
+        "regressed": {
+          "positive": 28,
+          "valid": 274,
+          "unknown": 1,
+          "rate": 0.10218978102189781
+        },
+        "final_success": {
+          "positive": 43,
+          "valid": 274,
+          "unknown": 1,
+          "rate": 0.15693430656934307
+        }
+      },
+      "heldout_matched_progression": {
+        "matched_exposed": 19,
+        "all_exposed_valid": 19,
+        "discarded_exposed_no_common_support": 0,
+        "matched_control_count": 167,
+        "strata": 7,
+        "difference": -0.011904761904761904,
+        "conditional_permutation_p_descriptive": 1.0
+      },
+      "heldout_environment_matched_progression": {
+        "matched_exposed": 5,
+        "all_exposed_valid": 19,
+        "discarded_exposed_no_common_support": 14,
+        "matched_control_count": 8,
+        "strata": 4,
+        "difference": 0.0,
+        "conditional_permutation_p_descriptive": 1.0
+      },
+      "train_environment_matched_progression": {
+        "matched_exposed": 60,
+        "all_exposed_valid": 93,
+        "discarded_exposed_no_common_support": 33,
+        "matched_control_count": 85,
+        "strata": 33,
+        "difference": -0.10416666666666667,
+        "conditional_permutation_p_descriptive": 0.0001999600079984003
+      }
+    }
+  },
+  "global_repeated_task_fisher_warning": "Fisher is descriptive; repeated tasks violate independence. Cluster bootstrap is primary CI. Multiple exploratory tests are not confirmatory."
+}

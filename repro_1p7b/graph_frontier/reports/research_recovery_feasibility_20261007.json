@@ -1,0 +1,217 @@
+{
+  "plan_regimes": {
+    "ADVANCE": 41,
+    "START": 41,
+    "TERMINATE": 18
+  },
+  "preflight": {
+    "failures": [
+      {
+        "exception": "AssertionError:",
+        "plan_sha256": "26b70832466eed26f89bc947b41bd9355e0b149efa1b8bcac6aba2ef88e928bd",
+        "status": "FAILED",
+        "task_id": "official-rl-2233-22c61dfb1ed9"
+      },
+      {
+        "exception": "AssertionError:",
+        "plan_sha256": "26b70832466eed26f89bc947b41bd9355e0b149efa1b8bcac6aba2ef88e928bd",
+        "status": "FAILED",
+        "task_id": "official-rl-1237-2c5d47b2c3bc"
+      },
+      {
+        "exception": "AssertionError:",
+        "plan_sha256": "26b70832466eed26f89bc947b41bd9355e0b149efa1b8bcac6aba2ef88e928bd",
+        "status": "FAILED",
+        "task_id": "official-rl-3050-bdc824445526"
+      },
+      {
+        "exception": "AssertionError:",
+        "plan_sha256": "26b70832466eed26f89bc947b41bd9355e0b149efa1b8bcac6aba2ef88e928bd",
+        "status": "FAILED",
+        "task_id": "official-rl-2677-fde4a427eeaf"
+      },
+      {
+        "exception": "AssertionError:",
+        "plan_sha256": "26b70832466eed26f89bc947b41bd9355e0b149efa1b8bcac6aba2ef88e928bd",
+        "status": "FAILED",
+        "task_id": "official-rl-2975-7f5db613865c"
+      },
+      {
+        "exception": "AssertionError:",
+        "plan_sha256": "26b70832466eed26f89bc947b41bd9355e0b149efa1b8bcac6aba2ef88e928bd",
+        "status": "FAILED",
+        "task_id": "official-rl-0981-6c51b0fc8cd6"
+      },
+      {
+        "exception": "AssertionError:",
+        "plan_sha256": "26b70832466eed26f89bc947b41bd9355e0b149efa1b8bcac6aba2ef88e928bd",
+        "status": "FAILED",
+        "task_id": "official-rl-1299-f1aa8740963f"
+      }
+    ],
+    "passed": 93,
+    "plan_sha256": "26b70832466eed26f89bc947b41bd9355e0b149efa1b8bcac6aba2ef88e928bd",
+    "status": "CPU_GATE_FAILED",
+    "tasks": 100
+  },
+  "portability_diagnostic": {
+    "failed_tasks": 7,
+    "gate_promoted": false,
+    "original_gate": "CPU_GATE_FAILED",
+    "phase_counts": {
+      "execution_success": 7,
+      "post_state_exact": 7,
+      "post_state_roundtrip_exact": 7,
+      "response_bag_sensitivity_equal": 6,
+      "response_exact": 0,
+      "snapshot_roundtrip_exact": 7
+    },
+    "plan_sha256": "26b70832466eed26f89bc947b41bd9355e0b149efa1b8bcac6aba2ef88e928bd",
+    "results": [
+      {
+        "action": {
+          "arguments": {
+            "a": false
+          },
+          "name": "GorillaFileSystem-ls"
+        },
+        "environment": "GorillaFileSystem",
+        "exception": null,
+        "execution_success": true,
+        "gate_promoted": false,
+        "plan_sha256": "26b70832466eed26f89bc947b41bd9355e0b149efa1b8bcac6aba2ef88e928bd",
+        "post_state_bag_sensitivity_equal": true,
+        "post_state_exact": true,
+        "post_state_roundtrip_exact": true,
+        "response_bag_sensitivity_equal": true,
+        "response_exact": false,
+        "snapshot_roundtrip_exact": true,
+        "task_id": "official-rl-2233-22c61dfb1ed9"
+      },
+      {
+        "action": {
+          "arguments": {},
+          "name": "WhatsApp-whatsapp_list_chats"
+        },
+        "environment": "WhatsApp",
+        "exception": null,
+        "execution_success": true,
+        "gate_promoted": false,
+        "plan_sha256": "26b70832466eed26f89bc947b41bd9355e0b149efa1b8bcac6aba2ef88e928bd",
+        "post_state_bag_sensitivity_equal": true,
+        "post_state_exact": true,
+        "post_state_roundtrip_exact": true,
+        "response_bag_sensitivity_equal": true,
+        "response_exact": false,
+        "snapshot_roundtrip_exact": true,
+        "task_id": "official-rl-1237-2c5d47b2c3bc"
+      },
+      {
+        "action": {
+          "arguments": {
+            "body": "Note: Internal team has requested better metrics endpoint documentation (ticket #1002). This aligns with broader API documentation needs.",
+            "issue_number": 17,
+            "owner": "acme-corp",
+            "repo": "internal-api-docs-gen"
+          },
+          "name": "GitHubServer-add_issue_comment"
+        },
+        "environment": "GitHubServer",
+        "exception": null,
+        "execution_success": true,
+        "gate_promoted": false,
+        "plan_sha256": "26b70832466eed26f89bc947b41bd9355e0b149efa1b8bcac6aba2ef88e928bd",
+        "post_state_bag_sensitivity_equal": true,
+        "post_state_exact": true,
+        "post_state_roundtrip_exact": true,
+        "response_bag_sensitivity_equal": false,
+        "response_exact": false,
+        "snapshot_roundtrip_exact": true,
+        "task_id": "official-rl-3050-bdc824445526"
+      },
+      {
+        "action": {
+          "arguments": {
+            "q": "Vincent van Gogh"
+          },
+          "name": "MetMuseum-search_museum_objects"
+        },
+        "environment": "LinkedInJobs,MetMuseum",
+        "exception": null,
+        "execution_success": true,
+        "gate_promoted": false,
+        "plan_sha256": "26b70832466eed26f89bc947b41bd9355e0b149efa1b8bcac6aba2ef88e928bd",
+        "post_state_bag_sensitivity_equal": true,
+        "post_state_exact": true,
+        "post_state_roundtrip_exact": true,
+        "response_bag_sensitivity_equal": true,
+        "response_exact": false,
+        "snapshot_roundtrip_exact": true,
+        "task_id": "official-rl-2677-fde4a427eeaf"
+      },
+      {
+        "action": {
+          "arguments": {
+            "query": "Austin"
+          },
+          "name": "AirDNA-search_markets"
+        },
+        "environment": "AirDNA",
+        "exception": null,
+        "execution_success": true,
+        "gate_promoted": false,
+        "plan_sha256": "26b70832466eed26f89bc947b41bd9355e0b149efa1b8bcac6aba2ef88e928bd",
+        "post_state_bag_sensitivity_equal": true,
+        "post_state_exact": true,
+        "post_state_roundtrip_exact": true,
+        "response_bag_sensitivity_equal": true,
+        "response_exact": false,
+        "snapshot_roundtrip_exact": true,
+        "task_id": "official-rl-2975-7f5db613865c"
+      },
+      {
+        "action": {
+          "arguments": {
+            "keywords": "IBM Model M keyboard",
+            "limit": 15
+          },
+          "name": "EtsyServer-search_listings"
+        },
+        "environment": "EtsyServer",
+        "exception": null,
+        "execution_success": true,
+        "gate_promoted": false,
+        "plan_sha256": "26b70832466eed26f89bc947b41bd9355e0b149efa1b8bcac6aba2ef88e928bd",
+        "post_state_bag_sensitivity_equal": true,
+        "post_state_exact": true,
+        "post_state_roundtrip_exact": true,
+        "response_bag_sensitivity_equal": true,
+        "response_exact": false,
+        "snapshot_roundtrip_exact": true,
+        "task_id": "official-rl-0981-6c51b0fc8cd6"
+      },
+      {
+        "action": {
+          "arguments": {
+            "project_id": "proj_shopify_store"
+          },
+          "name": "TickTick-ticktick_get_project_with_data"
+        },
+        "environment": "TickTick",
+        "exception": null,
+        "execution_success": true,
+        "gate_promoted": false,
+        "plan_sha256": "26b70832466eed26f89bc947b41bd9355e0b149efa1b8bcac6aba2ef88e928bd",
+        "post_state_bag_sensitivity_equal": true,
+        "post_state_exact": true,
+        "post_state_roundtrip_exact": true,
+        "response_bag_sensitivity_equal": true,
+        "response_exact": false,
+        "snapshot_roundtrip_exact": true,
+        "task_id": "official-rl-1299-f1aa8740963f"
+      }
+    ]
+  },
+  "gpu_rollouts": 0,
+  "training": false
+}
